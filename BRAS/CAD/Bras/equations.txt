@@ -1,2 +1,2 @@
-﻿"Longueur1"= 135mm
-"Longueur2"= 147mm
+﻿"Longueur1"= 150mm
+"Longueur2"= 175mm
