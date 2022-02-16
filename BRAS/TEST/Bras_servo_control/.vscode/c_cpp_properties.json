@@ -1,0 +1,62 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/include",
+                "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/src",
+                "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/lib/Bras_servo_control",
+                "/home/chris/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/lib/Servo-master/src",
+                "/home/chris/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "/home/chris/.platformio/packages/framework-arduino-avr/variants/mega",
+                "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/lib/RAMP-master/src",
+                "/home/chris/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "/home/chris/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "/home/chris/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "/home/chris/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/include",
+                    "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/src",
+                    "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/lib/Bras_servo_control",
+                    "/home/chris/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/lib/Servo-master/src",
+                    "/home/chris/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "/home/chris/.platformio/packages/framework-arduino-avr/variants/mega",
+                    "/home/chris/S4_ws/src/S4H2022-projet/BRAS/TEST/Bras_servo_control/lib/RAMP-master/src",
+                    "/home/chris/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "/home/chris/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "/home/chris/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "/home/chris/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=50205",
+                "ARDUINO_AVR_MEGA2560",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega2560__",
+                ""
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "/home/chris/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega2560",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
