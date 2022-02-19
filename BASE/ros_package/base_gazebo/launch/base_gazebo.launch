@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <!--Loading urdf into Parameter Server-->
+    <include file="$(find base_description)/launch/base_description.launch">
+    </include>
+    
+    <!--Using default world config-->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" default="false"/>
+        <arg name="use_sim_time" default="true"/>
+        <arg name="gui" default="true"/>
+        <arg name="headless" default="false"/>
+    </include>
+
+    <!--Spawning base into Gazebo-->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
+      args="-urdf -param robot_description -model rufus" />
+
+</launch>

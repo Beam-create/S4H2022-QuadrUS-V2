@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <!--Set parameter on Parameter Server-->
+    <param name="robot_description"
+        command="xacro '$(find base_description)/urdf/base.xacro'" />
+    
+    <!-- Publish the robot state -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+        <param name="publish_frequency" value="20.0"/>
+    </node>
+
+    <!--Load to rviz-->
+    <node name="rviz" pkg="rviz" type="rviz"
+        args="-d $(find base_description)/urdf.rviz" />
+
+</launch>
