@@ -19,16 +19,16 @@
 /*---------------------------- variables globales ---------------------------*/
  
  // ENC_A: Yellow wire out of encoder, either 2,3,18 or 19
-int FL_ENC_A_pin = 2;
-int FR_ENC_A_pin = 3;
-int BL_ENC_A_pin = 18;
-int BR_ENC_A_pin = 19;
+int FL_ENC_A_pin = 19;
+int FR_ENC_A_pin = 18;
+int BL_ENC_A_pin = 2;
+int BR_ENC_A_pin = 3;
 
 // ENC_B: White wire out of encoder, between 22 and 53 (30,32,34,36)
 int FL_ENC_B_pin = 30;
 int FR_ENC_B_pin = 32;
-int BL_ENC_B_pin = 34;
-int BR_ENC_B_pin = 36;
+int BL_ENC_B_pin = 36;
+int BR_ENC_B_pin = 34;
 
 // ENC_Vcc: Blue wire out of encoder, 3.5-20 V
 // ENC_GND: Green wire out of encoder, any ground pin
@@ -83,9 +83,11 @@ void setup() {
 }
 
 void loop() {
-  //motorEncoderTest();
+  // motorEncoderTest();
   // motorSpeedTest();
-  //moteur_AD.setPWM(0);
+  // BL_motor.setPWM(0);
+  delay(5000);
+  //rotate(0.5,1,0);
   demo();
 }
 
@@ -107,18 +109,18 @@ void motorEncoderTest(){
   Serial.println("---------------------------");
   Serial.println("Motor Encoder Test :");
   Serial.println("---------------------------");
-  if (!FL_motor.safeCheck()) {
+  if (!BL_motor.safeCheck()) {
     Serial.println("Destruction du moteur");
-    FL_motor.~motor();
+    BL_motor.~motor();
     }
   Serial.print("Nombre de tour : ");
-  Serial.println(FL_motor.getNbRotation());
+  Serial.println(BL_motor.getNbRotation());
   Serial.print("Position de l'encodeur : ");
-  Serial.println(FL_motor.getEncoderPos());
+  Serial.println(BL_motor.getEncoderPos());
   Serial.print("Position de totale de l'encodeur : ");
-  Serial.println(FL_motor.getEncoderPosTotal());
+  Serial.println(BL_motor.getEncoderPosTotal());
   Serial.print("Vitesse moyenne : ");
-  Serial.println(FL_motor.getMeanSpeed());
+  Serial.println(BL_motor.getMeanSpeed());
   Serial.println("---------------------------");
   Serial.println("End of motor encoder test");
   Serial.println("---------------------------");
@@ -142,96 +144,100 @@ void motorSpeedTest(){
 
 void moveForward(float speed){
   FL_motor.setPWM(speed);
-  FR_motor.setPWM(speed);
+  FR_motor.setPWM(speed*-1);
   BL_motor.setPWM(speed);
-  BR_motor.setPWM(speed);
+  BR_motor.setPWM(speed*-1);
 }
 void moveBackward(float speed){
   FL_motor.setPWM(-speed);
-  FR_motor.setPWM(-speed);
+  FR_motor.setPWM(-speed*-1);
   BL_motor.setPWM(-speed);
-  BR_motor.setPWM(-speed);
+  BR_motor.setPWM(-speed*-1);
 }
 void moveLeft(float speed){
   FL_motor.setPWM(-speed);
-  FR_motor.setPWM(speed);
+  FR_motor.setPWM(speed*-1);
   BL_motor.setPWM(speed);
-  BR_motor.setPWM(-speed);
+  BR_motor.setPWM(-speed*-1);
 }
 void moveRight(float speed){
   FL_motor.setPWM(speed);
-  FR_motor.setPWM(-speed);
+  FR_motor.setPWM(-speed*-1);
   BL_motor.setPWM(-speed);
-  BR_motor.setPWM(speed);
+  BR_motor.setPWM(speed*-1);
 }
 void moveDiagFL(float speed){
   FL_motor.setPWM(0);
-  FR_motor.setPWM(speed);
+  FR_motor.setPWM(speed*-1);
   BL_motor.setPWM(speed);
-  BR_motor.setPWM(0);
+  BR_motor.setPWM(0*-1);
 }
 void moveDiagFR(float speed){
   FL_motor.setPWM(speed);
-  FR_motor.setPWM(0);
+  FR_motor.setPWM(0*-1);
   BL_motor.setPWM(0);
-  BR_motor.setPWM(speed);
-}
-void moveDiagBL(float speed){
-  FL_motor.setPWM(0);
-  FR_motor.setPWM(-speed);
-  BL_motor.setPWM(-speed);
-  BR_motor.setPWM(0);
+  BR_motor.setPWM(speed*-1);
 }
 void moveDiagBR(float speed){
+  FL_motor.setPWM(0);
+  FR_motor.setPWM(-speed*-1);
+  BL_motor.setPWM(-speed);
+  BR_motor.setPWM(0*-1);
+}
+void moveDiagBL(float speed){
   FL_motor.setPWM(-speed);
-  FR_motor.setPWM(0);
+  FR_motor.setPWM(0*-1);
   BL_motor.setPWM(0);
-  BR_motor.setPWM(-speed);
+  BR_motor.setPWM(-speed*-1);
 }
 void stop(){
   FL_motor.setPWM(0);
-  FR_motor.setPWM(0);
+  FR_motor.setPWM(0*-1);
   BL_motor.setPWM(0);
-  BR_motor.setPWM(0);
+  BR_motor.setPWM(0*-1);
 }
 void rotate(float speed, int direction, int point_of_rotation){
-  int dir_speed = speed;
+  float dir_speed = speed;
+  Serial.println(dir_speed);
   if (direction < 0){
     dir_speed *= -1;
   }
-  switch (point_of_rotation){
-    case 0:
-      FL_motor.setPWM(dir_speed);
-      FR_motor.setPWM(-dir_speed);
-      BL_motor.setPWM(dir_speed);
-      BR_motor.setPWM(-dir_speed);
-    case 1:
-      FL_motor.setPWM(dir_speed);
-      FR_motor.setPWM(-dir_speed);
-      BL_motor.setPWM(0);
-      BR_motor.setPWM(0);
-    case 2:
-      FL_motor.setPWM(0);
-      FR_motor.setPWM(0);
-      BL_motor.setPWM(dir_speed);
-      BR_motor.setPWM(-dir_speed);
-    case 3:
-      FL_motor.setPWM(dir_speed);
-      FR_motor.setPWM(0);
-      BL_motor.setPWM(dir_speed);
-      BR_motor.setPWM(0);
-    case 4:
-      FL_motor.setPWM(0);
-      FR_motor.setPWM(dir_speed);
-      BL_motor.setPWM(0);
-      BR_motor.setPWM(dir_speed);
+  if (point_of_rotation == 0){
+    FL_motor.setPWM(dir_speed);
+    FR_motor.setPWM(-dir_speed*-1);
+    BL_motor.setPWM(dir_speed);
+    BR_motor.setPWM(-dir_speed*-1);
+  }
+  else if (point_of_rotation == 1){
+    FL_motor.setPWM(dir_speed);
+    FR_motor.setPWM(-dir_speed*-1);
+    BL_motor.setPWM(0);
+    BR_motor.setPWM(0*-1);
+  }
+  else if (point_of_rotation == 2){
+    FL_motor.setPWM(0);
+    FR_motor.setPWM(0*-1);
+    BL_motor.setPWM(dir_speed);
+    BR_motor.setPWM(-dir_speed*-1);
+  }
+  else if (point_of_rotation == 3){
+    FL_motor.setPWM(dir_speed);
+    FR_motor.setPWM(0*-1);
+    BL_motor.setPWM(dir_speed);
+    BR_motor.setPWM(0*-1);
+  }
+  else if (point_of_rotation == 4){
+    FL_motor.setPWM(0);
+    FR_motor.setPWM(dir_speed*-1);
+    BL_motor.setPWM(0);
+    BR_motor.setPWM(dir_speed*-1);
   }
 }
 
 void demo(){
   float speed = 0.5;
-  int stop_time = 100;
-  int move_time = 2000;
+  int stop_time = 50;
+  int move_time = 1000;
 
   // FL Square Loop
   moveForward(speed);
@@ -269,41 +275,41 @@ void demo(){
   stop();
   delay(stop_time);
 
-  // FR Square Loop
-  moveForward(speed);
-  delay(move_time);
-  stop();
-  delay(stop_time);
-  moveRight(speed);
-  delay(move_time);
-  stop();
-  delay(stop_time);
-  moveBackward(speed);
-  delay(move_time);
-  stop();
-  delay(stop_time);
-  moveLeft(speed);
-  delay(move_time);
-  stop();
-  delay(stop_time);
+  // // FR Square Loop
+  // moveForward(speed);
+  // delay(move_time);
+  // stop();
+  // delay(stop_time);
+  // moveRight(speed);
+  // delay(move_time);
+  // stop();
+  // delay(stop_time);
+  // moveBackward(speed);
+  // delay(move_time);
+  // stop();
+  // delay(stop_time);
+  // moveLeft(speed);
+  // delay(move_time);
+  // stop();
+  // delay(stop_time);
 
-  // BL Square Loop
-  moveLeft(speed);
-  delay(move_time);
-  stop();
-  delay(stop_time);
-  moveBackward(speed);
-  delay(move_time);
-  stop();
-  delay(stop_time);
-  moveRight(speed);
-  delay(move_time);
-  stop();
-  delay(stop_time);
-  moveForward(speed);
-  delay(move_time);
-  stop();
-  delay(stop_time);
+  // // BL Square Loop
+  // moveLeft(speed);
+  // delay(move_time);
+  // stop();
+  // delay(stop_time);
+  // moveBackward(speed);
+  // delay(move_time);
+  // stop();
+  // delay(stop_time);
+  // moveRight(speed);
+  // delay(move_time);
+  // stop();
+  // delay(stop_time);
+  // moveForward(speed);
+  // delay(move_time);
+  // stop();
+  // delay(stop_time);
 
   // FL Diag Loop
   moveDiagFL(speed);
