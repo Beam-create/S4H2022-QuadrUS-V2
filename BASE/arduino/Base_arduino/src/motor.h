@@ -22,7 +22,6 @@ class motor{
         void init();
         bool checkPins(int pin, int arg_nb);
         bool safeCheck();
-        // void setPin(char _pinName[11],int pinValue);
         int getPin(char _pinName[11]);
         void getPins();
         void readEncoder();
@@ -33,21 +32,21 @@ class motor{
         int getResetEncoderPos();
         void setPWM(float speed);
         double getMeanSpeed();
-        char _ENC_A[11] = "_ENC_A_pin";
+        char _ENC_A[11] = "_ENC_A_pin"; // Noms associés aux pins
         char _ENC_B[11] = "_ENC_B_pin";
         char _DIR[11] = "_DIR_pin";
         char _PWM[11] = "_PWM_pin";
     protected:
-        int _ENC_A_pin;
+        int _ENC_A_pin; // Pins de l'encodeur
         int _ENC_B_pin;
-        int _DIR_pin;
+        int _DIR_pin; // Pins du contrôleur de moteur
         int _PWM_pin;
-        int encoder_pos = 0;
+        int encoder_pos = 0; // Position de l'encodeur
         int nb_rotation = 0;
         int encoder_max_pos = 800;
-        int mean_time = 50;
+        int mean_time = 50; // Temps entre deux lectures de l'encodeur pour calculer la vitesse moyenne
         float set_speed = 0;
-        float pulse_per_seconds_to_unit = 0.5; // TBD
+        float pulse_per_seconds_to_unit = 0.5; // Ratio entre le nombre de pulses par seconde et le ratio de vitesse
 };
 
 #endif //motor

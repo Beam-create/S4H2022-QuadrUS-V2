@@ -2,54 +2,55 @@
  * GRO 400 - Conception agile et ouverte en robotique
  * Code de démarrage
  * Auteurs: Antoine Waltz et al     
- * date: 9 février 2022
+ * date: 22 février 2022
 */
 
 /*------------------------------ Librairies ---------------------------------*/
 
 #include <Arduino.h>
 #include "motor.h"
-#include "pid.h"
+// #include "pid.h"
 
 /*------------------------------ Constantes ---------------------------------*/
 
-#define BAUD            9600      // Frequence de transmission serielle
+#define BAUD            9600      // Fréquence de transmission serielle
 #define NB_PULSE_TOUR   800
 
 /*---------------------------- variables globales ---------------------------*/
  
- // ENC_A: Yellow wire out of encoder, either 2,3,18 or 19
+ // ENC_A: Fil jaune de l'encodeur, soit 2,3,18 ou 19
 int FL_ENC_A_pin = 19;
 int FR_ENC_A_pin = 18;
 int BL_ENC_A_pin = 2;
 int BR_ENC_A_pin = 3;
 
-// ENC_B: White wire out of encoder, between 22 and 53 (30,32,34,36)
+// ENC_B: Fil blanc de l'encodeur, entre 22 et 53 (30,32,34,36)
 int FL_ENC_B_pin = 30;
 int FR_ENC_B_pin = 32;
 int BL_ENC_B_pin = 36;
 int BR_ENC_B_pin = 34;
 
-// ENC_Vcc: Blue wire out of encoder, 3.5-20 V
-// ENC_GND: Green wire out of encoder, any ground pin
+// ENC_Vcc: Fil bleu de l'encodeur, 3.5-20 V
+// ENC_GND: Fil vert de l'encodeur
 
-// DIR: Yellow wire out of driver, between 22 and 53 (22,24,26,28)
+// DIR: Fil jaune du contrôleur de moteur, entre 22 et 53 (22,24,26,28)
 int FL_DIR_pin = 22;
 int FR_DIR_pin = 24;
 int BL_DIR_pin = 26;
 int BR_DIR_pin = 28;
 
-// PWM: White wire out of driver, between 4 and 13 (4,5,6,7)
+// PWM: Fil blanc du contrôleur de moteur, entre 4 et 13 (4,5,6,7)
 int FL_PWM_pin = 4;
 int FR_PWM_pin = 5;
 int BL_PWM_pin = 6;
 int BR_PWM_pin = 7;
 
+// Déclaration des objets moteur
 motor FL_motor(FL_ENC_A_pin, FL_ENC_B_pin, FL_DIR_pin, FL_PWM_pin);
 motor FR_motor(FR_ENC_A_pin, FR_ENC_B_pin, FR_DIR_pin, FR_PWM_pin);
 motor BL_motor(BL_ENC_A_pin, BL_ENC_B_pin, BL_DIR_pin, BL_PWM_pin);
 motor BR_motor(BR_ENC_A_pin, BR_ENC_B_pin, BR_DIR_pin, BR_PWM_pin);
-PID pid(FL_motor, FR_motor, BL_motor, BR_motor);
+// PID pid(FL_motor, FR_motor, BL_motor, BR_motor);
 
 /*------------------------- Prototypes de fonctions -------------------------*/
 
@@ -75,6 +76,7 @@ void demo();
 
 void setup() {
   Serial.begin(BAUD);
+  // Fonctions qui assigne les pins à lire et les fonctions pour lire les encodeurs
   // attachInterrupt: 2, 3, 18, 19, 20, 21 (pins 20 & 21 are not available to use for interrupts while they are used for I2C communication)
   attachInterrupt(digitalPinToInterrupt(FL_motor.getPin(FL_motor._ENC_A)), readEncoderFL, RISING);
   attachInterrupt(digitalPinToInterrupt(FR_motor.getPin(FR_motor._ENC_A)), readEncoderFR, RISING);
@@ -83,16 +85,13 @@ void setup() {
 }
 
 void loop() {
-  // motorEncoderTest();
-  // motorSpeedTest();
-  // BL_motor.setPWM(0);
   delay(5000);
-  //rotate(0.5,1,0);
   demo();
 }
 
 /*---------------------------Definition de fonctions ------------------------*/
 
+// Fonctions qui appelle la fonction de lecture de la position de l'encodeur
 void readEncoderFL(){
   FL_motor.readEncoder();
 }
@@ -105,6 +104,7 @@ void readEncoderBL(){
 void readEncoderBR(){
   BR_motor.readEncoder();
 }
+// Fonction de test des encodeurs
 void motorEncoderTest(){
   Serial.println("---------------------------");
   Serial.println("Motor Encoder Test :");
@@ -127,7 +127,7 @@ void motorEncoderTest(){
   Serial.println("");
   delay(500);
 }
-
+// Fonction de test du calcul de la vitesse moyenne d'un moteur
 void motorSpeedTest(){
   Serial.println("---------------------------");
   Serial.println("Motor Speed Test :");
@@ -141,7 +141,7 @@ void motorSpeedTest(){
   FL_motor.setPWM(0.1);
   }
 }
-
+// Fonctions pour la démo
 void moveForward(float speed){
   FL_motor.setPWM(speed);
   FR_motor.setPWM(speed*-1);
@@ -274,42 +274,6 @@ void demo(){
   delay(move_time);
   stop();
   delay(stop_time);
-
-  // // FR Square Loop
-  // moveForward(speed);
-  // delay(move_time);
-  // stop();
-  // delay(stop_time);
-  // moveRight(speed);
-  // delay(move_time);
-  // stop();
-  // delay(stop_time);
-  // moveBackward(speed);
-  // delay(move_time);
-  // stop();
-  // delay(stop_time);
-  // moveLeft(speed);
-  // delay(move_time);
-  // stop();
-  // delay(stop_time);
-
-  // // BL Square Loop
-  // moveLeft(speed);
-  // delay(move_time);
-  // stop();
-  // delay(stop_time);
-  // moveBackward(speed);
-  // delay(move_time);
-  // stop();
-  // delay(stop_time);
-  // moveRight(speed);
-  // delay(move_time);
-  // stop();
-  // delay(stop_time);
-  // moveForward(speed);
-  // delay(move_time);
-  // stop();
-  // delay(stop_time);
 
   // FL Diag Loop
   moveDiagFL(speed);
