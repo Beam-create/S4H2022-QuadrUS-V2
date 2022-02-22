@@ -11,9 +11,9 @@
 ## Table des matières
 * [Description du projet](#Description)
 * [Assemblage](#Assemblage)
-	* [Base](##Base:)
-	* [Bras](##Bras:)
-	* [Caméra](##Caméra:)
+	* [Base](###Base:)
+	* [Bras](###Bras:)
+	* [Caméra](###Caméra:)
 * [Mise en place logicielle](##Setup-logiciel)
 * [Development environment](#Development-environment)
     * [Needed installation](#ROS-installation)
