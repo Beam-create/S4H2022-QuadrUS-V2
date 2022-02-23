@@ -8,14 +8,19 @@ void setup() {
   Serial.begin(9600);
   Serial.println(F("Initialize System"));
   bras.initServos();
+  bras.drop();
+  delay(3000);
 }
 
 void loop() {
   while (!isDone){
     // put your main code here, to run repeatedly:
-    float JointAngles[nbJoints]= {90.0, 0.0, 0.0};
-    bras.readAngles(JointAngles);
-    bras.goTo();
+    float JointAngles[nbJoints]= {0.0, 91.0, -31.0};
+    //bras.readAngles(JointAngles);
+    bras.goTo(JointAngles);
+    //bras.goToHome();
+
+    bras.pick();
     isDone = true;
   }
 }

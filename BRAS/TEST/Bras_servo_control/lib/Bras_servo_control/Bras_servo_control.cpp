@@ -21,27 +21,53 @@ Bras_servo_control::~Bras_servo_control()
 {
 }
 
+/**
+ * This method attaches all joints and effector to the respective pins
+ * @param : void
+ * @return : void 
+ */ 
 void Bras_servo_control::initServos()
 {
     for (size_t i = 0; i < nbJoints; i++)
     {
         Joints[i].attach(J_pins[i]);
     }
+    Effecteur.attach(Eff_pin);
 }
 
-void Bras_servo_control::readAngles(float angles[nbJoints])
+/**
+ * This method converts the input angles from the inverse kinematic formula and sets the appropriate PWM signal to the servos.
+ * Array is sorted from J1, J2 to Jend
+ * @param angles array of goal angles to go to 
+ * @return void 
+ */ 
+void Bras_servo_control::goTo(float angles[nbJoints])
 {
-    for (size_t i = 0; i<nbJoints; i++){
-        GOAL[i] = map(angles[i], MIN_ANG[i], MAX_ANG[i], 0.0, 200.0); //180 is the value that defines the max angle for Servo object
+    if((L1 + L2*sin(angles[1]*(PI/180.0)) + L3*sin(angles[2]*(PI/180.0)) - L4y)>=0.02){ // Verification de l'eq en y 
+        GOAL[0] = ZEROS[0] - angles[0];
+        GOAL[1] = angles[1] + (ZEROS[1]-90);
+        GOAL[2] = ZEROS[2] + angles[2]; 
+        for (size_t i =0; i< nbJoints; i++){
+            //Joints[i].writeMicroseconds(writeServo(i,GOAL[i]));
+            Serial.print("Servo angle commands are: ");
+            Serial.println(GOAL[i]);
+        }
+    }
+    else{
+        Serial.print("La combinaison d'ang en entree donne une valeur de: ");
+        Serial.println(L1 + L2*sin(angles[1]*(PI/180.0)) + L3*sin(angles[2]*(PI/180.0)) - L4y);
     }
 }
 
-void Bras_servo_control::goTo()
+/**
+ * This method send the PWM command
+ * @param : void
+ * @return : void 
+ */ 
+void Bras_servo_control::goToHome()
 {
-    for (size_t i =0; i< nbJoints; i++){
-        Joints[i].write(GOAL[i]);
-        Serial.print("PWM commands are: ");
-        Serial.println(GOAL[i]);
+    for (size_t i=0; i<nbJoints; i++){
+        Joints[i].writeMicroseconds(writeServo(i,HOME[i]));
     }
 }
 
@@ -55,5 +81,10 @@ void Bras_servo_control::drop()
     Effecteur.write(dropAngle);
 }
 
+int Bras_servo_control::writeServo(int indJoint, float angle)
+{
+    int Micro_sec = COEFFS[indJoint][0]*pow(angle,3) + COEFFS[indJoint][1]*pow(angle,2) + COEFFS[indJoint][2]*angle + COEFFS[indJoint][3];
+    return Micro_sec;
+}
 
 
