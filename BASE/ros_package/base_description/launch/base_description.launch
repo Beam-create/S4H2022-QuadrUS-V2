@@ -1,0 +1,7 @@
+<launch>
+    
+    <!--Set parameter on Parameter Server-->
+    <param name="robot_description"
+        command="xacro '$(find base_description)/urdf/base.xacro'" />
+
+</launch>
