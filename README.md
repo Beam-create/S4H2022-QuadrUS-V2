@@ -5,7 +5,7 @@
 
 
 ## Produit final
-(image/gif/video du produit fini)
+![image](https://user-images.githubusercontent.com/72213923/155257730-0c8ef9f5-0139-4f08-8084-f2a888d273e7.png)
 
 ## Table des matières
 * [Description du projet](#Description)
