@@ -1,7 +1,9 @@
 #include "Bras_servo_control.h"
 
 Bras_servo_control bras = Bras_servo_control();
-bool isDone = false;
+bool isDone = false; // Flag condition, testing only, if needed!
+
+float JointAngles[nbJoints]= {26.57, 77.02, 34.87}; // Target angles are defined once;
 
 void setup() {
   //Init Serial USB
@@ -9,18 +11,12 @@ void setup() {
   Serial.println(F("Initialize System"));
   bras.initServos();
   bras.drop();
+  bras.goTo(bras.HOME);
   delay(3000);
 }
 
 void loop() {
-  while (!isDone){
-    // put your main code here, to run repeatedly:
-    float JointAngles[nbJoints]= {0.0, 91.0, -31.0};
-    //bras.readAngles(JointAngles);
     bras.goTo(JointAngles);
-    //bras.goToHome();
-
+    delay(1000);
     bras.pick();
-    isDone = true;
-  }
 }

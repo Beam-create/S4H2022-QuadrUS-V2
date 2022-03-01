@@ -10,6 +10,7 @@
 #include <Wire.h>//https://www.arduino.cc/en/reference/wire
 #include <Servo.h>
 #include <math.h>
+#include <Ramp.h>
 
 #define nbJoints 3 
 
@@ -24,14 +25,19 @@ private:
     Servo Joints[nbJoints];
     Servo Effecteur;
 
+    rampFloat interpQ1;        // interpolation objects
+    rampFloat interpQ2;
+    rampFloat interpQ3;
+
     uint8_t J_pins[nbJoints] = {2, 3, 4};
     uint8_t Eff_pin = 5;
 
     float MIN_ANG[nbJoints] = {0.0, 0.0, 0.0};
     float MAX_ANG[nbJoints] = {270.0, 270.0, 270.0};
-    float HOME[nbJoints] = {105.0, 80.0, 180.0};
-    float GOAL[nbJoints] = {0.0, 0.0, 0.0};
+    float* GOAL;
     float ZEROS[nbJoints] = {105.0, 105.0, 177.0}; //joint3 est actually 90deg
+    float gearRatio = 2.0;
+
     
     float L1 = 0.095;
     float L2 = 0.160;
@@ -48,14 +54,20 @@ private:
     int dropAngle = 130;
 
 public:
+    float HOME[nbJoints] = {0.0, 90.0, 0.0};
+    float currAngles[nbJoints] = {0.0, 0.0, 0.0};
+
     Bras_servo_control();
     ~Bras_servo_control();
     void initServos();
-    void goToHome();
     void goTo(float angles[nbJoints]);
+    void goToHome();
+    float* convToServAng(float angles[nbJoints]);
     void pick();
     void drop();
     int writeServo(int indJoint, float angle);
 };
+
+
 
 
