@@ -10,10 +10,10 @@
 ## Table des matières
 * [Description du projet](#Description)
 * [Assemblage](#Assemblage)
-	* [Base](###Base:)
-	* [Bras](###Bras:)
+	* [Base](#Base:)
+	* [Bras](#Bras:)
 	* [Caméra](###Caméra:)
-* [Environnement de développement](#Environnement de développement)
+* [Environnement de développement](#Environnement-de-développement)
 
 
 ## Description
