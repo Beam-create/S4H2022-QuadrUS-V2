@@ -10,9 +10,9 @@
 ## Table des matières
 * [Description du projet](#Description)
 * [Assemblage](#Assemblage)
-	* [Base](#Base:)
-	* [Bras](#Bras:)
-	* [Caméra](###Caméra:)
+	* [Base](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#base)
+	* [Bras](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#bras)
+	* [Caméra](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#caméra)
 * [Environnement de développement](#Environnement-de-développement)
 
 
