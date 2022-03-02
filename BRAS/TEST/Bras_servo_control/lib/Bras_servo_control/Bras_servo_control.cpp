@@ -44,40 +44,22 @@ void Bras_servo_control::initServos()
 void Bras_servo_control::goTo(float angles[nbJoints])
 {
     GOAL = convToServAng(angles); 
-    interpQ1.go(GOAL[0]-currAngles[0], 2000, LINEAR, ONCEFORWARD);
-    interpQ1.go(GOAL[1]-currAngles[1], 2000, LINEAR, ONCEFORWARD);
-    interpQ1.go(GOAL[2]-currAngles[2], 2000, LINEAR, ONCEFORWARD);
-
-    while(!interpQ1.isFinished() || !interpQ2.isFinished() || !interpQ3.isFinished()){
-        float q1 = interpQ1.update() + currAngles[0];
-        float q2 = interpQ2.update() + currAngles[1];
-        float q3 = interpQ3.update() + currAngles[2];
-        
-        if((L1 + L2*sin(angles[1]*(PI/180.0)) - L3*sin(angles[2]*(PI/180.0)) - L4y)>=0.02){ // Verification de l'eq en y 
-            Serial.print("Servo q1 commands are: ");
-            Serial.println(q1);
-            //Joints[i].writeMicroseconds(writeServo(i,GOAL[i]));
-            Serial.print("Servo q2 commands are: ");
-            Serial.println(q2);
-            //Joints[i].writeMicroseconds(writeServo(i,GOAL[i]));
-            Serial.print("Servo q3 commands are: ");
-            Serial.println(q3);
-            Serial.println("NEXT INTERPOLATION");
+    if((L1 + L2*sin(angles[1]*(PI/180.0)) - L3*sin(angles[2]*(PI/180.0)) - L4y)>=0.02){ // Verification de l'eq en y, pour pas causer de colisions
+        for (size_t i=0; i<nbJoints; i++){
+            Joints[i].writeMicroseconds(writeServo(i,GOAL[i]));
         }
-        else{
-            Serial.print("La combinaison d'ang en entree donne une valeur de: ");
-            Serial.println(L1 + L2*sin(angles[1]*(PI/180.0)) + L3*sin(angles[2]*(PI/180.0)) - L4y);
-        }
+    }
+    else{
+        Serial.print("La combinaison d'ang en entree donne une valeur de: ");
+        Serial.println(L1 + L2*sin(angles[1]*(PI/180.0)) + L3*sin(angles[2]*(PI/180.0)) - L4y);
     }
 }
 
 void Bras_servo_control::goToHome()
 { 
     for (size_t i =0; i< nbJoints; i++){
-        Joints[i].writeMicroseconds(writeServo(i,GOAL[i]));
-        // Serial.print("Servo angle commands are: ");
-        // Serial.println(GOAL[i]);
-        currAngles[i] = GOAL[i];
+        Joints[i].writeMicroseconds(writeServo(i,HOME[i]));
+        prevAngles[i] = HOME[i];
     }
 }
 
@@ -106,18 +88,4 @@ int Bras_servo_control::writeServo(int indJoint, float angle)
     return Micro_sec;
 }
 
-// float Interpolation::go(float input, int duration)
-// {
-//     if (input != savedValue) {   // check for new data
-//         interpolationFlag = 0;
-//     }
-//     savedValue = input;          // bookmark the old value  
-    
-//     if (interpolationFlag == 0) {                                        // only do it once until the flag is reset
-//         myRamp.go(input, duration, LINEAR, ONCEFORWARD);              // start interpolation (value to go to, duration)
-//         interpolationFlag = 1;
-//     }
-    
-//     float output = myRamp.update();               
-//     return output;
-// }
+
