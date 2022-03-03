@@ -30,7 +30,6 @@ private:
 
     float MIN_ANG[nbJoints] = {0.0, 0.0, 0.0};
     float MAX_ANG[nbJoints] = {270.0, 270.0, 270.0};
-    float* GOAL;
     float ZEROS[nbJoints] = {105.0, 105.0, 177.0}; //joint3 est actually 90deg
     float HOME[nbJoints] = {0.0, 90.0, 0.0};
     float gearRatio = 2.0;
@@ -39,15 +38,15 @@ private:
     float L1 = 0.095;
     float L2 = 0.160;
     float L3 = 0.180;
-    float L4x = 0.05;
-    float L4y = 0.088;
+    float L4x = 0.035;
+    float L4y = 0.0988;
 
 
     double COEFFS[nbJoints][4] ={ {1.6081*pow(10,-4), -0.0431, 10.3541, 515.1217},
                                 {7.5132*pow(10,-5), -0.020724270569472, 9.201324389404880, 513.0813397129187},
                                 {1.1107*pow(10,-4), -0.032836268478683, 10.118121283601132, 504.3328776486678} };
 
-    int pickAngle = 40;
+    int pickAngle = 50;
     int dropAngle = 130;
 
 public:
@@ -57,10 +56,11 @@ public:
     void initServos();
     void goTo(float angles[nbJoints]);
     void goToHome();
-    float* convToServAng(float angles[nbJoints]);
+    //float convToServAng(int indJoint, float angle);
     void pick();
     void drop();
     int writeServo(int indJoint, float angle);
+    void setPrevAngles(float angles[nbJoints]);
 };
 
 

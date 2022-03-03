@@ -43,15 +43,14 @@ void Bras_servo_control::initServos()
  */ 
 void Bras_servo_control::goTo(float angles[nbJoints])
 {
-    GOAL = convToServAng(angles); 
-    if((L1 + L2*sin(angles[1]*(PI/180.0)) - L3*sin(angles[2]*(PI/180.0)) - L4y)>=0.02){ // Verification de l'eq en y, pour pas causer de colisions
+    if((L1 + L2*sin(angles[1]*(PI/180.0)) - L3*sin(angles[2]*(PI/180.0)) - L4y)>=0.015){ // Verification de l'eq en y, pour pas causer de colisions
         for (size_t i=0; i<nbJoints; i++){
-            Joints[i].writeMicroseconds(writeServo(i,GOAL[i]));
+            Joints[i].writeMicroseconds(writeServo(i,angles[i]));
         }
     }
     else{
         Serial.print("La combinaison d'ang en entree donne une valeur de: ");
-        Serial.println(L1 + L2*sin(angles[1]*(PI/180.0)) + L3*sin(angles[2]*(PI/180.0)) - L4y);
+        Serial.println(L1 + L2*sin(angles[1]*(PI/180.0)) - L3*sin(angles[2]*(PI/180.0)) - L4y);
     }
 }
 
@@ -61,15 +60,6 @@ void Bras_servo_control::goToHome()
         Joints[i].writeMicroseconds(writeServo(i,HOME[i]));
         prevAngles[i] = HOME[i];
     }
-}
-
-float* Bras_servo_control::convToServAng(float angles[nbJoints])
-{
-    float* conv;
-    conv[0] = ZEROS[0]+(angles[0]*gearRatio);
-    conv[1] = (ZEROS[1]+90)-angles[1];
-    conv[2] = ZEROS[2] - angles[2];
-    return conv;
 }
 
 void Bras_servo_control::pick()
@@ -84,8 +74,22 @@ void Bras_servo_control::drop()
 
 int Bras_servo_control::writeServo(int indJoint, float angle)
 {
-    int Micro_sec = COEFFS[indJoint][0]*pow(angle,3) + COEFFS[indJoint][1]*pow(angle,2) + COEFFS[indJoint][2]*angle + COEFFS[indJoint][3];
+    float conv;
+    if(indJoint == 0)
+        conv = (ZEROS[0]+(angle*gearRatio));
+    else if(indJoint == 1)
+        conv = ((ZEROS[1]+90)-angle); 
+    else
+        conv = (ZEROS[2] - angle);
+    int Micro_sec = COEFFS[indJoint][0]*pow(conv,3) + COEFFS[indJoint][1]*pow(conv,2) + COEFFS[indJoint][2]*conv + COEFFS[indJoint][3];
     return Micro_sec;
+}
+
+void Bras_servo_control::setPrevAngles(float angles[nbJoints])
+{
+    for (int i=0; i<nbJoints; i++){
+        prevAngles[i] = angles[i];
+    }
 }
 
 
