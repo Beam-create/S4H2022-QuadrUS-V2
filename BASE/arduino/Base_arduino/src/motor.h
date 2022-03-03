@@ -43,10 +43,10 @@ class motor{
         int _PWM_pin;
         int encoder_pos = 0; // Position de l'encodeur
         int nb_rotation = 0;
-        int encoder_max_pos = 800;
-        int mean_time = 50; // Temps entre deux lectures de l'encodeur pour calculer la vitesse moyenne
+        int encoder_max_pos = 800; // Pulse/tour
         float set_speed = 0;
-        float pulse_per_seconds_to_unit = 0.5; // Ratio entre le nombre de pulses par seconde et le ratio de vitesse
+        float max_speed = 225; // RPM, à vide
+        float pulse_per_seconds_to_unit_speed = 1/(max_speed/60*encoder_max_pos); // Ratio entre le nombre de pulses par seconde et le ratio de vitesse
 };
 
 #endif //motor

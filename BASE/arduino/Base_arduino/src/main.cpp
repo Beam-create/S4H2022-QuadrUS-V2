@@ -9,12 +9,16 @@
 
 #include <Arduino.h>
 #include "motor.h"
-// #include "pid.h"
+#include "pid.h"
+#include "Servo.h"
+#include <ros.h>
+#include <base_control/Rufus_base_msgs.h>
+#include <std_msgs/String.h>
+#include <base_control/Feedback_arduino_msgs.h>
 
 /*------------------------------ Constantes ---------------------------------*/
 
-#define BAUD            9600      // Fréquence de transmission serielle
-#define NB_PULSE_TOUR   800
+#define BAUD            57600      // Fréquence de transmission serielle
 
 /*---------------------------- variables globales ---------------------------*/
  
@@ -45,12 +49,28 @@ int FR_PWM_pin = 5;
 int BL_PWM_pin = 6;
 int BR_PWM_pin = 7;
 
+// Pin gimbal
+int gimbal_pin = 8;
+
 // Déclaration des objets moteur
 motor FL_motor(FL_ENC_A_pin, FL_ENC_B_pin, FL_DIR_pin, FL_PWM_pin);
+motor *FL = &FL_motor;
 motor FR_motor(FR_ENC_A_pin, FR_ENC_B_pin, FR_DIR_pin, FR_PWM_pin);
+motor *FR = &FR_motor;
 motor BL_motor(BL_ENC_A_pin, BL_ENC_B_pin, BL_DIR_pin, BL_PWM_pin);
+motor *BL = &BL_motor;
 motor BR_motor(BR_ENC_A_pin, BR_ENC_B_pin, BR_DIR_pin, BR_PWM_pin);
-// PID pid(FL_motor, FR_motor, BL_motor, BR_motor);
+motor *BR = &BR_motor;
+
+// Déclaration de l'objet PID
+PID pid(*FL, *FR, *BL, *BR);
+
+// Déclaration de l'objet Gimbal
+Servo gimbal;
+
+// ROS
+ros::NodeHandle nh;
+base_control::Feedback_arduino_msgs feedback_msg;
 
 /*------------------------- Prototypes de fonctions -------------------------*/
 
@@ -58,8 +78,9 @@ void readEncoderFL();
 void readEncoderFR();
 void readEncoderBL();
 void readEncoderBR();
-void motorEncoderTest();
-void motorSpeedTest();
+void motorEncoderTest(int motorID);
+void motorSpeedTest(int motorID, float speed);
+void pidTest(float cmd_FL, float cmd_FR, float cmd_BL, float cmd_BR);
 void moveForward(float speed);
 void moveBackward(float speed);
 void moveLeft(float speed);
@@ -71,8 +92,12 @@ void moveDiagBR(float speed);
 void rotate(float speed, int direction, int point_of_rotation);
 void stop();
 void demo();
+void commandCB(const base_control::Rufus_base_msgs& motor_cmd);
 
 /*---------------------------- fonctions "Main" -----------------------------*/
+
+ros::Subscriber<base_control::Rufus_base_msgs> motor_sub("/rufus/base_arduino", commandCB);
+ros::Publisher arduino_feedback("/rufus/arduino_feedback",&feedback_msg);
 
 void setup() {
   Serial.begin(BAUD);
@@ -82,11 +107,25 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(FR_motor.getPin(FR_motor._ENC_A)), readEncoderFR, RISING);
   attachInterrupt(digitalPinToInterrupt(BL_motor.getPin(BL_motor._ENC_A)), readEncoderBL, RISING);
   attachInterrupt(digitalPinToInterrupt(BR_motor.getPin(BR_motor._ENC_A)), readEncoderBR, RISING);
+  pid.setGains(0.5, 0.05, 0.009);
+  gimbal.attach(gimbal_pin);
+  gimbal.write(90); // Angle zéro à trouver, en degré
+  nh.getHardware()->setBaud(57600);
+  nh.initNode();
+  nh.advertise(arduino_feedback);
+  nh.subscribe(motor_sub);
+  nh.negotiateTopics();
 }
 
 void loop() {
-  delay(5000);
-  demo();
+  // demo();
+  arduino_feedback.publish(&feedback_msg);
+  nh.spinOnce();
+  delay(10);
+  // pidTest(0, 0, 0, 0);
+  // BR_motor.setPWM(0.3);
+  // motorSpeedTest(1,0.08);
+  // motorEncoderTest(1);
 }
 
 /*---------------------------Definition de fonctions ------------------------*/
@@ -105,22 +144,27 @@ void readEncoderBR(){
   BR_motor.readEncoder();
 }
 // Fonction de test des encodeurs
-void motorEncoderTest(){
+void motorEncoderTest(int motorID){
+  motor *moteur;
+  if (motorID == 1){moteur = &FL_motor;}
+  else if (motorID == 2){moteur = &FR_motor;}
+  else if (motorID == 3){moteur = &BL_motor;}
+  else if (motorID == 4){moteur = &BR_motor;}
   Serial.println("---------------------------");
   Serial.println("Motor Encoder Test :");
   Serial.println("---------------------------");
-  if (!BL_motor.safeCheck()) {
+  if (!moteur->safeCheck()) {
     Serial.println("Destruction du moteur");
     BL_motor.~motor();
     }
   Serial.print("Nombre de tour : ");
-  Serial.println(BL_motor.getNbRotation());
+  Serial.println(moteur->getNbRotation());
   Serial.print("Position de l'encodeur : ");
-  Serial.println(BL_motor.getEncoderPos());
+  Serial.println(moteur->getEncoderPos());
   Serial.print("Position de totale de l'encodeur : ");
-  Serial.println(BL_motor.getEncoderPosTotal());
+  Serial.println(moteur->getEncoderPosTotal());
   Serial.print("Vitesse moyenne : ");
-  Serial.println(BL_motor.getMeanSpeed());
+  Serial.println(moteur->getMeanSpeed());
   Serial.println("---------------------------");
   Serial.println("End of motor encoder test");
   Serial.println("---------------------------");
@@ -128,17 +172,88 @@ void motorEncoderTest(){
   delay(500);
 }
 // Fonction de test du calcul de la vitesse moyenne d'un moteur
-void motorSpeedTest(){
+void motorSpeedTest(int motorID, float speed){
+  motor *moteur;
+  if (motorID == 1){moteur = &FL_motor;}
+  else if (motorID == 2){moteur = &FR_motor;}
+  else if (motorID == 3){moteur = &BL_motor;}
+  else if (motorID == 4){moteur = &BR_motor;}
   Serial.println("---------------------------");
   Serial.println("Motor Speed Test :");
   Serial.println("---------------------------");
-  if (!FL_motor.safeCheck()) {
-  Serial.println("Destruction du moteur");
-  FL_motor.~motor();
-  Serial.print("Vitesse moyenne : ");
-  Serial.println(FL_motor.getMeanSpeed());
   Serial.print("Vitesse input : ");
-  FL_motor.setPWM(0.1);
+  Serial.println(speed);
+  moteur->setPWM(speed);
+  // FL_motor.setPWM(speed);
+  if (!moteur->safeCheck()) {
+  // if (!FL_motor.safeCheck()) {
+  Serial.println("Destruction du moteur");
+  // moteur->~motor();
+  FL_motor.~motor();
+  }
+  else{
+  Serial.print("Vitesse moyenne : ");
+  Serial.println(moteur->getMeanSpeed());
+  // Serial.println(FL_motor.getMeanSpeed());
+  }
+  Serial.println("---------------------------");
+  Serial.println("End of Speed Test");
+  Serial.println("---------------------------");
+  Serial.println("");
+  delay(500);
+}
+// Fonction de test du PID
+void pidTest(float cmd_FL, float cmd_FR, float cmd_BL, float cmd_BR){
+  bool atteint = false;
+  if(!atteint){
+    Serial.println("---------------------------");
+    Serial.println("PID Test :");
+    Serial.println("---------------------------");
+    Serial.print("Goal FL : ");
+    Serial.println(cmd_FL);
+    Serial.print("Goal FR : ");
+    Serial.println(cmd_FR);
+    Serial.print("Goal BL : ");
+    Serial.println(cmd_BL);
+    Serial.print("Goal BR : ");
+    Serial.println(cmd_BR);
+    Serial.println("---------------------------");
+    pid.goals();
+    // Serial.println(pid.goal());
+    pid.run(cmd_FL, cmd_FR, cmd_BL, cmd_BR);
+    if (!pid.goal()){
+      Serial.println("---------------------------");
+      Serial.println("Not at Goal");
+      Serial.println("---------------------------");
+      Serial.print("Vitesse moyenne FL : ");
+      Serial.println(FL_motor.getMeanSpeed());
+      Serial.print("Vitesse moyenne FR : ");
+      Serial.println(FR_motor.getMeanSpeed());
+      Serial.print("Vitesse moyenne BL : ");
+      Serial.println(BL_motor.getMeanSpeed());
+      Serial.print("Vitesse moyenne BR : ");
+      Serial.println(BR_motor.getMeanSpeed());
+    }
+    if (pid.goal() && !atteint){
+      Serial.println("---------------------------");
+      Serial.println("Goal Reached");
+      Serial.println("---------------------------");
+      Serial.print("Vitesse moyenne FL : ");
+      Serial.println(FL_motor.getMeanSpeed());
+      Serial.print("Vitesse moyenne FR : ");
+      Serial.println(FR_motor.getMeanSpeed());
+      Serial.print("Vitesse moyenne BL : ");
+      Serial.println(BL_motor.getMeanSpeed());
+      Serial.print("Vitesse moyenne BR : ");
+      Serial.println(BR_motor.getMeanSpeed());
+      atteint = true;
+    }
+    if (atteint){
+    Serial.println("---------------------------");
+    Serial.println("End of PID test");
+    Serial.println("---------------------------");
+    Serial.println("");
+    }
   }
 }
 // Fonctions pour la démo
@@ -334,5 +449,34 @@ void demo(){
   delay(move_time);
   stop();
   delay(stop_time);
+
+}
+void commandCB(const base_control::Rufus_base_msgs& motor_cmd)
+{
+  float cmd_FL = motor_cmd.motor_FL;
+  float cmd_FR = motor_cmd.motor_FR;
+  float cmd_BL = motor_cmd.motor_BL;
+  float cmd_BR = motor_cmd.motor_BR;
+
+  FL_motor.setPWM(cmd_FL);
+  FR_motor.setPWM(cmd_FR);
+  BL_motor.setPWM(cmd_BL);
+  BR_motor.setPWM(cmd_BR);
+  
+  //Ajouter les fonctions pour faire tourner les moteurs en fonction des cmd_XX
+  // pid.run(cmd_FL, cmd_FR, cmd_BL, cmd_BR);
+
+  feedback_msg.motor_FL = cmd_FL;
+  feedback_msg.motor_FR = cmd_FR;
+  feedback_msg.motor_BL = cmd_BL;
+  feedback_msg.motor_BR = cmd_BR;
+  // feedback_msg.mean_speed_FL = pid._FL_motor->getMeanSpeed();
+  // feedback_msg.mean_speed_FR = pid._FR_motor->getMeanSpeed();
+  // feedback_msg.mean_speed_BL = pid._BL_motor->getMeanSpeed();
+  // feedback_msg.mean_speed_BR = pid._BR_motor->getMeanSpeed();
+  // feedback_msg.encoder_FL = pid._FL_motor->getEncoderPos();
+  // feedback_msg.encoder_FR = pid._FR_motor->getEncoderPos();
+  // feedback_msg.encoder_BL = pid._BL_motor->getEncoderPos();
+  // feedback_msg.encoder_BR = pid._BR_motor->getEncoderPos();
 
 }

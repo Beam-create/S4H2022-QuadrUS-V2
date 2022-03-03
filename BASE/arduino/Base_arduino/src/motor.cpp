@@ -204,8 +204,9 @@ double motor::getMeanSpeed(){
     /*
     Fonction qui calcule et retourne la vitesse moyenne du moteur sur un intervalle de temps
     */
+    int mean_time = 10; // ms, Temps entre deux lectures de l'encodeur pour calculer la vitesse moyenne
     int pos1 = motor::getEncoderPosTotal();
     delay(mean_time);
     int pos2 = motor::getEncoderPosTotal();
-    return ((pos2-pos1))/(mean_time/1000.0)*pulse_per_seconds_to_unit;
+    return (double)((pos2-pos1))/(((mean_time))/1000.0)*pulse_per_seconds_to_unit_speed;
 }

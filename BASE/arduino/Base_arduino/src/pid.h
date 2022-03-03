@@ -16,38 +16,50 @@ on Arduino Mega 2560
 
 class PID{
     public:
-        PID(motor FL_motor, motor FR_motor, motor BL_motor, motor BR_motor);
+        PID(motor &FL_motor, motor &FR_motor, motor &BL_motor, motor &BR_motor);
         ~PID();
-        void run();
-        double computeCommand(double error);
+        void setGains(float kp, float ki, float kd);
+        void reset(int motor_id);
+        void run(float cmd_FL,float cmd_FR,float cmd_BL,float cmd_BR);
+        float computeCommand(int motor_id,double error);
+        bool goal(){return atGoal_;};
+        void goals();
+
+        motor *_FL_motor; // 1
+        motor *_FR_motor; // 2
+        motor *_BL_motor; // 3
+        motor *_BR_motor; // 4
     private:
-        motor _FL_motor; // 1
-        motor _FR_motor; // 2
-        motor _BL_motor; // 3
-        motor _BR_motor; // 4
 
-        // Function pointers
-        double (*measurementFunc_)() = nullptr; // Measurement function
-        void (*commandFunc_)(double) = nullptr; // Command function
-        void (*atGoalFunc)() = nullptr; // Fonction called when goal is reached
-
-        double goal_ = 0; // Desired state
-        bool enable_ = false; // Enable flag
-        bool atGoal_ = false; // Flag to know if at goal 
+        bool atGoal_ = false; // Flag to know if at goal
+        bool atGoal_FL = false;
+        bool atGoal_FR = false;
+        bool atGoal_BL = false;
+        bool atGoal_BR = false;
 
         double Kp_ = 1.0; // Proportional constant
         double Ki_ = 1.0; // Integral constant
         double Kd_ = 1.0; // Derivative constant
         double dt_; // Theoric time between 2 measurments
-        unsigned long dtMs_; // Periode between commands
-        unsigned long actualDt_; // Actual periode between last command
-        unsigned long measureTime_ = 0; // Time for next iteration 
-        unsigned long lastMeasureTime_ = 0; // Time of last iteration 
+        unsigned long lastMeasureTime_FL = 0; // Time of last iteration
+        unsigned long lastMeasureTime_FR = 0; // Time of last iteration 
+        unsigned long lastMeasureTime_BL = 0; // Time of last iteration 
+        unsigned long lastMeasureTime_BR = 0; // Time of last iteration 
 
-        double epsilon_ = 5;
+        double epsilon_ = 0.05;
         double eIntegralLim_ = 100;
-        double eIntegral_ = 0; // Variable to store the sum of errors
-        double ePrevious = 0; // Variable to store the last error
+        double eIntegral_FL = 0; // Variable to store the sum of errors
+        double eIntegral_FR = 0; // Variable to store the sum of errors
+        double eIntegral_BL = 0; // Variable to store the sum of errors
+        double eIntegral_BR = 0; // Variable to store the sum of errors
+        double ePrevious_FL = 0; // Variable to store the last error
+        double ePrevious_FR = 0; // Variable to store the last error
+        double ePrevious_BL = 0; // Variable to store the last error
+        double ePrevious_BR = 0; // Variable to store the last error
+        float cmdPrevious_FL = 0;
+        float cmdPrevious_FR = 0;
+        float cmdPrevious_BL = 0;
+        float cmdPrevious_BR = 0;
 };
 
 #endif //pid
