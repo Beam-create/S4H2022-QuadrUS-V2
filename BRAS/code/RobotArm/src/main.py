@@ -14,7 +14,7 @@ def print_hi(name):
 if __name__ == '__main__':
     print_hi('PyCharm')
     robot = cinematiqueInverse.robotArm()
-    q = robot.inverseKinematics(0.1,0,0)
+    q = robot.inverseKinematics(0.25, 0.016, 0.1) #x,y,z
     print(q)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
