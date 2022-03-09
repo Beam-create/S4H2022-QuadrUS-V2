@@ -1,10 +1,10 @@
 <launch>
     <!-- Parametrer les machines-->
     <machine 
-        name='portable' 
+        name='remote' 
         address='192.168.1.11'
         user='$(env USER)'
-        env-loader='$/home/$(env USER)/UNIVERSITÉ/rufus_ws/src/S4H2022_RufUS/BASE/ros_package/base_master/launch/base_remote.sh'
+        env-loader='$~/UNIVERSITÉ/rufus_ws/src/S4H2022_RufUS/BASE/ros_package/base_master/launch/base_remote.sh'
         default='false'
     />
 

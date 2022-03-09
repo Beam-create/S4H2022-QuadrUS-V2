@@ -7,4 +7,6 @@ export ROSLAUNCH_SSH_UNKNOWN=1
 source /opt/ros/noetic/setup.bash
 source ~/rufus_ws/devel/setup.bash
 
+echo "EXECUTED BASH FILE ON MASTER"
+
 exec "$@"
