@@ -7,7 +7,7 @@ on Arduino Mega 2560
 @version 1.0 09/02/2022
 */
 
-#include "pid.h"
+#include "rufus_lib/pid.h"
 
 PID::PID(motor &FL_motor, motor &FR_motor, motor &BL_motor, motor &BR_motor){
     _FL_motor = &FL_motor;

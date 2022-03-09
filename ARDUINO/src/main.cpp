@@ -8,13 +8,13 @@
 /*------------------------------ Librairies ---------------------------------*/
 
 #include <Arduino.h>
-#include "motor.h"
-#include "pid.h"
+#include "rufus_lib/motor.h"
+#include "rufus_lib/pid.h"
 #include "Servo.h"
 #include <ros.h>
-#include <base_control/Rufus_base_msgs.h>
+#include <rufus_master/Rufus_base_msgs.h>
 #include <std_msgs/String.h>
-#include <base_control/Feedback_arduino_msgs.h>
+#include <rufus_master/Feedback_arduino_msgs.h>
 
 /*------------------------------ Constantes ---------------------------------*/
 
@@ -70,7 +70,7 @@ Servo gimbal;
 
 // ROS
 ros::NodeHandle nh;
-base_control::Feedback_arduino_msgs feedback_msg;
+rufus_master::Feedback_arduino_msgs feedback_msg;
 
 /*------------------------- Prototypes de fonctions -------------------------*/
 
@@ -93,11 +93,11 @@ void moveDiagBR(float speed);
 void rotate(float speed, int direction, int point_of_rotation);
 void stop();
 void demo();
-void commandCB(const base_control::Rufus_base_msgs& motor_cmd);
+void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd);
 
 /*---------------------------- fonctions "Main" -----------------------------*/
 
-ros::Subscriber<base_control::Rufus_base_msgs> motor_sub("/rufus/base_arduino", commandCB);
+ros::Subscriber<rufus_master::Rufus_base_msgs> motor_sub("/rufus/base_arduino", commandCB);
 ros::Publisher arduino_feedback("/rufus/arduino_feedback",&feedback_msg);
 
 void setup() {
@@ -460,7 +460,7 @@ void demo(){
   delay(stop_time);
 
 }
-void commandCB(const base_control::Rufus_base_msgs& motor_cmd)
+void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd)
 {
   float cmd_FL = motor_cmd.motor_FL;
   float cmd_FR = motor_cmd.motor_FR;

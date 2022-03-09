@@ -1,12 +1,12 @@
-#ifndef _ROS_base_control_Rufus_base_msgs_h
-#define _ROS_base_control_Rufus_base_msgs_h
+#ifndef _ROS_rufus_master_Rufus_base_msgs_h
+#define _ROS_rufus_master_Rufus_base_msgs_h
 
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
 
-namespace base_control
+namespace rufus_master
 {
 
   class Rufus_base_msgs : public ros::Msg
@@ -125,7 +125,7 @@ namespace base_control
      return offset;
     }
 
-    virtual const char * getType() override { return "base_control/Rufus_base_msgs"; };
+    virtual const char * getType() override { return "rufus_master/Rufus_base_msgs"; };
     virtual const char * getMD5() override { return "e621f9710f8a9ff8d191feb0dac8bcc4"; };
 
   };

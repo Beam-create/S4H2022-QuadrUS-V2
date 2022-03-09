@@ -7,7 +7,7 @@ on Arduino Mega 2560
 @version 1.0 09/02/2022
 */
 
-#include "motor.h"
+#include "rufus_lib/motor.h"
 
 motor::motor(){
     /*

@@ -1,12 +1,12 @@
-#ifndef _ROS_base_control_Feedback_arduino_msgs_h
-#define _ROS_base_control_Feedback_arduino_msgs_h
+#ifndef _ROS_rufus_master_Feedback_arduino_msgs_h
+#define _ROS_rufus_master_Feedback_arduino_msgs_h
 
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
 
-namespace base_control
+namespace rufus_master
 {
 
   class Feedback_arduino_msgs : public ros::Msg
@@ -225,7 +225,7 @@ namespace base_control
      return offset;
     }
 
-    virtual const char * getType() override { return "base_control/Feedback_arduino_msgs"; };
+    virtual const char * getType() override { return "rufus_master/Feedback_arduino_msgs"; };
     virtual const char * getMD5() override { return "2d6b004d820dd2b719b874c1599325ed"; };
 
   };
