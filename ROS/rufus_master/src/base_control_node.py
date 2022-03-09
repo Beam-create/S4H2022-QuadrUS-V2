@@ -8,7 +8,7 @@ Publisher : rufus/base_arduino
 from sympy import true
 import rospy
 from geometry_msgs.msg import Twist
-from base_control.msg import Rufus_base_msgs
+from rufus_master.msg import Rufus_base_msgs
 import math
 
 class base_control:
