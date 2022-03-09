@@ -1,0 +1,14 @@
+<launch>
+    <!-- Parametrer les machines-->
+    <machine 
+        name='rufus' 
+        address='192.168.1.14'
+        user='ubuntu'
+        env-loader='~/rufus_ws/src/S4H2022_RufUS/BASE/ros_package/base_master/launch/base_master.sh'
+    />
+
+
+    <!-- Inclure le fichier .launch pour le contrôle-->
+    <include file="$(find base_control)/launch/base_control.launch" />
+
+</launch>

@@ -1,0 +1,13 @@
+<launch>
+    <!-- Parametrer les machines-->
+    <machine 
+        name='portable' 
+        address='192.168.1.11'
+        user='$(env USER)'
+        env-loader='$(find base_master)/launch/base_remote.sh'
+    />
+
+    <!-- Inclure le fichier .launch pour la manette et teleop-->
+    <include file="$(find base_joy)/launch/base_joy.launch" />
+
+</launch>
