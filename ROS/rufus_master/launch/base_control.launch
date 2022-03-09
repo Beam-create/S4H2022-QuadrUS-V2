@@ -1,0 +1,11 @@
+<launch>
+
+    <!--Lancer la communication série avec l'arduino-->
+    <node name="arduino_serial" pkg="rosserial_python" type="serial_node.py">
+    <param name="port" value="/dev/ttyACM0"/>
+    </node>
+
+    <!--Lancer le noeud de controle-->
+    <node name="base_control" pkg="base_control" type="base_control_node.py"/>
+
+</launch>
