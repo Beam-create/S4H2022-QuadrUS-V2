@@ -18,7 +18,7 @@
 
 /*------------------------------ Constantes ---------------------------------*/
 
-#define BAUD            57600      // Fréquence de transmission serielle
+#define BAUD            9600      // Fréquence de transmission serielle
 
 /*---------------------------- variables globales ---------------------------*/
  
@@ -80,6 +80,7 @@ void readEncoderBL();
 void readEncoderBR();
 void motorEncoderTest(int motorID);
 void motorSpeedTest(int motorID, float speed);
+void gainsTest(float cmd_FL, float cmd_FR, float cmd_BL, float cmd_BR);
 void pidTest(float cmd_FL, float cmd_FR, float cmd_BL, float cmd_BR);
 void moveForward(float speed);
 void moveBackward(float speed);
@@ -107,7 +108,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(FR_motor.getPin(FR_motor._ENC_A)), readEncoderFR, RISING);
   attachInterrupt(digitalPinToInterrupt(BL_motor.getPin(BL_motor._ENC_A)), readEncoderBL, RISING);
   attachInterrupt(digitalPinToInterrupt(BR_motor.getPin(BR_motor._ENC_A)), readEncoderBR, RISING);
-  pid.setGains(0.5, 0.05, 0.009);
+  pid.setGains(1, 0.1, 0.05);
   gimbal.attach(gimbal_pin);
   gimbal.write(90); // Angle zéro à trouver, en degré
   nh.getHardware()->setBaud(57600);
@@ -119,10 +120,11 @@ void setup() {
 
 void loop() {
   // demo();
-  arduino_feedback.publish(&feedback_msg);
-  nh.spinOnce();
-  delay(10);
-  // pidTest(0, 0, 0, 0);
+  // arduino_feedback.publish(&feedback_msg);
+  // nh.spinOnce();
+  // delay(10);
+  //gainsTest(0.5, 0.5, 0.5, 0.5);
+  pidTest(0, 0, 0, 0);
   // BR_motor.setPWM(0.3);
   // motorSpeedTest(1,0.08);
   // motorEncoderTest(1);
@@ -255,6 +257,13 @@ void pidTest(float cmd_FL, float cmd_FR, float cmd_BL, float cmd_BR){
     Serial.println("");
     }
   }
+}
+void gainsTest(float cmd_FL, float cmd_FR, float cmd_BL, float cmd_BR){
+  pid.run(cmd_FL, cmd_FR, cmd_BL, cmd_BR);
+  // Serial.println(FL_motor.getMeanSpeed());
+  Serial.println(FR_motor.getMeanSpeed());
+  // Serial.println(BL_motor.getMeanSpeed());
+  // Serial.println(BR_motor.getMeanSpeed());
 }
 // Fonctions pour la démo
 void moveForward(float speed){
@@ -479,4 +488,14 @@ void commandCB(const base_control::Rufus_base_msgs& motor_cmd)
   // feedback_msg.encoder_BL = pid._BL_motor->getEncoderPos();
   // feedback_msg.encoder_BR = pid._BR_motor->getEncoderPos();
 
+}
+void moveSequence(){
+ // Attends de recevoir la confirmation de la part de la caméra que la balle se trouve dans son champs de vision
+ // Lorsque la balle est aperçue, envoie une info qui détermine la direction de la rotation (càd selon si la balle est à gauche ou à droite du centre de l'image)
+ // rotate(speed,direction,0);
+ // Lorsque reçoit la confirmation que la balle est centrée sur l'image (donc que la base est alignée avec la balle)
+ // stop();
+ // moveForward(speed);
+ // Lorsque reçoit la confirmation que la balle est à la portée du bras (portée absolue ou distance de positionnement désirée)
+ // stop();
 }

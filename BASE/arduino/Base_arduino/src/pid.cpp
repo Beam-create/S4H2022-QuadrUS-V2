@@ -69,9 +69,9 @@ void PID::run(float cmd_FL,float cmd_FR,float cmd_BL,float cmd_BR){
     }
     // Serial.println("Vérification des commandes faite");
     // variables();
-    if (!atGoal_){
+    //if (!atGoal_){
         // Serial.println("if (!atGoal_)");
-        if(!atGoal_FL){
+        //if(!atGoal_FL){
             // Serial.println("if (!atGoal_FL)");
             double FL_error = cmd_FL - _FL_motor->getMeanSpeed();
             // Serial.println(FL_error);
@@ -87,8 +87,8 @@ void PID::run(float cmd_FL,float cmd_FR,float cmd_BL,float cmd_BR){
                 _FL_motor->setPWM(computeCommand(1,FL_error));
                 // Serial.println("(*_FL_motor)->setPWM(computeCommand(1,FL_error)) Fait!");
             }
-        }
-        if(!atGoal_FR){
+        //}
+        //if(!atGoal_FR){
             // Serial.println("if (!atGoal_FR)");
             double FR_error = cmd_FR - _FR_motor->getMeanSpeed();
             // Serial.println("Calcul de FR_error");
@@ -101,8 +101,8 @@ void PID::run(float cmd_FL,float cmd_FR,float cmd_BL,float cmd_BR){
             else{
                 _FR_motor->setPWM(computeCommand(2,FR_error));
             }
-        }
-        if(!atGoal_BL){
+        //}
+        //if(!atGoal_BL){
             // Serial.println("if (!atGoal_BL)");
             double BL_error = cmd_BL - _BL_motor->getMeanSpeed();
             if(fabs(BL_error)<epsilon_){
@@ -112,8 +112,8 @@ void PID::run(float cmd_FL,float cmd_FR,float cmd_BL,float cmd_BR){
             else{
                 _BL_motor->setPWM(computeCommand(3,BL_error));
             }
-        }
-        if(!atGoal_BR){
+        //}
+        //if(!atGoal_BR){
             // Serial.println("if (!atGoal_BR)");
             double BR_error = cmd_BR - _BR_motor->getMeanSpeed();
             if(fabs(BR_error)<epsilon_){
@@ -123,11 +123,11 @@ void PID::run(float cmd_FL,float cmd_FR,float cmd_BL,float cmd_BR){
             else{
                 _BR_motor->setPWM(computeCommand(4,BR_error));
             }
-        }
-        if(atGoal_FL && atGoal_FR && atGoal_BL && atGoal_BR){
-            atGoal_ = true;
-        }
-    }
+        //}
+        // if(atGoal_FL && atGoal_FR && atGoal_BL && atGoal_BR){
+        //     atGoal_ = true;
+        // }
+    //}
     
 }
 
