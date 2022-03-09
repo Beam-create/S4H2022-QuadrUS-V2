@@ -1,6 +1,4 @@
 <launch>
-    <!-- Inclure le fichier .launch pour la manette-->
-    <include file="$(find base_joy)/launch/base_joy.launch" />
 
     <!--Lancer la communication série avec l'arduino-->
     <node name="arduino_serial" pkg="rosserial_python" type="serial_node.py">

@@ -11,17 +11,12 @@ from geometry_msgs.msg import Twist
 from base_control.msg import Rufus_base_msgs
 import math
 
-# from std_msgs.msg import String
-
 class base_control:
 
     def __init__(self):
         self.motor_cmd = Rufus_base_msgs()
-        # self.test_msg = String()
-        # self.input_msg = Twist()
         self.data = Twist()
 
-        # self.test = rospy.Publisher('/rufus/test', String, queue_size=10)
         self.twist_sub = rospy.Subscriber("rufus/base_teleop", Twist, self.cb)
         self.arduino_pub = rospy.Publisher("/rufus/base_arduino", Rufus_base_msgs, queue_size=200)
 
@@ -64,14 +59,10 @@ if __name__=='__main__':
         
         rospy.init_node('base_control', anonymous=true)
         rate = rospy.Rate(10)
-        # rospy.spin()
         while not rospy.is_shutdown():
-            # b_c.test_msg.data = "Hello_world"
-            # b_c.test.publish(b_c.test_msg)
             b_c.vector_to_motor(b_c.data)
             b_c.arduino_pub.publish(b_c.motor_cmd)
             rate.sleep()
-            # rospy.spin()
     
     except rospy.ROSInterruptException:
         pass
