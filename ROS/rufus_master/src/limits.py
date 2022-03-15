@@ -30,8 +30,10 @@ class limits:
         self.ball_position = Vector3()
         #Subscribe to the camera topic # Check if the ball is reacheable
         self.limits_sub = rospy.Subscriber("/rufus/camera/ball_position", Vector3, self.checkReachLimits)
-        #Subscribe to see if pick ball is done
+        #Subscribe to see if pick ball is done (arduino feedback)
         self.pick_status = rospy.Subscriber("/rufus/state_pick", Bool, self.checkState)
+        #Subscribe to joy (wait confirmation from user)
+        #self.confirmation = rospy.Subscriber("")
         
         #Publish to topic /rufus/ball_position if ball reacheable
         self.limits_pub = rospy.Publisher("/rufus/ball_position", Vector3, queue_size=1)
