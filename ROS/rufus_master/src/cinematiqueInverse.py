@@ -3,6 +3,8 @@ from click import echo
 from sympy import *
 import rospy
 from geometry_msgs.msg import Vector3
+from rufus_master.msg import bras_commands
+from rufus_master.lib import Limits
 
 #Fonction pour la generation des angles des joints en fonction de positions cartesienne
 
@@ -16,24 +18,26 @@ class robotArm:
 
 
     #Changer angle initiale pour les bonnes valeurs
-	def __init__(self, initial_q1 = 0, initial_q2 = 0, initial_q3 = 0):
+	def __init__(self, initial_q1 = 0, initial_q2 = 90, initial_q3 = 0):
 		self.q1 = initial_q1
 		self.q2 = initial_q2
 		self.q3 = initial_q3
 
-		self.q = Vector3()
+		self.q = bras_commands()
+		self.ball_position = Vector3()
 		#Subcribe to the ball position publish by limits
-		self.sub = rospy.Subscriber("/rufus/ball_position", Vector3, self.cb)
+		self.sub = rospy.Subscriber("/rufus/ball_position", Vector3, self.cb_camera)
 
 		#Publisher
-		self.pub = rospy.Publisher("/rufus/bras_arduino", Vector3, queue_size = 1)
+		self.pub = rospy.Publisher("/rufus/bras_arduino",bras_commands, queue_size = 1)
 		
-	def cb(self, data):
-		if data.x != 0 and data.y != 0 and data.z != 0:
-			self.inverseKinematics(data)
-			self.position = data
+	def cb_camera(self, data):
+		
+		if Limits.verify_limits([data.x, data.y, data.z], 1):
+			self.ball_position = data
 		else:
-			raise Exception('Position of zeros is not possible')
+			print("Fail")
+			
             
 	def inverseKinematics(self, vector_pos):
 		"""
@@ -76,11 +80,10 @@ class robotArm:
 		if float(sol[1][1]) < 0.0:
 			Angle_q3 = round(float(sol[0][1]) * 180 / pi, 2)
 
-		self.q.x = Angle_q1
-		self.q.y = Angle_q2
-		self.q.z = Angle_q3
-            
-            
+		self.q.q1 = Angle_q1
+		self.q.q2 = Angle_q2
+		self.q.q3 = Angle_q3
+		    
            
 if __name__=='__main__':
 	try:
@@ -88,8 +91,9 @@ if __name__=='__main__':
 		rospy.init_node('robot_control', anonymous=True)
 		rate = rospy.Rate(10)
 		while not rospy.is_shutdown():
-			
-			r_a.pub.publish(r_a.q)
+			if "bouton appuyer":
+				r_a.inverseKinematics(r_a.ball_position)
+				r_a.pub.publish(r_a.q)
 			rate.sleep()
 	except rospy.ROSInterruptException:
 		pass
