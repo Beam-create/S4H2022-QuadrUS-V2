@@ -5,7 +5,6 @@ Subscriber : rufus/base_teleop
 Publisher : rufus/base_arduino
 """
 
-from sympy import true
 import rospy
 from geometry_msgs.msg import Twist
 from rufus_master.msg import Rufus_base_msgs
@@ -42,9 +41,9 @@ class base_control:
 
         #Calculer la commande pour chaque moteurs
         self.motor_cmd.motor_FL = power * cos/max_comp + turn
-        self.motor_cmd.motor_FR = -1*(power * sin/max_comp - turn)
+        self.motor_cmd.motor_FR = power * sin/max_comp - turn
         self.motor_cmd.motor_BL = power * sin/max_comp + turn
-        self.motor_cmd.motor_BR = -1*(power * cos/max_comp - turn)
+        self.motor_cmd.motor_BR = power * cos/max_comp - turn
 
         #Normaliser les commandes entre 1 et -1
         if((power + abs(turn)) > 1):
@@ -57,7 +56,7 @@ if __name__=='__main__':
     try:
         b_c = base_control()
         
-        rospy.init_node('base_control', anonymous=true)
+        rospy.init_node('base_control', anonymous=True)
         rate = rospy.Rate(10)
         while not rospy.is_shutdown():
             b_c.vector_to_motor(b_c.data)

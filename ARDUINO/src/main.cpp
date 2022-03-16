@@ -119,9 +119,9 @@ void setup() {
 }
 
 void loop() {
-  // arduino_feedback.publish(&feedback_msg);
-  // nh.spinOnce();
-  // delay(10);
+  nh.spinOnce();
+  arduino_feedback.publish(&feedback_msg);
+  delay(1000);
 }
 
 /*---------------------------Definition de fonctions ------------------------*/
@@ -158,14 +158,6 @@ void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd)
   feedback_msg.motor_FR = cmd_FR;
   feedback_msg.motor_BL = cmd_BL;
   feedback_msg.motor_BR = cmd_BR;
-  // feedback_msg.mean_speed_FL = pid._FL_motor->getMeanSpeed();
-  // feedback_msg.mean_speed_FR = pid._FR_motor->getMeanSpeed();
-  // feedback_msg.mean_speed_BL = pid._BL_motor->getMeanSpeed();
-  // feedback_msg.mean_speed_BR = pid._BR_motor->getMeanSpeed();
-  // feedback_msg.encoder_FL = pid._FL_motor->getEncoderPos();
-  // feedback_msg.encoder_FR = pid._FR_motor->getEncoderPos();
-  // feedback_msg.encoder_BL = pid._BL_motor->getEncoderPos();
-  // feedback_msg.encoder_BR = pid._BR_motor->getEncoderPos();
 
 }
 

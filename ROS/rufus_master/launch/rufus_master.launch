@@ -3,8 +3,8 @@
     <machine 
         name='rufus' 
         address='localhost'
-        user='ubuntu'
-        env-loader='/home/$(env USER)/rufus_ws/src/S4H2022_RufUS/BASE/ros_package/base_master/launch/base_master.sh'
+        user='jetson'
+        env-loader='/home/$(env USER)/rufus_ws/src/rufus_master'
         default='true'
     />
 
