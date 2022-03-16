@@ -2,13 +2,19 @@
     <!-- Parametrer les machines-->
     <machine 
         name='remote' 
-        address='192.168.1.11'
+        address='10.42.0.180'
         user='$(env USER)'
         env-loader='$~/UNIVERSITÉ/rufus_ws/src/S4H2022_RufUS/BASE/ros_package/base_master/launch/base_remote.sh'
         default='false'
     />
 
-    <!-- Inclure le fichier .launch pour la manette et teleop-->
-    <include file="$(find base_joy)/launch/base_joy.launch" />
+    <!-- Joystick Node -->
+    <node machine="remote" respawn="true" pkg="joy" type="joy_node" name="base_joy">
+        <param name="dev" type="string" value="/dev/input/js0" />
+        <param name="deadzone" value="0.05" />
+    </node>
+
+    <!-- Teleop Node -->
+    <node machine="remote" name="base_teleop" pkg="rufus_remote" type="base_teleop.py" />
 
 </launch>
