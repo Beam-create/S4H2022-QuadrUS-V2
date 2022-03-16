@@ -76,6 +76,7 @@ void Bras_servo_control::goToHome()
 void Bras_servo_control::pick()
 {
     Effecteur.write(pickAngle);
+    isPick = true;
 }
 
 /**
@@ -86,6 +87,7 @@ void Bras_servo_control::pick()
 void Bras_servo_control::drop()
 {
     Effecteur.write(dropAngle);
+    isPick = false;
 }
 
 /**

@@ -50,6 +50,7 @@ private:
 
 public:
     float prevAngles[nbJoints] = {0.0, 0.0, 0.0};
+    bool isPick = false;
     Bras_servo_control();
     ~Bras_servo_control();
     void initServos();
