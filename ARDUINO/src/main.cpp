@@ -102,18 +102,21 @@ void rotate(float speed, int direction, int point_of_rotation);
 void stop();
 void demo();
 void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd);
-void commandBrasCB(const rufus_master::bras_commands& bras_cmd);
+
+void brasManuelCB(const rufus_master::bras_commands& bras_cmd);
+void brasAutoCB(const rufus_master::bras_commands& bras_cmd);
 
 
 /*---------------------------- fonctions "Main" -----------------------------*/
 
 ros::Subscriber<rufus_master::Rufus_base_msgs> motor_sub("/rufus/base_arduino", commandCB);
-ros::Subscriber<rufus_master::bras_commands> bras_sub("/rufus/bras_teleop", commandBrasCB); // Get les commands via le topic envoyer par bras_teleop
+ros::Subscriber<rufus_master::bras_commands> brasM_sub("/rufus/bras_teleop", brasManuelCB); // Get les commands via le topic envoyer par bras_teleop
+ros::Subscriber<rufus_master::bras_commands> brasA_sub("/rufus/bras_arduino", brasAutoCB); // Get les commands via le topic envoyer par la IK
 ros::Publisher arduino_feedback("/rufus/arduino_feedback",&feedback_msg);
 
 void setup() {
   Serial.begin(BAUD);
-  setupInterrupts(); // Timer interrupt
+  // setupInterrupts(); // Timer interrupt
   // Fonctions qui assigne les pins à lire et les fonctions pour lire les encodeurs
   // attachInterrupt: 2, 3, 18, 19, 20, 21 (pins 20 & 21 are not available to use for interrupts while they are used for I2C communication)
   attachInterrupt(digitalPinToInterrupt(FL_motor.getPin(FL_motor._ENC_A)), readEncoderFL, RISING);
@@ -506,22 +509,19 @@ void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd)
 
 }
 
-void commandBrasCB(const rufus_master::bras_commands& bras_commands)
-{
-
-  // Merger le commandBrasCB avec brasGetBall, une seule fonction depend juste du mode!
-  float angles[nbJoints] = {bras_commands.q1, bras_commands.q2, bras_commands.q3};
-  bool effect = bras_commands.effector;
-  bras.goTo(angles);
-  if(effect){
-    bras.pick();
-  }
-  else{
-    bras.drop();
-  }
-
-
-}
+// void commandBrasCB(const rufus_master::bras_commands& bras_commands)
+// {
+//   // Merger le commandBrasCB avec brasGetBall, une seule fonction depend juste du mode!
+//   float angles[nbJoints] = {bras_commands.q1, bras_commands.q2, bras_commands.q3};
+//   bool effect = bras_commands.effector;
+//   bras.goTo(angles);
+//   if(effect){
+//     bras.pick();
+//   }
+//   else{
+//     bras.drop();
+//   }
+// }
 
 void moveSequence(){
  // Attends de recevoir la confirmation de la part de la caméra que la balle se trouve dans son champs de vision
@@ -534,47 +534,60 @@ void moveSequence(){
  // stop();
 }
 
-bool brasGetBall(float angles[3]){
+void brasManuelCB(const rufus_master::bras_commands& bras_cmd){
+  float angles[nbJoints];
+  angles[0] = bras_cmd.q1;
+  angles[1] = bras_cmd.q2;
+  angles[2] = bras_cmd.q3;
+  bras.goTo(angles);
+  if()
+
+  feedback_msg.q1 = angles[0];
+  feedback_msg.q2 = angles[0];
+  feedback_msg.q3 = angles[0];
+}
+
+void brasAutoCB(const rufus_master::bras_commands& bras_cmd){
   bool isDone = false;
   float smoothAngles[nbJoints];
 
   // Interrupts a tester, changer le comparer pour un temps plus facile a verifier!
-  ISR(TIMER5_COMPA_vect){
-    TCNT5 = 0; // reset timer counter to zero for next interrupt
+  while(!isDone){
     for (int i=0; i<nbJoints; i++)
     {
       smoothAngles[i] = (angles[i]*0.03) + (bras.prevAngles[i]*0.97);
       bras.prevAngles[i] = smoothAngles[i];
     }
     bras.goTo(smoothAngles);
+    delay(7);
     if((round(smoothAngles[0]*100)/100.0) == angles[0] && (round(smoothAngles[1]*100)/100.0) == angles[1] && (round(smoothAngles[2]*100)/100.0) == angles[2]) // Sync once all 3 values have reached
     {
       isDone = true;
       bras.setPrevAngles(smoothAngles);
       // Serial.println("GOAL has been reached!"); //debugging
-      return isDone;
     }
   }
 }
 
-void setupInterrupts()
-{
-  cli();
+// void setupInterrupts()
+// {
+//   cli();
 
-  //Sets timer 5 to interrupt at 7ms
-  //set timer4 interrupt at 1Hz
- TCCR5A = 0;// set entire TCCR1A register to 0
- TCCR5B = 0;// same for TCCR1B
- TCNT5  = 0;//initialize counter value to 0
+//   //Sets timer 5 to interrupt at 7ms
+//   //set timer4 interrupt at 1Hz
+//  TCCR5A = 0;// set entire TCCR1A register to 0
+//  TCCR5B = 0;// same for TCCR1B
+//  TCNT5  = 0;//initialize counter value to 0
 
- // Set CS12 bit for 256 prescaler
- TCCR5B |= B00000100;  
+//  // Set CS12 bit for 256 prescaler
+//  TCCR5B |= B00000100;  
 
- // enable timer compare interrupt
- TIMSK5 |= B00000010;
+//  // enable timer compare interrupt
+//  TIMSK5 |= B00000010;
 
- // set compare match register for 7ms increments
- OCR5A = 437;// = (16*10^6) / (1*1024) - 1 (must be <65536)
+//  // set compare match register for 7ms increments
+//  OCR5A = 437;// = (16*10^6) / (1*1024) - 1 (must be <65536)
 
-  sei();//allow interrupts
-}
+//   sei();//allow interrupts
+// }
+
