@@ -10,9 +10,11 @@
 #include <Arduino.h>
 #include "rufus_lib/motor.h"
 #include "rufus_lib/pid.h"
+#include "rufus_lib/Bras_servo_control.h"
 #include "Servo.h"
 #include <ros.h>
 #include <rufus_master/Rufus_base_msgs.h>
+#include <rufus_master/bras_commands.h> // A generer!, voir Mat
 #include <std_msgs/String.h>
 #include <rufus_master/Feedback_arduino_msgs.h>
 
@@ -52,6 +54,7 @@ int BR_PWM_pin = 7;
 // Pin gimbal
 int gimbal_pin = 8;
 
+
 // Déclaration des objets moteur
 motor FL_motor(FL_ENC_A_pin, FL_ENC_B_pin, FL_DIR_pin, FL_PWM_pin);
 motor *FL = &FL_motor;
@@ -67,6 +70,11 @@ PID pid(*FL, *FR, *BL, *BR);
 
 // Déclaration de l'objet Gimbal
 Servo gimbal;
+
+// Declaration de l'objet Bras et autre variables
+Bras_servo_control bras;
+const long interpolTime = 7;
+unsigned long currentTime;
 
 // ROS
 ros::NodeHandle nh;
@@ -94,14 +102,18 @@ void rotate(float speed, int direction, int point_of_rotation);
 void stop();
 void demo();
 void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd);
+void commandBrasCB(const rufus_master::bras_commands& bras_cmd);
+
 
 /*---------------------------- fonctions "Main" -----------------------------*/
 
 ros::Subscriber<rufus_master::Rufus_base_msgs> motor_sub("/rufus/base_arduino", commandCB);
+ros::Subscriber<rufus_master::bras_commands> bras_sub("/rufus/bras_teleop", commandBrasCB); // Get les commands via le topic envoyer par bras_teleop
 ros::Publisher arduino_feedback("/rufus/arduino_feedback",&feedback_msg);
 
 void setup() {
   Serial.begin(BAUD);
+  setupInterrupts(); // Timer interrupt
   // Fonctions qui assigne les pins à lire et les fonctions pour lire les encodeurs
   // attachInterrupt: 2, 3, 18, 19, 20, 21 (pins 20 & 21 are not available to use for interrupts while they are used for I2C communication)
   attachInterrupt(digitalPinToInterrupt(FL_motor.getPin(FL_motor._ENC_A)), readEncoderFL, RISING);
@@ -111,6 +123,10 @@ void setup() {
   pid.setGains(1, 0.1, 0.05);
   gimbal.attach(gimbal_pin);
   gimbal.write(90); // Angle zéro à trouver, en degré
+
+  bras.drop();
+  bras.goToHome();
+
   nh.getHardware()->setBaud(57600);
   nh.initNode();
   nh.advertise(arduino_feedback);
@@ -489,6 +505,24 @@ void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd)
   // feedback_msg.encoder_BR = pid._BR_motor->getEncoderPos();
 
 }
+
+void commandBrasCB(const rufus_master::bras_commands& bras_commands)
+{
+
+  // Merger le commandBrasCB avec brasGetBall, une seule fonction depend juste du mode!
+  float angles[nbJoints] = {bras_commands.q1, bras_commands.q2, bras_commands.q3};
+  bool effect = bras_commands.effector;
+  bras.goTo(angles);
+  if(effect){
+    bras.pick();
+  }
+  else{
+    bras.drop();
+  }
+
+
+}
+
 void moveSequence(){
  // Attends de recevoir la confirmation de la part de la caméra que la balle se trouve dans son champs de vision
  // Lorsque la balle est aperçue, envoie une info qui détermine la direction de la rotation (càd selon si la balle est à gauche ou à droite du centre de l'image)
@@ -498,4 +532,49 @@ void moveSequence(){
  // moveForward(speed);
  // Lorsque reçoit la confirmation que la balle est à la portée du bras (portée absolue ou distance de positionnement désirée)
  // stop();
+}
+
+bool brasGetBall(float angles[3]){
+  bool isDone = false;
+  float smoothAngles[nbJoints];
+
+  // Interrupts a tester, changer le comparer pour un temps plus facile a verifier!
+  ISR(TIMER5_COMPA_vect){
+    TCNT5 = 0; // reset timer counter to zero for next interrupt
+    for (int i=0; i<nbJoints; i++)
+    {
+      smoothAngles[i] = (angles[i]*0.03) + (bras.prevAngles[i]*0.97);
+      bras.prevAngles[i] = smoothAngles[i];
+    }
+    bras.goTo(smoothAngles);
+    if((round(smoothAngles[0]*100)/100.0) == angles[0] && (round(smoothAngles[1]*100)/100.0) == angles[1] && (round(smoothAngles[2]*100)/100.0) == angles[2]) // Sync once all 3 values have reached
+    {
+      isDone = true;
+      bras.setPrevAngles(smoothAngles);
+      // Serial.println("GOAL has been reached!"); //debugging
+      return isDone;
+    }
+  }
+}
+
+void setupInterrupts()
+{
+  cli();
+
+  //Sets timer 5 to interrupt at 7ms
+  //set timer4 interrupt at 1Hz
+ TCCR5A = 0;// set entire TCCR1A register to 0
+ TCCR5B = 0;// same for TCCR1B
+ TCNT5  = 0;//initialize counter value to 0
+
+ // Set CS12 bit for 256 prescaler
+ TCCR5B |= B00000100;  
+
+ // enable timer compare interrupt
+ TIMSK5 |= B00000010;
+
+ // set compare match register for 7ms increments
+ OCR5A = 437;// = (16*10^6) / (1*1024) - 1 (must be <65536)
+
+  sei();//allow interrupts
 }
