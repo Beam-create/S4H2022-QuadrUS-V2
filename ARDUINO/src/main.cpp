@@ -31,25 +31,25 @@ int BL_ENC_A_pin = 2;
 int BR_ENC_A_pin = 3;
 
 // ENC_B: Fil blanc de l'encodeur, entre 22 et 53 (30,32,34,36)
-int FL_ENC_B_pin = 30;
-int FR_ENC_B_pin = 32;
-int BL_ENC_B_pin = 36;
-int BR_ENC_B_pin = 34;
+int FL_ENC_B_pin = 37;
+int FR_ENC_B_pin = 35;
+int BL_ENC_B_pin = 31;
+int BR_ENC_B_pin = 33;
 
 // ENC_Vcc: Fil bleu de l'encodeur, 3.5-20 V
 // ENC_GND: Fil vert de l'encodeur
 
 // DIR: Fil jaune du contrôleur de moteur, entre 22 et 53 (22,24,26,28)
-int FL_DIR_pin = 22;
-int FR_DIR_pin = 24;
-int BL_DIR_pin = 26;
-int BR_DIR_pin = 28;
+int FL_DIR_pin = 27;
+int FR_DIR_pin = 29;
+int BL_DIR_pin = 23;
+int BR_DIR_pin = 25;
 
 // PWM: Fil blanc du contrôleur de moteur, entre 4 et 13 (4,5,6,7)
-int FL_PWM_pin = 4;
-int FR_PWM_pin = 5;
-int BL_PWM_pin = 6;
-int BR_PWM_pin = 7;
+int FL_PWM_pin = 5;
+int FR_PWM_pin = 4;
+int BL_PWM_pin = 7;
+int BR_PWM_pin = 6;
 
 // Pin gimbal
 int gimbal_pin = 8;
@@ -121,7 +121,7 @@ void setup() {
 void loop() {
   nh.spinOnce();
   arduino_feedback.publish(&feedback_msg);
-  delay(1000);
+  delay(10);
 }
 
 /*---------------------------Definition de fonctions ------------------------*/
