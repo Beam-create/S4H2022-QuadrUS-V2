@@ -1,0 +1,7 @@
+<launch>
+
+
+    <!--Lancer le noeud de controle de cinematique inverse-->
+    <node name="Inverse_K" pkg="rufus_master" type="cinematiqueInverse.py"/>
+
+</launch>

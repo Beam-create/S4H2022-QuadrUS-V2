@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #Fonction qui va gerer les limites
 
 import json
 
 def verify_limits(array, mode):
-    lim = json.load(open('Limits.JSON', "r"))
+    lim = json.load(open('/home/projetS4/src/S4H2022-projet/ROS/rufus_master/lib/Limits.JSON', "r"))
     is_good_angle = True
     is_good_position = True
 

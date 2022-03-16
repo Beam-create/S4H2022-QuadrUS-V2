@@ -1,10 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+import sys
 from click import echo
 from sympy import *
 import rospy
 from geometry_msgs.msg import Vector3
+from std_msgs.msg import Bool
 from rufus_master.msg import bras_commands
-from rufus_master.lib import Limits
+sys.path.append('/home/jordan/projetS4/src/S4H2022-projet/ROS/rufus_master/src')
+from Limits import *
 
 #Fonction pour la generation des angles des joints en fonction de positions cartesienne
 
@@ -22,21 +25,26 @@ class robotArm:
 		self.q1 = initial_q1
 		self.q2 = initial_q2
 		self.q3 = initial_q3
+		self.mode = False
 
 		self.q = bras_commands()
 		self.ball_position = Vector3()
 		#Subcribe to the ball position publish by limits
 		self.sub = rospy.Subscriber("/rufus/ball_position", Vector3, self.cb_camera)
+		#Subscribe to the remote
+		self.command = rospy.Subscriber("SHIT", Bool, self.debug)
 
 		#Publisher
 		self.pub = rospy.Publisher("/rufus/bras_arduino",bras_commands, queue_size = 1)
 		
 	def cb_camera(self, data):
-		
-		if Limits.verify_limits([data.x, data.y, data.z], 1):
+		if verify_limits([data.x, data.y, data.z], 1):
 			self.ball_position = data
 		else:
 			print("Fail")
+
+	def debug(self, boole):
+		self.mode = boole
 			
             
 	def inverseKinematics(self, vector_pos):
@@ -91,7 +99,7 @@ if __name__=='__main__':
 		rospy.init_node('robot_control', anonymous=True)
 		rate = rospy.Rate(10)
 		while not rospy.is_shutdown():
-			if "bouton appuyer":
+			if r_a.mode == True:
 				r_a.inverseKinematics(r_a.ball_position)
 				r_a.pub.publish(r_a.q)
 			rate.sleep()
