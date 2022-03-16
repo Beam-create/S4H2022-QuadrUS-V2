@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 from logging import raiseExceptions
+
+from numpy import angle
 import rospy
-from geometry_msgs.msg import Vector3
-from std_msgs.msg import Bool
+# from geometry_msgs.msg import Vector3
+# from std_msgs.msg import Bool
+# from rufus_master.msg import bras_commands
 
 class limits:
 
@@ -25,24 +28,33 @@ class limits:
 
 
     def __init__(self):
-        self.pick = False
-        self.good_position = False
-        self.ball_position = Vector3()
-        #Subscribe to the camera topic # Check if the ball is reacheable
-        self.limits_sub = rospy.Subscriber("/rufus/camera/ball_position", Vector3, self.checkReachLimits)
-        #Subscribe to see if pick ball is done (arduino feedback)
-        self.pick_status = rospy.Subscriber("/rufus/state_pick", Bool, self.checkState)
-        #Subscribe to joy (wait confirmation from user)
-        #self.confirmation = rospy.Subscriber("")
+        # self.b_c_msg = bras_commands()
+        # self.good_position = False
+        # self.ball_position = Vector3()
+        # #Subscribe to the camera topic # Check if the ball is reacheable
+        # self.limits_sub = rospy.Subscriber("/rufus/camera/ball_position", Vector3, self.checkReachLimits)
+        # #Subscribe to see if pick ball is done (arduino feedback)
+        # #self.pick_status = rospy.Subscriber("/rufus/state_pick", Bool, self.checkState)
+        # #Subscribe to joy (wait confirmation from user to pick the ball and angle value for jog)
+        # #if joggihg bypass the topic /rufusd/ball_position
+        # self.confirmation = rospy.Subscriber("/rufus/bras_commands",bras_commands,self.cb_mannette)
         
-        #Publish to topic /rufus/ball_position if ball reacheable
-        self.limits_pub = rospy.Publisher("/rufus/ball_position", Vector3, queue_size=1)
+        # #Publish to topic /rufus/ball_position if ball reacheable
+        # self.limits_pub = rospy.Publisher("/rufus/ball_position", Vector3, queue_size=1)
+        # #Publish to topic
 
-    def checkState(self,state):
-        if state: #If True, the ball is pick and mvt finish
-            self.pick = True
-        else: #When false we do not publish in topic /rufus/ball_position because compute in progress
-            self.pick = False
+    def cb_mannette(self, msg):
+        angle_1 = msg.q1
+        angle_2 = msg.q2
+        angle_3 = msg.q3
+
+        if self.checkErrorJointLimits(angle_1, angle_2, angle_3):
+            #publish angle
+            return True
+        else:
+            return False
+
+
             
 
     def checkErrorJointLimits(self, angle_q1, angle_q2, angle_q3):
@@ -54,14 +66,20 @@ class limits:
 		:return: If outside of joints limits return error code for appropriate joint
 		Otherwise return zero value
 		"""
+        good_angle = True
         if angle_q1 < self.angleLimits["joint1_min"] or angle_q1 > self.angleLimits["joint1_max"] :
+            good_angle = False
             raise Exception('Angle value joint 1 out of limits')
+
         if angle_q2 < self.angleLimits["joint2_min"]  or angle_q2 > self.angleLimits["joint2_max"] :
+            good_angle = False
             raise Exception('Angle value joint 2 out of limits')
+        
         if angle_q3 < self.angleLimits["joint3_min"]  or angle_q3 > self.angleLimits["joint3_max"] :
+            good_angle = False
             raise Exception('Angle value joint 3 out of limits')
         else:
-            return True
+            return good_angle
 
     def checkReachLimits(self, vector_position):
         """
@@ -84,15 +102,16 @@ class limits:
             self.ball_position = vector_position
 
 if __name__ == '__main__':
-    try:
-        lim = limits()
-        rospy.init_node('LIMITS', anonymous=True)
-        rate = rospy.Rate(10)
-        while not rospy.is_shutdown():
-            if lim.good_position and lim.pick:
-                lim.limits_pub.publish(lim.ball_position)
-            rate.sleep()
-    except rospy.ROSInterruptException:
-        pass
+    # try:
+        # lim = limits()
+        # rospy.init_node('LIMITS', anonymous=True)
+        # rate = rospy.Rate(10)
+        # while not rospy.is_shutdown():
+            # if lim.good_position and lim.pick:
+                # lim.limits_pub.publish(lim.ball_position)
+            # rate.sleep()
+    # except rospy.ROSInterruptException:
+        # pass
+    print("Hello world")
 
     
