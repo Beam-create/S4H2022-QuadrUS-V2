@@ -55,6 +55,7 @@ find_package(catkin REQUIRED COMPONENTS
    FILES
    Feedback_arduino_msgs.msg
    Rufus_base_msgs.msg
+   bras_commands.msg
  )
 
 ## Generate services in the 'srv' folder

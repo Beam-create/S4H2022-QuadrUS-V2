@@ -6,7 +6,7 @@
 ********/
 
 //Libraries
-#include "Bras_servo_control.h"
+#include "rufus_lib/Bras_servo_control.h"
 
 
 Bras_servo_control::Bras_servo_control()
@@ -23,8 +23,8 @@ Bras_servo_control::~Bras_servo_control()
 
 /**
  * This method attaches all joints and effector to the respective pins
- * @param : void
- * @return : void 
+ * @param void
+ * @return void 
  */ 
 void Bras_servo_control::initServos()
 {
@@ -54,6 +54,12 @@ void Bras_servo_control::goTo(float angles[nbJoints])
     }
 }
 
+/**
+ * This method positions robot to home position, angles defined in .h file as private attribute
+ * Array is sorted from J1, J2 to Jend
+ * @param void
+ * @return void 
+ */ 
 void Bras_servo_control::goToHome()
 { 
     for (size_t i =0; i< nbJoints; i++){
@@ -62,16 +68,32 @@ void Bras_servo_control::goToHome()
     }
 }
 
+/**
+ * This method closes gripper to pick angle
+ * @param void
+ * @return void 
+ */ 
 void Bras_servo_control::pick()
 {
     Effecteur.write(pickAngle);
 }
 
+/**
+ * This method open gripper to drop angle
+ * @param void
+ * @return void 
+ */ 
 void Bras_servo_control::drop()
 {
     Effecteur.write(dropAngle);
 }
 
+/**
+ * This method sets inputs a workable angle from IK, converts it to a servo angle in absolute position and returns PWM from linearised function
+ * @param int indJoint: joint index
+ * @param float angle:
+ * @return void 
+ */ 
 int Bras_servo_control::writeServo(int indJoint, float angle)
 {
     float conv;
@@ -85,6 +107,12 @@ int Bras_servo_control::writeServo(int indJoint, float angle)
     return Micro_sec;
 }
 
+
+/**
+ * This method sets the input array to be the previous angles, used for linearisation of mouvements
+ * @param array angles:
+ * @return void 
+ */ 
 void Bras_servo_control::setPrevAngles(float angles[nbJoints])
 {
     for (int i=0; i<nbJoints; i++){

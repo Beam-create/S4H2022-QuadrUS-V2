@@ -10,3 +10,7 @@ int16 encoder_FL
 int16 encoder_FR
 int16 encoder_BL
 int16 encoder_BR
+float32 q1
+float32 q2
+float32 q3
+bool effector
