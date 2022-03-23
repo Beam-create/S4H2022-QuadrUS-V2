@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+from time import sleep
 from click import echo
 from sympy import *
 import rospy
@@ -32,7 +33,7 @@ class robotArm:
 		#Subcribe to the ball position publish by limits
 		self.sub = rospy.Subscriber("/rufus/ball_position", Vector3, self.cb_camera)
 		#Subscribe to the remote
-		self.command = rospy.Subscriber("SHIT", Bool, self.debug)
+		self.command = rospy.Subscriber("/rufus/bras_arduino", bras_commands, self.start)
 
 		#Publisher
 		self.pub = rospy.Publisher("/rufus/bras_arduino",bras_commands, queue_size = 1)
@@ -41,10 +42,10 @@ class robotArm:
 		if verify_limits([data.x, data.y, data.z], 1):
 			self.ball_position = data
 		else:
-			print("Fail")
+			print("Flag 1")
 
-	def debug(self, boole):
-		self.mode = boole
+	def start(self, data):
+		self.mode = data.mode
 			
             
 	def inverseKinematics(self, vector_pos):
@@ -77,6 +78,7 @@ class robotArm:
 		e1 = Eq(cos(q1)*(L2*cos(a) + L3*cos(b) + L4x) - x, 0.0)
 		e2 = Eq(L1 + L2*sin(a) - L3*sin(b) - L4y - y, 0.0)
 		sol = solve([e1, e2], [a, b])
+		print("Flag 2")
         
         ## Choix de l'angle positif
 		if float(sol[0][0]) < 0.0:
@@ -88,9 +90,9 @@ class robotArm:
 		if float(sol[1][1]) < 0.0:
 			Angle_q3 = round(float(sol[0][1]) * 180 / pi, 2)
 
-		self.q.q1 = Angle_q1
-		self.q.q2 = Angle_q2
-		self.q.q3 = Angle_q3
+		self.q.q1 = round(Angle_q1,2)
+		self.q.q2 = round(Angle_q2,2)
+		self.q.q3 = round(Angle_q3,2)
 		    
            
 if __name__=='__main__':
