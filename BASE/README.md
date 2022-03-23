@@ -1,4 +1,4 @@
-# S4H2022-RufUS/BRAS
+# S4H2022-RufUS/BASE
 
 Cette section contient tous les fichiers CAD de la base et se divise selon les trois sections suivantes:
 
