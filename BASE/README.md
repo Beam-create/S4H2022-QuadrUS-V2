@@ -8,12 +8,12 @@ Cette section contient tous les fichiers CAD de la base et se divise selon les t
 
 ## CAD_SIM
 
-Cette section contient ...
+Cette section contient les pièces et les assemblages SolidWorks des composants primaires de la base et de ses roues (fichiers SLDPRT et SLDASM).
 
 ## DXF
 
-Cette section contient ...
+Cette section contient les fichiers DXF de la base
 
 ## STL
 
-Cette section contient ...
+Cette section contient les fichiers STL de composants secondaires de la base, tel que des supports, monture, etc.
