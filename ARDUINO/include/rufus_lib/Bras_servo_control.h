@@ -24,8 +24,8 @@ private:
     Servo Effecteur;
 
 
-    uint8_t J_pins[nbJoints] = {2, 3, 4};
-    uint8_t Eff_pin = 5;
+    uint8_t J_pins[nbJoints] = {9, 10, 11};
+    uint8_t Eff_pin = 12;
 
     float MIN_ANG[nbJoints] = {0.0, 0.0, 0.0};
     float MAX_ANG[nbJoints] = {270.0, 270.0, 270.0};
@@ -33,7 +33,7 @@ private:
     float HOME[nbJoints] = {0.0, 90.0, 0.0};
     float gearRatio = 2.0;
 
-    
+
     float L1 = 0.095;
     float L2 = 0.160;
     float L3 = 0.180;
