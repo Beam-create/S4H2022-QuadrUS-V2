@@ -3,6 +3,9 @@
 ### Robot-chien | UdeS-GRO
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## download du projet
+<a id="raw-url" href="https://github.com/Beam-create/S4H2022-RufUS/blob/main/Installation.sh">Download FILE</a>
+
 
 ## Produit final
 ![image](https://user-images.githubusercontent.com/72213923/155257730-0c8ef9f5-0139-4f08-8084-f2a888d273e7.png)
