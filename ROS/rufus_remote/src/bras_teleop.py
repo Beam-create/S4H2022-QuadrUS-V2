@@ -17,7 +17,7 @@ class bras_teleop:
         Initialize subscriber, pulisher and node
         """
         self.joy_sub = rospy.Subscriber("joy", Joy, self.cb_joy)
-        self.ang_pub = rospy.Publisher("rufus/bras_arduino", bras_commands, queue_size=50)
+        self.ang_pub = rospy.Publisher("rufus/bras_arduino", bras_commands, queue_size=5)
 
         #objet message de commande
         self.commands = bras_commands()
@@ -28,47 +28,73 @@ class bras_teleop:
         self.commands.q3 = 0.0
         self.ang_inc = 5.0
 
+        self.lim = {
+            "q1_min":20.0,
+            "q1_max":20.0,
+            "q2_min":20.0,
+            "q2_max":20.0,
+            "q3_min":20.0,
+            "q3_max":20.0
+        }
+
         
     def cb_joy(self, data):
-        isTriggered = false
-        self.commands.mode = false # Mode manuel is false
-
+        isTriggered = False
+        self.commands.mode = False # Mode manuel is false
         # Tester config manette pour attribuer les valeurs a angles.q*
         #q1
         if(data.buttons[15]):
-            self.commands.q1 = self.commands.q1 + self.ang_inc
-            isTriggered = true
+            if ((self.commands.q1 + self.ang_inc) >= self.lim['q1_max']):
+                self.commands.q1 = self.lim['q1_max']
+            else:
+                self.commands.q1 = self.commands.q1 + self.ang_inc
+            isTriggered = True
         if(data.buttons[16]):
-            self.commands.q1 = self.commands.q1 - self.ang_inc
-            isTriggered = true
+            if ((self.commands.q1 - self.ang_inc) <= self.lim['q1_min']):
+                self.commands.q1 = self.lim['q1_min']
+            else:
+                self.commands.q1 = self.commands.q1 - self.ang_inc
+            isTriggered = True
 
         #q2
         if(data.buttons[13]):
-            self.commands.q2 = self.commands.q2 + self.ang_inc
-            isTriggered = true
+            if ((self.commands.q2 + self.ang_inc) >= self.lim['q2_max']):
+                self.commands.q2 = self.lim['q2_max']
+            else:
+                self.commands.q2 = self.commands.q2 + self.ang_inc
+            isTriggered = True
         if(data.buttons[14]):
-            self.commands.q2 = self.commands.q2 - self.ang_inc
-            isTriggered = true
+            if ((self.commands.q2 - self.ang_inc) <= self.lim['q2_min']):
+                self.commands.q2 = self.lim['q2_min']
+            else:
+                self.commands.q2 = self.commands.q2 - self.ang_inc
+            isTriggered = True
 
         #q3
         if(data.buttons[2]):
-            self.commands.q3 = self.commands.q3 + self.ang_inc
-            isTriggered = true
+            if ((self.commands.q3 + self.ang_inc) >= self.lim['q3_max']):
+                self.commands.q3 = self.lim['q3_max']
+            else:
+                self.commands.q3 = self.commands.q3 + self.ang_inc
+            isTriggered = True
         if(data.buttons[0]):
-            self.commands.q3 = self.commands.q3 - self.ang_inc
-            isTriggered = true
+            if ((self.commands.q3 - self.ang_inc) <= self.lim['q3_min']):
+                self.commands.q3 = self.lim['q3_min']
+            else:
+                self.commands.q3 = self.commands.q3 - self.ang_inc
+            isTriggered = True
 
         #effector
         if(data.buttons[5]):
-            self.commands.effector = true
-            isTriggered = true
+            self.commands.effector = True
+            isTriggered = True
         if(data.buttons[4]):
-            self.commands.effector = false
-            isTriggered = true
+            self.commands.effector = False
+            isTriggered = True
 
         #mode Auto
         if(data.buttons[1]):
-            self.commands.mode = true
+            self.commands.mode = True
 
         if isTriggered: #publish on bras state change from controller input
             self.ang_pub.publish(self.commands)
@@ -76,11 +102,9 @@ class bras_teleop:
 
 if __name__=='__main__':
     try:
+        rospy.init_node('bras_teleop', anonymous=True)
         bras_t = bras_teleop()
-        rospy.init_node('bras_teleop', anonymous=true)
-        rate = rospy.Rate(10)
-        while not rospy.is_shutdown():
-            rate.sleep()
+        rospy.spin()
 
     except rospy.ROSInterruptException:
         raise e
