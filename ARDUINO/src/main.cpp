@@ -14,7 +14,7 @@
 #include "Servo.h"
 #include <ros.h>
 #include <rufus_master/Rufus_base_msgs.h>
-#include <rufus_master/bras_commands.h> // A generer!, voir Mat
+#include <rufus_master/bras_commands.h>
 #include <std_msgs/String.h>
 #include <rufus_master/Feedback_arduino_msgs.h>
 
@@ -108,6 +108,7 @@ void setup() {
   gimbal.attach(gimbal_pin);
   gimbal.write(90); // Angle zéro à trouver, en degré
 
+  bras.initServos();
   bras.drop();
   bras.goToHome();
 
@@ -119,8 +120,8 @@ void setup() {
 }
 
 void loop() {
-  nh.spinOnce();
   arduino_feedback.publish(&feedback_msg);
+  nh.spinOnce();
   delay(10);
 }
 
@@ -152,7 +153,7 @@ void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd)
   BR_motor.setPWM(cmd_BR);
   
   //Ajouter les fonctions pour faire tourner les moteurs en fonction des cmd_XX
-  // pid.run(cmd_FL, cmd_FR, cmd_BL, cmd_BR);
+  pid.run(cmd_FL, cmd_FR, cmd_BL, cmd_BR);
 
   feedback_msg.motor_FL = cmd_FL;
   feedback_msg.motor_FR = cmd_FR;
@@ -161,7 +162,8 @@ void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd)
 
 }
 
-void brasCB(const rufus_master::bras_commands& bras_cmd){
+void brasCB(const rufus_master::bras_commands& bras_cmd){ // Callback not triggered, A DEBUG!
+
   // Tsansfert des angles dans des variables locals
   float angles[nbJoints];
   angles[0] = bras_cmd.q1;

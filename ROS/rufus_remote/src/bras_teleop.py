@@ -5,6 +5,7 @@ Subscriber : joy
 Publisher : rufus/bras_teleop
 """
 
+from sympy import true
 import rospy
 from sensor_msgs.msg import Joy
 from rufus_master.msg import bras_commands
@@ -17,7 +18,7 @@ class bras_teleop:
         Initialize subscriber, pulisher and node
         """
         self.joy_sub = rospy.Subscriber("joy", Joy, self.cb_joy)
-        self.ang_pub = rospy.Publisher("rufus/bras_arduino", bras_commands, queue_size=5)
+        self.ang_pub = rospy.Publisher("/rufus/bras_arduino", bras_commands, queue_size=5)
 
         #objet message de commande
         self.commands = bras_commands()
@@ -29,12 +30,12 @@ class bras_teleop:
         self.ang_inc = 5.0
 
         self.lim = {
-            "q1_min":20.0,
-            "q1_max":20.0,
-            "q2_min":20.0,
-            "q2_max":20.0,
-            "q3_min":20.0,
-            "q3_max":20.0
+            "q1_min":-45.0,
+            "q1_max":45.0,
+            "q2_min":38.0,
+            "q2_max":130.0,
+            "q3_min":-10.0,
+            "q3_max":40.0
         }
 
         
@@ -101,11 +102,8 @@ class bras_teleop:
 
 
 if __name__=='__main__':
-    try:
-        rospy.init_node('bras_teleop', anonymous=True)
-        bras_t = bras_teleop()
-        rospy.spin()
+    rospy.init_node('bras_teleop', anonymous=true)
+    bras_t = bras_teleop()
+    rospy.spin()
 
-    except rospy.ROSInterruptException:
-        raise e
 
