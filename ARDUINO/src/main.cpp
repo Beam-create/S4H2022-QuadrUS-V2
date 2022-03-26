@@ -169,7 +169,7 @@ void brasCB(const rufus_master::bras_commands& bras_cmd){
   angles[2] = bras_cmd.q3;
 
   // Executes Automatic mode
-  if(bras_cmd.FK){
+  if(bras_cmd.mode){
     bool isDone = false;
     float smoothAngles[nbJoints];
 

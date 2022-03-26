@@ -7,7 +7,7 @@ import rospy
 from geometry_msgs.msg import Vector3
 from std_msgs.msg import Bool
 from rufus_master.msg import bras_commands
-sys.path.append('/home/jordan/projetS4/src/S4H2022-projet/ROS/rufus_master/src')
+sys.path.append('~/rufus_ws/src/S4H2022-projet/ROS/rufus_master/src')
 from Limits import *
 
 #Fonction pour la generation des angles des joints en fonction de positions cartesienne

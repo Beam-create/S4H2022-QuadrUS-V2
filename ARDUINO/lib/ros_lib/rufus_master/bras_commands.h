@@ -20,15 +20,15 @@ namespace rufus_master
       _q3_type q3;
       typedef bool _effector_type;
       _effector_type effector;
-      typedef bool _FK_type;
-      _FK_type FK;
+      typedef bool _mode_type;
+      _mode_type mode;
 
     bras_commands():
       q1(0),
       q2(0),
       q3(0),
       effector(0),
-      FK(0)
+      mode(0)
     {
     }
 
@@ -75,10 +75,10 @@ namespace rufus_master
       union {
         bool real;
         uint8_t base;
-      } u_FK;
-      u_FK.real = this->FK;
-      *(outbuffer + offset + 0) = (u_FK.base >> (8 * 0)) & 0xFF;
-      offset += sizeof(this->FK);
+      } u_mode;
+      u_mode.real = this->mode;
+      *(outbuffer + offset + 0) = (u_mode.base >> (8 * 0)) & 0xFF;
+      offset += sizeof(this->mode);
       return offset;
     }
 
@@ -129,11 +129,11 @@ namespace rufus_master
       union {
         bool real;
         uint8_t base;
-      } u_FK;
-      u_FK.base = 0;
-      u_FK.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      this->FK = u_FK.real;
-      offset += sizeof(this->FK);
+      } u_mode;
+      u_mode.base = 0;
+      u_mode.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      this->mode = u_mode.real;
+      offset += sizeof(this->mode);
      return offset;
     }
 
