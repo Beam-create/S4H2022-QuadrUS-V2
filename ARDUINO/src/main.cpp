@@ -116,6 +116,7 @@ void setup() {
   nh.initNode();
   nh.advertise(arduino_feedback);
   nh.subscribe(motor_sub);
+  nh.subscribe(bras_sub);
   nh.negotiateTopics();
 }
 
