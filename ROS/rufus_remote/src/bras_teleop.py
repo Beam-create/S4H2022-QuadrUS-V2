@@ -18,7 +18,7 @@ class bras_teleop:
         Initialize subscriber, pulisher and node
         """
         self.joy_sub = rospy.Subscriber("joy", Joy, self.cb_joy)
-        self.ang_pub = rospy.Publisher("/rufus/bras_arduino", bras_commands, queue_size=5)
+        self.ang_pub = rospy.Publisher("rufus/bras_arduino", bras_commands, queue_size=1)
 
         #objet message de commande
         self.commands = bras_commands()
