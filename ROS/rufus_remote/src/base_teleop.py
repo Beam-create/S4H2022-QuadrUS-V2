@@ -5,7 +5,6 @@ Subscriber : joy
 Publisher : rufus/base_teleop
 """
 
-from sympy import true
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
@@ -31,6 +30,6 @@ class base_teleop:
         self.twist_pub.publish(twist)
 
 if __name__=='__main__':
-    rospy.init_node('base_teleop', anonymous=true)
+    rospy.init_node('base_teleop', anonymous=True)
     bt = base_teleop()
     rospy.spin()
