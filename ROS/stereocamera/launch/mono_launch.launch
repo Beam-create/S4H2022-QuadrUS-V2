@@ -1,0 +1,5 @@
+<launch>
+
+<node name="CAM0" pkg="stereocamera" type="simple_camera.py" output="screen" respawn="false"/>
+
+</launch>

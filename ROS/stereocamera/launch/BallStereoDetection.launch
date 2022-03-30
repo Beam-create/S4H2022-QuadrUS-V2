@@ -1,0 +1,5 @@
+<launch>
+
+<node name="StereoCam" pkg="stereocamera" type="BallStereoDetection.py" output="screen" respawn="false"/>
+
+</launch>
