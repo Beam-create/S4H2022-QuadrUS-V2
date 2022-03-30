@@ -93,11 +93,18 @@ void brasCB(const rufus_master::bras_commands& bras_cmd);
 /*---------------------------- fonctions "Main" -----------------------------*/
 
 ros::Subscriber<rufus_master::Rufus_base_msgs> motor_sub("/rufus/base_arduino", commandCB);
-ros::Subscriber<rufus_master::bras_commands> bras_sub("rufus/bras_arduino", brasCB); // Get les commands via le topic envoyer par bras_teleop et IK
+ros::Subscriber<rufus_master::bras_commands> bras_sub("/rufus/bras_arduino", brasCB); // Get les commands via le topic envoyer par bras_teleop et IK
 ros::Publisher arduino_feedback("/rufus/arduino_feedback",&feedback_msg);
 
 void setup() {
-  Serial.begin(BAUD);
+  nh.getHardware()->setBaud(57600);
+  nh.initNode();
+  nh.advertise(arduino_feedback); 
+  nh.subscribe(bras_sub);
+  nh.subscribe(motor_sub);
+  nh.negotiateTopics();
+  
+  // Serial.begin(BAUD);
   // Fonctions qui assigne les pins à lire et les fonctions pour lire les encodeurs
   // attachInterrupt: 2, 3, 18, 19, 20, 21 (pins 20 & 21 are not available to use for interrupts while they are used for I2C communication)
   attachInterrupt(digitalPinToInterrupt(FL_motor.getPin(FL_motor._ENC_A)), readEncoderFL, RISING);
@@ -112,12 +119,7 @@ void setup() {
   bras.drop();
   bras.goToHome();
 
-  nh.getHardware()->setBaud(57600);
-  nh.initNode();
-  nh.advertise(arduino_feedback);
-  nh.subscribe(motor_sub);
-  nh.subscribe(bras_sub);
-  nh.negotiateTopics();
+  
 }
 
 void loop() {
@@ -154,7 +156,7 @@ void commandCB(const rufus_master::Rufus_base_msgs& motor_cmd)
   BR_motor.setPWM(cmd_BR);
   
   //Ajouter les fonctions pour faire tourner les moteurs en fonction des cmd_XX
-  pid.run(cmd_FL, cmd_FR, cmd_BL, cmd_BR);
+  // pid.run(cmd_FL, cmd_FR, cmd_BL, cmd_BR);
 
   feedback_msg.motor_FL = cmd_FL;
   feedback_msg.motor_FR = cmd_FR;

@@ -138,7 +138,7 @@ namespace rufus_master
     }
 
     virtual const char * getType() override { return "rufus_master/bras_commands"; };
-    virtual const char * getMD5() override { return "3cab810059c71046265c762092e3ccff"; };
+    virtual const char * getMD5() override { return "c601fa504cc9d6a4ab9d6470a7e644ab"; };
 
   };
 
