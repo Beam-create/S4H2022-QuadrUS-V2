@@ -5,11 +5,9 @@ Subscriber : joy
 Publisher : rufus/bras_teleop
 """
 
-from sympy import true
 import rospy
 from sensor_msgs.msg import Joy
 from rufus_master.msg import bras_commands
-from rufus_master.msg import Feedback_arduino_msgs
 
 class bras_teleop:
 
@@ -17,16 +15,19 @@ class bras_teleop:
         """
         Initialize subscriber, pulisher and node
         """
-        self.joy_sub = rospy.Subscriber("joy", Joy, self.cb_joy)
-        self.ang_pub = rospy.Publisher("/rufus/bras_arduino", bras_commands, queue_size=5)
-
         #objet message de commande
         self.commands = bras_commands()
+
+        self.joy_sub = rospy.Subscriber("joy", Joy, self.cb_joy)
+        self.ang_pub = rospy.Publisher("/rufus/bras_arduino", bras_commands, queue_size=5)
 
         # Initial values of angles on start-up
         self.commands.q1 = 0.0
         self.commands.q2 = 90.0
         self.commands.q3 = 0.0
+        self.commands.mode = False
+        self.commands.effector = False
+
         self.ang_inc = 5.0
 
         self.lim = {
@@ -96,14 +97,23 @@ class bras_teleop:
         #mode Auto
         if(data.buttons[1]):
             self.commands.mode = True
+            isTriggered = True
 
         if isTriggered: #publish on bras state change from controller input
             self.ang_pub.publish(self.commands)
 
 
 if __name__=='__main__':
-    rospy.init_node('bras_teleop', anonymous=true)
-    bras_t = bras_teleop()
-    rospy.spin()
+    try:
+        bras_t = bras_teleop()
+        rospy.init_node('bras_teleop', anonymous=True)
+        rate = rospy.Rate(10)
+        while not rospy.is_shutdown():
+            bras_t.ang_pub.publish(bras_t.commands)
+            rate.sleep()
+
+    except rospy.ROSInterruptException:
+        pass
+        
 
 
