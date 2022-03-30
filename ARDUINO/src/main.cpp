@@ -93,7 +93,7 @@ void brasCB(const rufus_master::bras_commands& bras_cmd);
 /*---------------------------- fonctions "Main" -----------------------------*/
 
 ros::Subscriber<rufus_master::Rufus_base_msgs> motor_sub("/rufus/base_arduino", commandCB);
-ros::Subscriber<rufus_master::bras_commands> bras_sub("/rufus/bras_arduino", brasCB); // Get les commands via le topic envoyer par bras_teleop et IK
+ros::Subscriber<rufus_master::bras_commands> bras_sub("rufus/bras_arduino", brasCB); // Get les commands via le topic envoyer par bras_teleop et IK
 ros::Publisher arduino_feedback("/rufus/arduino_feedback",&feedback_msg);
 
 void setup() {
