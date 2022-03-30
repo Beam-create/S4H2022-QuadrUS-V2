@@ -26,8 +26,8 @@ class base_teleop:
         
         twist = Twist()
         twist.linear.x = data.axes[1]
-        twist.linear.y = data.axes[0]
-        twist.angular.z = data.axes[3]
+        twist.linear.y = -1*data.axes[0]
+        twist.angular.z = -1*data.axes[3]
         self.twist_pub.publish(twist)
 
 if __name__=='__main__':

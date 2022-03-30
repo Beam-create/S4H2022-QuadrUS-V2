@@ -41,9 +41,9 @@ class base_control:
 
         #Calculer la commande pour chaque moteurs
         self.motor_cmd.motor_FL = power * cos/max_comp + turn
-        self.motor_cmd.motor_FR = power * sin/max_comp - turn
+        self.motor_cmd.motor_FR = -1*(power * sin/max_comp - turn)
         self.motor_cmd.motor_BL = power * sin/max_comp + turn
-        self.motor_cmd.motor_BR = power * cos/max_comp - turn
+        self.motor_cmd.motor_BR = -1*(power * cos/max_comp - turn)
 
         #Normaliser les commandes entre 1 et -1
         if((power + abs(turn)) > 1):

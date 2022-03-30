@@ -8,7 +8,6 @@
 
     <!-- Teleop Node -->
     <node name="base_teleop" pkg="rufus_remote" type="base_teleop.py" />
-    <node name="bras_teleop" pkg="rufus_remote" type="bras_teleop.py" />
 
     <!--Lancer la communication série avec l'arduino-->
     <node name="arduino_serial" pkg="rosserial_python" type="serial_node.py">
