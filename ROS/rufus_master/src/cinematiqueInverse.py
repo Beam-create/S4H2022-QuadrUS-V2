@@ -22,21 +22,22 @@ class robotArm:
 
 
     #Changer angle initiale pour les bonnes valeurs
-	def __init__(self, initial_q1 = 0, initial_q2 = 90, initial_q3 = 0):
-		self.q1 = initial_q1
-		self.q2 = initial_q2
-		self.q3 = initial_q3
-		self.mode = False
-
+	def __init__(self, initial_q1 = 0.0, initial_q2 = 90.0, initial_q3 = 0.0):
 		self.q = bras_commands()
+		self.q.q1 = initial_q1
+		self.q.q2 = initial_q2
+		self.q.q3 = initial_q3
+		self.mode = False
+		self.IK = False
+
 		self.ball_position = Vector3()
 		#Subcribe to the ball position publish by limits
 		self.sub = rospy.Subscriber("/rufus/ball_position", Vector3, self.cb_camera)
 		#Subscribe to the remote
-		self.command = rospy.Subscriber("/rufus/bras_arduino", bras_commands, self.start)
+		self.command = rospy.Subscriber("rufus/bras_arduino", bras_commands, self.start)
 
 		#Publisher
-		self.pub = rospy.Publisher("/rufus/bras_arduino",bras_commands, queue_size = 1)
+		self.pub = rospy.Publisher("rufus/bras_arduino",bras_commands, queue_size = 1)
 		
 	def cb_camera(self, data):
 		if verify_limits([data.x, data.y, data.z], 1):
@@ -46,6 +47,7 @@ class robotArm:
 
 	def start(self, data):
 		self.mode = data.mode
+		self.IK = data.IK
 			
             
 	def inverseKinematics(self, vector_pos):
@@ -76,7 +78,7 @@ class robotArm:
 		
 		########## Solution finale pour la resolution de la cinematique inverse #############
 		e1 = Eq(cos(q1)*(L2*cos(a) + L3*cos(b) + L4x) - x, 0.0)
-		e2 = Eq(L1 + L2*sin(a) - L3*sin(b) - L4y - y, 0.0)
+		e2 = Eq(0.07695+L1 + L2*sin(a) - L3*sin(b) - L4y - y, 0.0)
 		sol = solve([e1, e2], [a, b])
 		print("Flag 2")
         
@@ -93,6 +95,7 @@ class robotArm:
 		self.q.q1 = round(Angle_q1,2)
 		self.q.q2 = round(Angle_q2,2)
 		self.q.q3 = round(Angle_q3,2)
+		self.q.mode = True
 		    
            
 if __name__=='__main__':
@@ -101,7 +104,7 @@ if __name__=='__main__':
 		rospy.init_node('robot_control', anonymous=True)
 		rate = rospy.Rate(10)
 		while not rospy.is_shutdown():
-			if r_a.mode == True:
+			if r_a.mode and r_a.IK:
 				r_a.inverseKinematics(r_a.ball_position)
 				r_a.pub.publish(r_a.q)
 			rate.sleep()

@@ -97,14 +97,17 @@ ros::Subscriber<rufus_master::bras_commands> bras_sub("/rufus/bras_arduino", bra
 ros::Publisher arduino_feedback("/rufus/arduino_feedback",&feedback_msg);
 
 void setup() {
+  // Serial.begin(BAUD);
+
+  // Setup ros, goes first always!
   nh.getHardware()->setBaud(57600);
   nh.initNode();
-  nh.advertise(arduino_feedback); 
+  nh.advertise(arduino_feedback);
   nh.subscribe(bras_sub);
   nh.subscribe(motor_sub);
   nh.negotiateTopics();
-  
-  // Serial.begin(BAUD);
+
+
   // Fonctions qui assigne les pins à lire et les fonctions pour lire les encodeurs
   // attachInterrupt: 2, 3, 18, 19, 20, 21 (pins 20 & 21 are not available to use for interrupts while they are used for I2C communication)
   attachInterrupt(digitalPinToInterrupt(FL_motor.getPin(FL_motor._ENC_A)), readEncoderFL, RISING);
@@ -118,8 +121,6 @@ void setup() {
   bras.initServos();
   bras.drop();
   bras.goToHome();
-
-  
 }
 
 void loop() {
@@ -200,10 +201,12 @@ void brasCB(const rufus_master::bras_commands& bras_cmd){ // Callback not trigge
   }
 
   // Check le state de leffecteur
-  if(bras.isPick){
+  if(bras_cmd.effector){
+    bras.pick();
     feedback_msg.effector = bras.isPick;
   }
   else{
+    bras.drop();
     feedback_msg.effector = false;
   }
 
