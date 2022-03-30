@@ -78,7 +78,7 @@ class robotArm:
 		
 		########## Solution finale pour la resolution de la cinematique inverse #############
 		e1 = Eq(cos(q1)*(L2*cos(a) + L3*cos(b) + L4x) - x, 0.0)
-		e2 = Eq(0.07695+L1 + L2*sin(a) - L3*sin(b) - L4y - y, 0.0)
+		e2 = Eq(0.07695 + L1 + L2*sin(a) - L3*sin(b) - L4y - y, 0.0)
 		sol = solve([e1, e2], [a, b])
 		print("Flag 2")
         

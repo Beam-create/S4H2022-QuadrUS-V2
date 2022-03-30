@@ -38,7 +38,7 @@ private:
     float L2 = 0.160;
     float L3 = 0.180;
     float L4x = 0.035;
-    float L4y = 0.0988;
+    float L4y = 0.098;
 
 
     double COEFFS[nbJoints][4] ={ {1.6081*pow(10,-4), -0.0431, 10.3541, 515.1217},
@@ -46,7 +46,7 @@ private:
                                 {1.1107*pow(10,-4), -0.032836268478683, 10.118121283601132, 504.3328776486678} };
 
     int pickAngle = 50;
-    int dropAngle = 130;
+    int dropAngle = 160;
 
 public:
     float prevAngles[nbJoints] = {0.0, 0.0, 0.0};

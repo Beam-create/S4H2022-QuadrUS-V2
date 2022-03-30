@@ -45,50 +45,32 @@ class bras_teleop:
 
         # Tester config manette pour attribuer les valeurs a angles.q*
         #q1
-        if(data.buttons[15]):
-            if ((self.commands.q1 + self.ang_inc) >= self.lim['q1_max']):
-                self.commands.q1 = self.lim['q1_max']
-            else:
-                self.commands.q1 = self.commands.q1 + self.ang_inc
+        if(data.buttons[16]):
+            self.commands.q1 = self.commands.q1 + self.ang_inc
             isTriggered = True
             self.commands.mode = False # Mode manuel is false
-        if(data.buttons[16]):
-            if ((self.commands.q1 - self.ang_inc) <= self.lim['q1_min']):
-                self.commands.q1 = self.lim['q1_min']
-            else:
-                self.commands.q1 = self.commands.q1 - self.ang_inc
+        if(data.buttons[15]):
+            self.commands.q1 = self.commands.q1 - self.ang_inc
             isTriggered = True
             self.commands.mode = False # Mode manuel is false
 
         #q2
         if(data.buttons[13]):
-            if ((self.commands.q2 + self.ang_inc) >= self.lim['q2_max']):
-                self.commands.q2 = self.lim['q2_max']
-            else:
-                self.commands.q2 = self.commands.q2 + self.ang_inc
+            self.commands.q2 = self.commands.q2 + self.ang_inc
             isTriggered = True
             self.commands.mode = False # Mode manuel is false
         if(data.buttons[14]):
-            if ((self.commands.q2 - self.ang_inc) <= self.lim['q2_min']):
-                self.commands.q2 = self.lim['q2_min']
-            else:
-                self.commands.q2 = self.commands.q2 - self.ang_inc
+            self.commands.q2 = self.commands.q2 - self.ang_inc
             isTriggered = True
             self.commands.mode = False # Mode manuel is false
 
         #q3
         if(data.buttons[0]):
-            if ((self.commands.q3 + self.ang_inc) >= self.lim['q3_max']):
-                self.commands.q3 = self.lim['q3_max']
-            else:
-                self.commands.q3 = self.commands.q3 + self.ang_inc
+            self.commands.q3 = self.commands.q3 + self.ang_inc
             isTriggered = True
             self.commands.mode = False # Mode manuel is false
         if(data.buttons[2]):
-            if ((self.commands.q3 - self.ang_inc) <= self.lim['q3_min']):
-                self.commands.q3 = self.lim['q3_min']
-            else:
-                self.commands.q3 = self.commands.q3 - self.ang_inc
+            self.commands.q3 = self.commands.q3 - self.ang_inc
             isTriggered = True
             self.commands.mode = False # Mode manuel is false
 
@@ -101,6 +83,14 @@ class bras_teleop:
             self.commands.effector = False
             isTriggered = True
             self.commands.mode = False # Mode manuel is false
+
+
+        # Go to home
+        if(data.buttons[8]):
+            self.commands.q1 = 0.0
+            self.commands.q2 = 90.0
+            self.commands.q3 = 0.0
+            isTriggered = True
 
         #mode Auto
         if(data.buttons[1]):

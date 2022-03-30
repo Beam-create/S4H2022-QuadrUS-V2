@@ -22,13 +22,16 @@ namespace rufus_master
       _effector_type effector;
       typedef bool _mode_type;
       _mode_type mode;
+      typedef bool _IK_type;
+      _IK_type IK;
 
     bras_commands():
       q1(0),
       q2(0),
       q3(0),
       effector(0),
-      mode(0)
+      mode(0),
+      IK(0)
     {
     }
 
@@ -79,6 +82,13 @@ namespace rufus_master
       u_mode.real = this->mode;
       *(outbuffer + offset + 0) = (u_mode.base >> (8 * 0)) & 0xFF;
       offset += sizeof(this->mode);
+      union {
+        bool real;
+        uint8_t base;
+      } u_IK;
+      u_IK.real = this->IK;
+      *(outbuffer + offset + 0) = (u_IK.base >> (8 * 0)) & 0xFF;
+      offset += sizeof(this->IK);
       return offset;
     }
 
@@ -134,11 +144,19 @@ namespace rufus_master
       u_mode.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
       this->mode = u_mode.real;
       offset += sizeof(this->mode);
+      union {
+        bool real;
+        uint8_t base;
+      } u_IK;
+      u_IK.base = 0;
+      u_IK.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      this->IK = u_IK.real;
+      offset += sizeof(this->IK);
      return offset;
     }
 
     virtual const char * getType() override { return "rufus_master/bras_commands"; };
-    virtual const char * getMD5() override { return "c601fa504cc9d6a4ab9d6470a7e644ab"; };
+    virtual const char * getMD5() override { return "4a67397188acca73171fc76d83fb9fe5"; };
 
   };
 

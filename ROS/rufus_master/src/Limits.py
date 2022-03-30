@@ -10,12 +10,12 @@ lim = {
     "z_min":0.0,
     "z_max":20.0,
     
-    "q1_min":20.0,
-    "q1_max":20.0,
-    "q2_min":20.0,
-    "q2_max":20.0,
-    "q3_min":20.0,
-    "q3_max":20.0
+    "q1_min":-45.0,
+    "q1_max":45.0,
+    "q2_min":30.0,
+    "q2_max":130.0,
+    "q3_min":-15.0,
+    "q3_max":60.0
 }
 
 def verify_limits(array, mode):

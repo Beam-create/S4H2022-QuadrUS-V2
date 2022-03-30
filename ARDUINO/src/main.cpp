@@ -174,11 +174,10 @@ void brasCB(const rufus_master::bras_commands& bras_cmd){ // Callback not trigge
   angles[1] = bras_cmd.q2;
   angles[2] = bras_cmd.q3;
 
-  // Executes Automatic mode
-  if(bras_cmd.mode){
-    bool isDone = false;
-    float smoothAngles[nbJoints];
 
+  bool isDone = false;
+  float smoothAngles[nbJoints];
+  if(bras_cmd.mode){
     while(!isDone){
       for (int i=0; i<nbJoints; i++)
       {
@@ -195,11 +194,9 @@ void brasCB(const rufus_master::bras_commands& bras_cmd){ // Callback not trigge
       }
     }
   }
-  // Mode manuel
   else{
     bras.goTo(angles);
   }
-
   // Check le state de leffecteur
   if(bras_cmd.effector){
     bras.pick();
