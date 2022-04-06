@@ -6,7 +6,7 @@
 ## Téléchargement du projet
 1. Installez le fichier d'installation grâce à la commande ci-dessous:
  `wget https://raw.githubusercontent.com/Beam-create/S4H2022-RufUS/main/Installation.sh`
- 2. Exécutez le fichier grâce à cette commande:
+2. Exécutez le fichier grâce à cette commande:
  `bash Installation.sh`
 
 > L'exécution du fichier permet d'installer automatiquement toutes les librairies ROS et les dépendances nécessaires au projet. Il permet aussi de configurer l'infrastructure ROS du projet. En effet, Un dossier sous le nom de rufus_ws (rufus workspace) contenant tous les éléments nécessaire au fonctionnement de la plateforme sera créé.
@@ -29,7 +29,7 @@ Un robot mobile munie d'un bras robotisé 3 axes et d'un système de vision num�
 
 ## Assemblage
 ### Base:
-Les pièces de la base se trouvent dans ce [dossier](https://drive.google.com/drive/folders/1wTbaxu6NTdUD7D1Q0fb7H7a6KUzrX4lB?usp=sharing). Pour l'assemblage,  se fier au CAD. L'assemblage électrique requiert un accès à des équipements spécialisés et une connaissance de base de l'électronique. 
+Les pièces de la base se trouvent dans ce [dossier](https://drive.google.com/drive/folders/1wTbaxu6NTdUD7D1Q0fb7H7a6KUzrX4lB?usp=sharing). Pour l'assemblage,  se fier au CAD. L'assemblage [électrique](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#assemblage-électrique) requiert un accès à des équipements spécialisés et une connaissance de base de l'électronique. 
 ### Bras:
 En ce qui concerne les pièces du bras, nous avons modifié un modèle déjà existant dont tous les cads se trouvent [ici](https://drive.google.com/drive/folders/1wTbaxu6NTdUD7D1Q0fb7H7a6KUzrX4lB?usp=sharing). Pour l'assemblage,  se référer à cette [page](https://www.instructables.com/EEZYbotARM-Mk2-3D-Printed-Robot/) rédigé par *theGHIZmo*.
 
