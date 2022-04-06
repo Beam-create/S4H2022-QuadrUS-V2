@@ -13,6 +13,7 @@
 
 ## Présentation du projet
 ![image](https://user-images.githubusercontent.com/72213923/155257730-0c8ef9f5-0139-4f08-8084-f2a888d273e7.png)
+
 RufUS est un robot collaboratif conçu et fabriqué par 6 étudiants en génie robotique à l'Université de Sherbrooke. Ce projet est fait dans le cadre du projet de la session 4.
 
 Le but de ce projet est de construire un robot ayant la capacité de détecter, saisir puis rapporter un item. Pour ce faire, RufUS intègre une vision caméra, un bras robotique et une base mobile.
@@ -28,9 +29,6 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
 * [Environnement de développement](#Environnement-de-développement)
 
 
-## Description
-Un robot mobile munie d'un bras robotisé 3 axes et d'un système de vision numérique stéréoscopique. 
-
 ## Assemblage
 ### Base:
 Les pièces de la base se trouvent dans ce [dossier](https://drive.google.com/drive/folders/1wTbaxu6NTdUD7D1Q0fb7H7a6KUzrX4lB?usp=sharing). Pour l'assemblage,  se fier au CAD. L'assemblage [électrique](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#assemblage-électrique) requiert un accès à des équipements spécialisés et une connaissance de base de l'électronique. 
@@ -40,14 +38,6 @@ En ce qui concerne les pièces du bras, nous avons modifié un modèle déjà ex
 ### Vision:
 **Caméra stéréoscopique:**   [IMX219-83](https://www.waveshare.com/wiki/IMX219-83_Stereo_Camera)
 **Jetson Nano B01**
-
-## Environnement de développement
-
-### System requirements
-- Ubuntu 20.04 LTS
-
-### Dépendances pour le bras
- `pip3 install sympy`
 
 ### Dépendances pour la vision : Voir README.md dans le dossier VISION
 
