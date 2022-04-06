@@ -11,9 +11,13 @@
 
 > L'exécution du fichier permet d'installer automatiquement toutes les librairies ROS et les dépendances nécessaires au projet. Il permet aussi de configurer l'infrastructure ROS du projet. En effet, Un dossier sous le nom de rufus_ws (rufus workspace) contenant tous les éléments nécessaire au fonctionnement de la plateforme sera créé.
 
-
-## Produit final
+## Présentation du projet
 ![image](https://user-images.githubusercontent.com/72213923/155257730-0c8ef9f5-0139-4f08-8084-f2a888d273e7.png)
+RufUS est un robot collaboratif conçu et fabriqué par 6 étudiants en génie robotique à l'Université de Sherbrooke. Ce projet est fait dans le cadre du projet de la session 4.
+
+Le but de ce projet est de construire un robot ayant la capacité de détecter, saisir puis rapporter un item. Pour ce faire, RufUS intègre une vision caméra, un bras robotique et une base mobile.
+
+
 
 ## Table des matières
 * [Description du projet](#Description)
