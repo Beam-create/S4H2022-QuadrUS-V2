@@ -1,3 +1,4 @@
+
 # S4H2022-RufUS
 
 ### Robot-chien | UdeS-GRO
@@ -20,26 +21,35 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
 
 
 
-## Table des matières
-* [Description du projet](#Description)
-* [Assemblage](#Assemblage)
-	* [Base](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#base)
-	* [Bras](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#bras)
-	* [Caméra](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#vision)
-* [Environnement de développement](#Environnement-de-développement)
+## Table des matières wiki
+* [Documentation](#documentation)
+	* [Base](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile)
+		* [Liste des matériaux et composantes](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#liste-des-mat%C3%A9riaux-et-composantes)
+		* [Assemblage mécanique](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#assemblage-m%C3%A9canique)
+		* [Assemblage électrique](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#assemblage-%C3%A9lectrique)
+		* [Préparation logicielle](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#pr%C3%A9paration-logicielle)
+	* [Bras](https://github.com/Beam-create/S4H2022-RufUS/wiki/Bras-Robot)
+		* [Assemblage du bras robot](https://github.com/Beam-create/S4H2022-RufUS/wiki/Bras-Robot#assemblage-du-bras-robot)
+		* [Contrôle du bras robot](https://github.com/Beam-create/S4H2022-RufUS/wiki/Bras-Robot#contr%C3%B4le-du-bras-robot)
+		* [Dépendances logicielles](https://github.com/Beam-create/S4H2022-RufUS/wiki/Bras-Robot#d%C3%A9pendances-logicielles)
+	* [Vision](https://github.com/Beam-create/S4H2022-RufUS/wiki/Vision)
+		* 
+	* [Configuration du Jetson Nano](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01)
+		* [Installation de Ubuntu 20.04](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01#installation-de-ubuntu-2004)
+		* [Création d'un hotspot](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01#cr%C3%A9ation-dun-hotspot)
+		* [Connexion au Jetson Nano par SSH](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01#connexion-au-jetson-nano-par-ssh)
+* [Licence](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#licence-mit)
 
-
-## Assemblage
+## Documentation
 ### Base:
-Les pièces de la base se trouvent dans ce [dossier](https://drive.google.com/drive/folders/1wTbaxu6NTdUD7D1Q0fb7H7a6KUzrX4lB?usp=sharing). Pour l'assemblage,  se fier au CAD. L'assemblage [électrique](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#assemblage-électrique) requiert un accès à des équipements spécialisés et une connaissance de base de l'électronique. 
+
+Les pièces de la base se trouvent dans ce [dossier](https://drive.google.com/drive/folders/1wTbaxu6NTdUD7D1Q0fb7H7a6KUzrX4lB?usp=sharing). L'assemblage [électrique](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#assemblage-électrique) requiert un accès à des équipements spécialisés et une connaissance de base de l'électronique. 
 ### Bras:
 En ce qui concerne les pièces du bras, nous avons modifié un modèle déjà existant dont tous les cads se trouvent [ici](https://drive.google.com/drive/folders/1wTbaxu6NTdUD7D1Q0fb7H7a6KUzrX4lB?usp=sharing). Pour l'assemblage,  se référer à cette [page](https://www.instructables.com/EEZYbotARM-Mk2-3D-Printed-Robot/) rédigé par *theGHIZmo*.
 
 ### Vision:
 **Caméra stéréoscopique:**   [IMX219-83](https://www.waveshare.com/wiki/IMX219-83_Stereo_Camera)
-**Jetson Nano B01**
 
-### Dépendances pour la vision : Voir README.md dans le dossier VISION
 
 ### Licence MIT
 Copyright 2022 RufUS
