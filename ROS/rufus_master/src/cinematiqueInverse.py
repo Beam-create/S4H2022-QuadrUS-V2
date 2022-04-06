@@ -79,18 +79,21 @@ class robotArm:
 		########## Solution finale pour la resolution de la cinematique inverse #############
 		e1 = Eq(cos(q1)*(L2*cos(a) + L3*cos(b) + L4x) - x, 0.0)
 		e2 = Eq(0.07695 + L1 + L2*sin(a) - L3*sin(b) - L4y - y, 0.0)
-		sol = solve([e1, e2], [a, b])
+		sol = nsolve([e1, e2], [a, b], [pi/2, 0])
 		print("Flag 2")
+
+		Angle_q2 = sol[0]
+		Angle_q3 = sol[1]
         
         ## Choix de l'angle positif
-		if float(sol[0][0]) < 0.0:
-			Angle_q2 = round(float(sol[1][0]) * 180 / pi, 2)
-		if float(sol[1][0]) < 0.0:
-			Angle_q2 = round(float(sol[0][0]) * 180 / pi, 2)
-		if float(sol[0][1]) < 0.0:
-			Angle_q3 = round(float(sol[1][1]) * 180 / pi, 2)
-		if float(sol[1][1]) < 0.0:
-			Angle_q3 = round(float(sol[0][1]) * 180 / pi, 2)
+		# if float(sol[0][0]) < 0.0:
+		# 	Angle_q2 = round(float(sol[1][0]) * 180 / pi, 2)
+		# if float(sol[1][0]) < 0.0:
+		# 	Angle_q2 = round(float(sol[0][0]) * 180 / pi, 2)
+		# if float(sol[0][1]) < 0.0:
+		# 	Angle_q3 = round(float(sol[1][1]) * 180 / pi, 2)
+		# if float(sol[1][1]) < 0.0:
+		# 	Angle_q3 = round(float(sol[0][1]) * 180 / pi, 2)
 
 		self.q.q1 = round(Angle_q1,2)
 		self.q.q2 = round(Angle_q2,2)
