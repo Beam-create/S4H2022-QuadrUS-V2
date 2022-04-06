@@ -30,7 +30,7 @@ Un robot mobile munie d'un bras robotisé 3 axes et d'un système de vision num�
 ## Assemblage
 ### Base:
 ### Bras:
-En ce qui concerne les pièces du bras, nous avons modifié un modèle déjà existant dont tous les cads se trouvent [ici](). Pour l'assemblage,  se référer à cette [page](https://www.instructables.com/EEZYbotARM-Mk2-3D-Printed-Robot/) rédigé par *theGHIZmo*.
+En ce qui concerne les pièces du bras, nous avons modifié un modèle déjà existant dont tous les cads se trouvent [ici](https://drive.google.com/drive/folders/1wTbaxu6NTdUD7D1Q0fb7H7a6KUzrX4lB?usp=sharing). Pour l'assemblage,  se référer à cette [page](https://www.instructables.com/EEZYbotARM-Mk2-3D-Printed-Robot/) rédigé par *theGHIZmo*.
 
 ### Vision:
 **Caméra stéréoscopique:**   [IMX219-83](https://www.waveshare.com/wiki/IMX219-83_Stereo_Camera)
