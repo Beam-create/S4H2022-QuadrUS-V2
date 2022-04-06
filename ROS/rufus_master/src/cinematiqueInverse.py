@@ -32,7 +32,7 @@ class robotArm:
 
 		self.ball_position = Vector3()
 		#Subcribe to the ball position publish by limits
-		self.sub = rospy.Subscriber("/rufus/ball_position", Vector3, self.cb_camera)
+		self.sub = rospy.Subscriber("/camera/Ball_pos", Vector3, self.cb_camera)
 		#Subscribe to the remote
 		self.command = rospy.Subscriber("rufus/bras_arduino", bras_commands, self.start)
 
@@ -63,9 +63,9 @@ class robotArm:
 		L3 = self.L3
 		L4y = self.L4y
 		L4x = self.L4x
-		x = vector_pos.x
-		y = vector_pos.y
-		z = vector_pos.z
+		x = vector_pos.x/100
+		y = vector_pos.y/100
+		z = vector_pos.z/100
 		pi = 3.14159265359
         
 		# Find the value for the first angle
