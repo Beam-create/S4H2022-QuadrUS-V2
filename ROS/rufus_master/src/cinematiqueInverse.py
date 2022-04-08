@@ -42,12 +42,10 @@ class robotArm:
 	def cb_camera(self, data):
 		if verify_limits([data.x, data.y, data.z], 1):
 			self.ball_position = data
-		else:
-			print("Flag 1")
 
 	def start(self, data):
 		self.mode = data.mode
-		self.IK = data.IK
+		# self.IK = data.IK
 			
             
 	def inverseKinematics(self, vector_pos):
@@ -80,10 +78,10 @@ class robotArm:
 		e1 = Eq(cos(q1)*(L2*cos(a) + L3*cos(b) + L4x) - x, 0.0)
 		e2 = Eq(0.07695 + L1 + L2*sin(a) - L3*sin(b) - L4y - y, 0.0)
 		sol = nsolve([e1, e2], [a, b], [pi/2, 0])
-		print("Flag 2")
+		# print("Flag 2")
 
-		Angle_q2 = sol[0]
-		Angle_q3 = sol[1]
+		Angle_q2 = float(sol[0])*180/pi
+		Angle_q3 = float(sol[1])*180/pi
         
         ## Choix de l'angle positif
 		# if float(sol[0][0]) < 0.0:
@@ -98,7 +96,8 @@ class robotArm:
 		self.q.q1 = round(Angle_q1,2)
 		self.q.q2 = round(Angle_q2,2)
 		self.q.q3 = round(Angle_q3,2)
-		self.q.mode = True
+		self.q.mode = False
+		self.q.IK = True
 		    
            
 if __name__=='__main__':
@@ -107,7 +106,8 @@ if __name__=='__main__':
 		rospy.init_node('robot_control', anonymous=True)
 		rate = rospy.Rate(10)
 		while not rospy.is_shutdown():
-			if r_a.mode and r_a.IK:
+			if r_a.mode:
+				r_a.mode = False
 				r_a.inverseKinematics(r_a.ball_position)
 				r_a.pub.publish(r_a.q)
 			rate.sleep()

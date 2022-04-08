@@ -19,6 +19,8 @@ class bras_teleop:
         self.commands = bras_commands()
 
         self.joy_sub = rospy.Subscriber("joy", Joy, self.cb_joy)
+        self.ang_sub = rospy.Subscriber("rufus/bras_arduino", bras_commands, self.cb_sync)
+
         self.ang_pub = rospy.Publisher("rufus/bras_arduino", bras_commands, queue_size=1)
 
         # Initial values of angles on start-up
@@ -54,39 +56,37 @@ class bras_teleop:
             "gim_min":20.0
         }
 
+    def cb_sync(self, data):
+        if data.IK:
+            self.commands.mode = data.mode
+            self.commands.IK = data.IK
+            self.commands.q1 = data.q1
+            self.commands.q2 = data.q2
+            self.commands.q3 = data.q3
         
     def cb_joy(self, data):
         # Tester config manette pour attribuer les valeurs a angles.q*
+        # Force set au mode manuelle en cas dappuis
+        if (data.buttons[16] or data.buttons[15] or data.buttons[13] or data.buttons[14] or data.buttons[0] or data.buttons[2] or data.buttons[5] or data.buttons[4] or data.buttons[8]):
+            self.commands.mode = False
+            self.commands.IK = False
+
         #q1
         self.flags["q1+"] = True if data.buttons[16] else False
         self.flags["q1-"] = True if data.buttons[15] else False
-
 
         #q2
         self.flags["q2+"] = True if data.buttons[13] else False
         self.flags["q2-"] = True if data.buttons[14] else False
 
-        # if(data.buttons[13]):
-        #     self.commands.q2 = self.commands.q2 + self.ang_inc
-        #     isTriggered = True
-        #     self.commands.mode = False # Mode manuel is false
-        # if(data.buttons[14]):
-        #     self.commands.q2 = self.commands.q2 - self.ang_inc
-        #     isTriggered = True
-        #     self.commands.mode = False # Mode manuel is false
-
         #q3
         self.flags["q3+"] = True if data.buttons[0] else False
         self.flags["q3-"] = True if data.buttons[2] else False
 
-        # if(data.buttons[0]):
-        #     self.commands.q3 = self.commands.q3 + self.ang_inc
-        #     isTriggered = True
-        #     self.commands.mode = False # Mode manuel is false
-        # if(data.buttons[2]):
-        #     self.commands.q3 = self.commands.q3 - self.ang_inc
-        #     isTriggered = True
-        #     self.commands.mode = False # Mode manuel is false
+
+        #gimbal
+        self.flags["gim+"] = True if data.buttons[7] else False
+        self.flags["gim-"] = True if data.buttons[6] else False
 
         #effector
         if(data.buttons[5]):
@@ -104,12 +104,6 @@ class bras_teleop:
         #mode Auto
         if(data.buttons[1]):
             self.commands.mode = True
-
-        #Gimbal control
-        if(data.buttons[7]):
-            self.flags["gim+"] = True
-        if(data.buttons[6]):
-            self.flags["gim-"] = True
 
     def controllerCommands(self):
         # Fonction d'envoie de parametre a 10Hz 
