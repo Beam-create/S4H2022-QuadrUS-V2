@@ -38,8 +38,10 @@ class bras_teleop:
         self.L3 = 18.0 #cm
         self.L4y = 9.8 #cm
         self.L4x = 3.5 #cm
-        self.camx = 0.0
-        self.camy = 7.695
+        self.camx = 12.48
+        self.camy = 10.87
+        # self.camy = 11.87
+
 
         # self.L1 = 0.095 #m
         # self.L2 = 0.160 #m
@@ -122,7 +124,7 @@ class bras_teleop:
         b = Symbol('b') # Angle q3
 
         ########## Solution finale pour la resolution de la cinematique inverse #############
-        e1 = Eq(cos(q1)*(self.L2*cos(a) + self.L3*cos(b) + self.L4x) - x, 0.0) #x equation
+        e1 = Eq(cos(q1)*(self.L2*cos(a) + self.L3*cos(b) + self.L4x) - x - self.camx, 0.0) #x equation
         e2 = Eq(self.camy + self.L1 + self.L2*sin(a) - self.L3*sin(b) - self.L4y - y, 0.0) #y equation
         sol = nsolve([e1, e2], [a, b], [pi/2, 0])
 
@@ -206,10 +208,13 @@ class bras_teleop:
 
         # IK mode
         if(self.commands.mode):
-            Angles = self.inverseKinematics()
-            self.commands.q1 = Angles[0]
-            self.commands.q2 = Angles[1]
-            self.commands.q3 = Angles[2]
+            try:
+                Angles = self.inverseKinematics()
+                self.commands.q1 = Angles[0]
+                self.commands.q2 = Angles[1]
+                self.commands.q3 = Angles[2]
+            except:
+                pass
         
 if __name__=='__main__':
     try:

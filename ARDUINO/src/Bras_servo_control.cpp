@@ -43,15 +43,11 @@ void Bras_servo_control::initServos()
  */ 
 void Bras_servo_control::goTo(float angles[nbJoints])
 {
-    if((0.07695 + L1 + L2*sin(angles[1]*(PI/180.0)) - L3*sin(angles[2]*(PI/180.0)) - L4y)>=0.015){ // Verification de l'eq en y, pour pas causer de colisions
+    if((0.1187 + L1 + L2*sin(angles[1]*(PI/180.0)) - L3*sin(angles[2]*(PI/180.0)) - L4y)>=0.015){ // Verification de l'eq en y, pour pas causer de colisions
         for (size_t i=0; i<nbJoints; i++){
             Joints[i].writeMicroseconds(writeServo(i,angles[i]));
             prevAngles[i] = angles[i];
         }
-    }
-    else{
-        Serial.print("La combinaison d'ang en entree donne une valeur de: ");
-        Serial.println(L1 + L2*sin(angles[1]*(PI/180.0)) - L3*sin(angles[2]*(PI/180.0)) - L4y);
     }
 }
 

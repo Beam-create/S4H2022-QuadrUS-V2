@@ -2,7 +2,7 @@
     <!-- Parametrer les machines-->
     <machine 
         name='remote' 
-        address='192.168.0.4'
+        address='10.244.35.9'
         user='$(env USER)'
         env-loader='$~/rufus_ws/src/S4H2022_RufUS/ROS/ros_package/base_master/launch/base_remote.sh'
         default='false'
