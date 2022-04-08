@@ -40,6 +40,9 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
 		* [Connexion au Jetson Nano par SSH](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01#connexion-au-jetson-nano-par-ssh)
 * [Licence](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#licence-mit)
 
+## Comment démarrer le projet
+1. 
+
 ## Documentation
 ### Base:
 
