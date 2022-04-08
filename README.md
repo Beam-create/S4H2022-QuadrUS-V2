@@ -5,14 +5,6 @@
 ### Robot-chien | UdeS-GRO
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Téléchargement du projet
-1. Installez le fichier d'installation grâce à la commande ci-dessous:
- `wget https://raw.githubusercontent.com/Beam-create/S4H2022-RufUS/main/Installation.sh`
-2. Exécutez le fichier grâce à cette commande:
- `bash Installation.sh`
-
-> L'exécution du fichier permet d'installer automatiquement toutes les librairies ROS et les dépendances nécessaires au projet. Il permet aussi de configurer l'infrastructure ROS du projet. En effet, Un dossier sous le nom de rufus_ws (rufus workspace) contenant tous les éléments nécessaire au fonctionnement de la plateforme sera créé.
-
 ## Présentation du projet
 ![image](https://user-images.githubusercontent.com/72213923/155257730-0c8ef9f5-0139-4f08-8084-f2a888d273e7.png)
 
@@ -21,30 +13,41 @@ RufUS est un robot collaboratif conçu et fabriqué par 6 étudiants en génie r
 Le but de ce projet est de construire un robot ayant la capacité de détecter, saisir puis rapporter un item. Pour ce faire, RufUS intègre une vision caméra, un bras robotique et une base mobile.
 
 
+## Téléchargement du projet
+1. Installez le fichier d'installation grâce à la commande ci-dessous:
+ `wget https://raw.githubusercontent.com/Beam-create/S4H2022-RufUS/main/Installation.sh`
+2. Exécutez le fichier grâce à cette commande:
+ `bash Installation.sh`
 
-## Table des matières wiki
-* [Documentation](#documentation)
-	* [Base](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile)
-		* [Liste des matériaux et composantes](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#liste-des-mat%C3%A9riaux-et-composantes)
-		* [Assemblage mécanique](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#assemblage-m%C3%A9canique)
-		* [Assemblage électrique](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#assemblage-%C3%A9lectrique)
-		* [Préparation logicielle](https://github.com/Beam-create/S4H2022-RufUS/wiki/Base-mobile#pr%C3%A9paration-logicielle)
-	* [Bras](https://github.com/Beam-create/S4H2022-RufUS/wiki/Bras-Robot)
-		* [Assemblage du bras robot](https://github.com/Beam-create/S4H2022-RufUS/wiki/Bras-Robot#assemblage-du-bras-robot)
-		* [Contrôle du bras robot](https://github.com/Beam-create/S4H2022-RufUS/wiki/Bras-Robot#contr%C3%B4le-du-bras-robot)
-		* [Dépendances logicielles](https://github.com/Beam-create/S4H2022-RufUS/wiki/Bras-Robot#d%C3%A9pendances-logicielles)
-	* [Vision](https://github.com/Beam-create/S4H2022-RufUS/wiki/Vision)
-
-	* [ROS](/ROS#s4h2022-rufusros)
-	* [Configuration du Jetson Nano](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01)
-		* [Installation de Ubuntu 20.04](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01#installation-de-ubuntu-2004)
-		* [Création d'un hotspot](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01#cr%C3%A9ation-dun-hotspot)
-		* [Connexion au Jetson Nano par SSH](https://github.com/Beam-create/S4H2022-RufUS/wiki/Configuration-du-Jetson-Nano-B01#connexion-au-jetson-nano-par-ssh)
-* [Licence](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#licence-mit)
+> L'exécution du fichier permet d'installer automatiquement toutes les librairies ROS et les dépendances nécessaires au projet. Il permet aussi de configurer l'infrastructure ROS du projet. En effet, Un dossier sous le nom de rufus_ws (rufus workspace) contenant tous les éléments nécessaire au fonctionnement de la plateforme sera créé.
 
 ## Comment démarrer le projet
 1. 
 
+
+## Table des matières
+* Documentation
+	* [Base](/BASE#s4h2022-rufusbase)
+		* [Fichiers CAD](/BASE#fichers-cad)
+		* [Comment fabriquer la base mobile](/BASE#comment-fabriquer-la-base-mobile) 
+			* [Liste des matériaux et composantes](/BASE#liste-des-matériaux-et-composantes)
+			* [Assemblage mécanique](/BASE#assemblage-mécanique)
+			* [Assemblage électrique](/BASE#assemblage-électrique)
+	* [Bras](/BRAS#s4h2022-rufusbras)
+		* [Assemblage du bras robot](/BRAS#assemblage-du-bras-robot)
+		* [Contrôle du bras robot](/BRAS#contrôle-du-bras-robot)
+		* [Dépendances logicielles](/BRAS#dépendances-logicielles)
+	* [Vision](/VISION#s4h2022-rufusvision)
+		* [Matériel nécessaire](/VISION#matériel-nécessaire)
+		* [Configuration du Jetson Nano](/VISION#configuration-du-jetson-nano)
+			* [Installation de Ubuntu 20.04](/VISION#installation-de-ubuntu-2004)
+			* [Installation des dépendances (vision)](/VISION#installation-des-dépendances)  
+	* [Arduino](/ARDUINO#s4h2022-rufusarduino)
+	* [ROS](/ROS#s4h2022-rufusros)
+		* [Configuration du Jetson Nano](/ROS#configuartion-du-jetson-nano) 
+			* [Création d'un hotspot](/ROS#création-dun-hotspot)
+			* [Connexion par ssh](/ROS#connexion-au-jetson-nano-par-ssh) 
+* [Licence](https://github.com/Beam-create/S4H2022-RufUS/blob/main/README.md#licence-mit)
 
 
 ### Licence MIT
