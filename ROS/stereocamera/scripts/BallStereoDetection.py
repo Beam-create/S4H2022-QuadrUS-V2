@@ -82,9 +82,9 @@ def ball_stereo_detection_pub():
                         
                         depth, angle, X_position, Z_position = tri.find_depth_and_angle(circles_right, circles_left, frame_right, frame_left, B, f, alpha)
                         ball_position = Vector3()
-                        ball_position.x = X_position
+                        ball_position.x = Z_position
                         ball_position.y = 3.5
-                        ball_position.z = Z_position
+                        ball_position.z = X_position
                         pub_vector.publish(ball_position)
                         
                     
