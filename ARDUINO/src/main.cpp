@@ -177,7 +177,8 @@ void brasCB(const rufus_master::bras_commands& bras_cmd){ // Callback not trigge
 
   bool isDone = false;
   float smoothAngles[nbJoints];
-  if(bras_cmd.IK){
+  if(bras_cmd.mode){
+    bras.drop();
     while(!isDone){
       for (int i=0; i<nbJoints; i++)
       {

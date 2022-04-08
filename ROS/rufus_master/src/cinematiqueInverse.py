@@ -5,7 +5,6 @@ from click import echo
 from sympy import *
 import rospy
 from geometry_msgs.msg import Vector3
-from std_msgs.msg import Bool
 from rufus_master.msg import bras_commands
 sys.path.append('~/rufus_ws/src/S4H2022-projet/ROS/rufus_master/src')
 from Limits import *
@@ -13,14 +12,6 @@ from Limits import *
 #Fonction pour la generation des angles des joints en fonction de positions cartesienne
 
 class robotArm:
-
-	L1 = 0.095 #m
-	L2 = 0.160 #m
-	L3 = 0.180 #m
-	L4y = 0.098 #m
-	L4x = 0.035 #m
-
-
     #Changer angle initiale pour les bonnes valeurs
 	def __init__(self, initial_q1 = 0.0, initial_q2 = 90.0, initial_q3 = 0.0):
 		self.q = bras_commands()
@@ -78,20 +69,9 @@ class robotArm:
 		e1 = Eq(cos(q1)*(L2*cos(a) + L3*cos(b) + L4x) - x, 0.0)
 		e2 = Eq(0.07695 + L1 + L2*sin(a) - L3*sin(b) - L4y - y, 0.0)
 		sol = nsolve([e1, e2], [a, b], [pi/2, 0])
-		# print("Flag 2")
 
 		Angle_q2 = float(sol[0])*180/pi
 		Angle_q3 = float(sol[1])*180/pi
-        
-        ## Choix de l'angle positif
-		# if float(sol[0][0]) < 0.0:
-		# 	Angle_q2 = round(float(sol[1][0]) * 180 / pi, 2)
-		# if float(sol[1][0]) < 0.0:
-		# 	Angle_q2 = round(float(sol[0][0]) * 180 / pi, 2)
-		# if float(sol[0][1]) < 0.0:
-		# 	Angle_q3 = round(float(sol[1][1]) * 180 / pi, 2)
-		# if float(sol[1][1]) < 0.0:
-		# 	Angle_q3 = round(float(sol[0][1]) * 180 / pi, 2)
 
 		self.q.q1 = round(Angle_q1,2)
 		self.q.q2 = round(Angle_q2,2)
