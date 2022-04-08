@@ -34,7 +34,7 @@ La création d'un réseau wi-fi dit "hotspot" sur un appareil permet à un ordin
 ![image](https://user-images.githubusercontent.com/72227100/158658654-0ac53ffa-0ce1-497c-b9ce-2fc50742b386.png)
 10. Vérifier si le hotspot apparait parmi les réseaux disponible sur l'ordinateur, le cas échéant, s'y connecter
 
-# Connexion au Jetson Nano par SSH
+### Connexion au Jetson Nano par SSH
 1. Ouvrir un terminal de commande sur le Jetson Nano et taper "ifconfig"
 2. Noter l'adresse ip à côté de "inet" sous "wlan0" de la forme 10.x.x.x, par exemple 10.42.0.1
 3. Ouvrir un terminal de commande sur l'ordinateur et taper "ssh <Nom du Jetson Nano>@<Adresse ip notée>", par exemple "ssh jetson@10.42.0.1"
