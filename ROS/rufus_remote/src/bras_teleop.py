@@ -19,16 +19,29 @@ class bras_teleop:
         self.commands = bras_commands()
 
         self.joy_sub = rospy.Subscriber("joy", Joy, self.cb_joy)
-        self.ang_pub = rospy.Publisher("rufus/bras_arduino", bras_commands, queue_size=5)
+        self.ang_pub = rospy.Publisher("rufus/bras_arduino", bras_commands, queue_size=1)
 
         # Initial values of angles on start-up
         self.commands.q1 = 0.0
         self.commands.q2 = 90.0
         self.commands.q3 = 0.0
+        self.commands.gimbalAng = 90.0
         self.commands.mode = False
         self.commands.effector = False
+        self.commands.IK = False
 
-        self.ang_inc = 5.0
+        self.ang_inc = 0.5
+
+        self.flags = {
+            "q1+": False,
+            "q1-": False,
+            "q2+": False,
+            "q2-": False,
+            "q3+": False,
+            "q3-": False,
+            "gim+": False,
+            "gim-": False,
+        }
 
         self.lim = {
             "q1_min":-45.0,
@@ -36,53 +49,50 @@ class bras_teleop:
             "q2_min":30.0,
             "q2_max":130.0,
             "q3_min":-15.0,
-            "q3_max":60.0
+            "q3_max":60.0,
+            "gim_max":90.0,
+            "gim_min":20.0
         }
 
         
     def cb_joy(self, data):
-        isTriggered = False
-
         # Tester config manette pour attribuer les valeurs a angles.q*
         #q1
-        if(data.buttons[16]):
-            self.commands.q1 = self.commands.q1 + self.ang_inc
-            isTriggered = True
-            self.commands.mode = False # Mode manuel is false
-        if(data.buttons[15]):
-            self.commands.q1 = self.commands.q1 - self.ang_inc
-            isTriggered = True
-            self.commands.mode = False # Mode manuel is false
+        self.flags["q1+"] = True if data.buttons[16] else False
+        self.flags["q1-"] = True if data.buttons[15] else False
+
 
         #q2
-        if(data.buttons[13]):
-            self.commands.q2 = self.commands.q2 + self.ang_inc
-            isTriggered = True
-            self.commands.mode = False # Mode manuel is false
-        if(data.buttons[14]):
-            self.commands.q2 = self.commands.q2 - self.ang_inc
-            isTriggered = True
-            self.commands.mode = False # Mode manuel is false
+        self.flags["q2+"] = True if data.buttons[13] else False
+        self.flags["q2-"] = True if data.buttons[14] else False
+
+        # if(data.buttons[13]):
+        #     self.commands.q2 = self.commands.q2 + self.ang_inc
+        #     isTriggered = True
+        #     self.commands.mode = False # Mode manuel is false
+        # if(data.buttons[14]):
+        #     self.commands.q2 = self.commands.q2 - self.ang_inc
+        #     isTriggered = True
+        #     self.commands.mode = False # Mode manuel is false
 
         #q3
-        if(data.buttons[0]):
-            self.commands.q3 = self.commands.q3 + self.ang_inc
-            isTriggered = True
-            self.commands.mode = False # Mode manuel is false
-        if(data.buttons[2]):
-            self.commands.q3 = self.commands.q3 - self.ang_inc
-            isTriggered = True
-            self.commands.mode = False # Mode manuel is false
+        self.flags["q3+"] = True if data.buttons[0] else False
+        self.flags["q3-"] = True if data.buttons[2] else False
+
+        # if(data.buttons[0]):
+        #     self.commands.q3 = self.commands.q3 + self.ang_inc
+        #     isTriggered = True
+        #     self.commands.mode = False # Mode manuel is false
+        # if(data.buttons[2]):
+        #     self.commands.q3 = self.commands.q3 - self.ang_inc
+        #     isTriggered = True
+        #     self.commands.mode = False # Mode manuel is false
 
         #effector
         if(data.buttons[5]):
             self.commands.effector = True
-            isTriggered = True
-            self.commands.mode = False # Mode manuel is false
         if(data.buttons[4]):
             self.commands.effector = False
-            isTriggered = True
-            self.commands.mode = False # Mode manuel is false
 
 
         # Go to home
@@ -90,20 +100,54 @@ class bras_teleop:
             self.commands.q1 = 0.0
             self.commands.q2 = 90.0
             self.commands.q3 = 0.0
-            isTriggered = True
 
         #mode Auto
         if(data.buttons[1]):
             self.commands.mode = True
-            isTriggered = True
 
-        if isTriggered: #publish on bras state change from controller input
-            self.ang_pub.publish(self.commands)
+        #Gimbal control
+        if(data.buttons[7]):
+            self.flags["gim+"] = True
+        if(data.buttons[6]):
+            self.flags["gim-"] = True
 
+    def controllerCommands(self):
+        # Fonction d'envoie de parametre a 10Hz 
+        # q1
+        if(self.flags["q1+"]):
+            self.commands.q1 = self.lim["q1_max"] if (self.commands.q1 + self.ang_inc >= self.lim["q1_max"]) else self.commands.q1 + self.ang_inc
+        if(self.flags["q1-"]):
+            self.commands.q1 = self.lim["q1_min"] if (self.commands.q1 - self.ang_inc <= self.lim["q1_min"]) else self.commands.q1 - self.ang_inc
 
+        #q2
+        if(self.flags["q2+"]): #La verif des limites se fait 
+            self.commands.q2 = self.commands.q2 + self.ang_inc
+        if(self.flags["q2-"]):
+            self.commands.q2 = self.commands.q2 - self.ang_inc
+        
+        #q3
+        if(self.flags["q3+"]):
+            self.commands.q3 = self.commands.q3 + self.ang_inc
+        if(self.flags["q3-"]):
+            self.commands.q3 = self.commands.q3 - self.ang_inc
+        
+        # #Gimbal control
+        if(self.flags["gim+"]):
+            self.commands.gimbalAng = self.lim["gim_max"] if (self.commands.gimbalAng + self.ang_inc >= self.lim["gim_max"]) else self.commands.gimbalAng + self.ang_inc
+        if(self.flags["gim-"]):
+            self.commands.gimbalAng = self.lim["gim_min"] if (self.commands.gimbalAng - self.ang_inc <= self.lim["gim_min"]) else self.commands.gimbalAng - self.ang_inc
+        
 if __name__=='__main__':
-    bras_t = bras_teleop()
-    rospy.init_node('bras_teleop', anonymous=True)
-    rospy.spin()
+    try:
+        bras_t = bras_teleop()
+        rospy.init_node('bras_teleop', anonymous=True)
+        rate = rospy.Rate(22)
+        while not rospy.is_shutdown():
+            bras_t.controllerCommands()
+            bras_t.ang_pub.publish(bras_t.commands)
+            rate.sleep()
+
+    except rospy.ROSInterruptException:
+        pass
 
 

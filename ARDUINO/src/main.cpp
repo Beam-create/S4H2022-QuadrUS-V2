@@ -177,7 +177,7 @@ void brasCB(const rufus_master::bras_commands& bras_cmd){ // Callback not trigge
 
   bool isDone = false;
   float smoothAngles[nbJoints];
-  if(bras_cmd.mode){
+  if(bras_cmd.IK){
     while(!isDone){
       for (int i=0; i<nbJoints; i++)
       {
@@ -207,6 +207,10 @@ void brasCB(const rufus_master::bras_commands& bras_cmd){ // Callback not trigge
     feedback_msg.effector = false;
   }
 
+  // Gimbal control
+  gimbal.write(bras_cmd.gimbalAng);
+
+  
   feedback_msg.q1 = angles[0];
   feedback_msg.q2 = angles[1];
   feedback_msg.q3 = angles[2];

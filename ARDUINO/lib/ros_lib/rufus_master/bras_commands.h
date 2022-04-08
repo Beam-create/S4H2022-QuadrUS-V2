@@ -18,6 +18,8 @@ namespace rufus_master
       _q2_type q2;
       typedef float _q3_type;
       _q3_type q3;
+      typedef float _gimbalAng_type;
+      _gimbalAng_type gimbalAng;
       typedef bool _effector_type;
       _effector_type effector;
       typedef bool _mode_type;
@@ -29,6 +31,7 @@ namespace rufus_master
       q1(0),
       q2(0),
       q3(0),
+      gimbalAng(0),
       effector(0),
       mode(0),
       IK(0)
@@ -68,6 +71,16 @@ namespace rufus_master
       *(outbuffer + offset + 2) = (u_q3.base >> (8 * 2)) & 0xFF;
       *(outbuffer + offset + 3) = (u_q3.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->q3);
+      union {
+        float real;
+        uint32_t base;
+      } u_gimbalAng;
+      u_gimbalAng.real = this->gimbalAng;
+      *(outbuffer + offset + 0) = (u_gimbalAng.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_gimbalAng.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_gimbalAng.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_gimbalAng.base >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->gimbalAng);
       union {
         bool real;
         uint8_t base;
@@ -129,6 +142,17 @@ namespace rufus_master
       this->q3 = u_q3.real;
       offset += sizeof(this->q3);
       union {
+        float real;
+        uint32_t base;
+      } u_gimbalAng;
+      u_gimbalAng.base = 0;
+      u_gimbalAng.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_gimbalAng.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_gimbalAng.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_gimbalAng.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->gimbalAng = u_gimbalAng.real;
+      offset += sizeof(this->gimbalAng);
+      union {
         bool real;
         uint8_t base;
       } u_effector;
@@ -156,7 +180,7 @@ namespace rufus_master
     }
 
     virtual const char * getType() override { return "rufus_master/bras_commands"; };
-    virtual const char * getMD5() override { return "4a67397188acca73171fc76d83fb9fe5"; };
+    virtual const char * getMD5() override { return "73a1e69152193c3ffb60f4a8c2d405c7"; };
 
   };
 

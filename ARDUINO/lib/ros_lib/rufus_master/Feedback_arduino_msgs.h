@@ -44,6 +44,8 @@ namespace rufus_master
       _q3_type q3;
       typedef bool _effector_type;
       _effector_type effector;
+      typedef float _gimbalAng_type;
+      _gimbalAng_type gimbalAng;
 
     Feedback_arduino_msgs():
       motor_FL(0),
@@ -61,7 +63,8 @@ namespace rufus_master
       q1(0),
       q2(0),
       q3(0),
-      effector(0)
+      effector(0),
+      gimbalAng(0)
     {
     }
 
@@ -181,6 +184,16 @@ namespace rufus_master
       u_effector.real = this->effector;
       *(outbuffer + offset + 0) = (u_effector.base >> (8 * 0)) & 0xFF;
       offset += sizeof(this->effector);
+      union {
+        float real;
+        uint32_t base;
+      } u_gimbalAng;
+      u_gimbalAng.real = this->gimbalAng;
+      *(outbuffer + offset + 0) = (u_gimbalAng.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_gimbalAng.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_gimbalAng.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_gimbalAng.base >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->gimbalAng);
       return offset;
     }
 
@@ -312,11 +325,22 @@ namespace rufus_master
       u_effector.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
       this->effector = u_effector.real;
       offset += sizeof(this->effector);
+      union {
+        float real;
+        uint32_t base;
+      } u_gimbalAng;
+      u_gimbalAng.base = 0;
+      u_gimbalAng.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_gimbalAng.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_gimbalAng.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_gimbalAng.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->gimbalAng = u_gimbalAng.real;
+      offset += sizeof(this->gimbalAng);
      return offset;
     }
 
     virtual const char * getType() override { return "rufus_master/Feedback_arduino_msgs"; };
-    virtual const char * getMD5() override { return "cf98269104181798d698e6a91b4620ca"; };
+    virtual const char * getMD5() override { return "3e725fe45ddf60055d6b8aba3f24ecbd"; };
 
   };
 
