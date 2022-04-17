@@ -1,5 +1,8 @@
-# S4H2022-RufUS/BRAS
 
+# S4H2022-RufUS/BRAS
+## Liste des matériaux et composantes
+- [ ] 3 x Servo DS3225  ([amazon](https://www.amazon.ca/-/fr/enti%C3%A8rement-m%C3%A9tallique-num%C3%A9rique-voitures-contr%C3%B4le/dp/B07NSG5WFQ/ref=sr_1_7?__mk_fr_CA=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=250SI05Q6DGX1&keywords=servo+25+kg&qid=1650227407&sprefix=servo+25kg%2Caps%2C165&sr=8-7))
+- [ ] 1 x Servo SG90 ([amazon](https://www.amazon.ca/-/fr/servomoteur-radiocommand%C3%A9-h%C3%A9licopt%C3%A8re-v%C3%A9hicules-compatible/dp/B097RD8RB7/ref=sr_1_16?__mk_fr_CA=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=BJCQ5BYGP5O8&keywords=servo+9+g&qid=1650227478&sprefix=servo+9g%2Caps%2C74&sr=8-16))
 ## Assemblage du bras robot
 
 [Instructions de montage du bras.pdf](https://github.com/Beam-create/S4H2022-RufUS/files/8430149/Instructions.de.montage.du.bras.pdf)
@@ -25,7 +28,13 @@ Afin de se rendre à position cartésienne définie par la position de la balle 
 2- Vue de dessus du bras du robot : 
 ![vue_dessus2](https://user-images.githubusercontent.com/72227713/163698269-1dca8a0d-97f3-4ff2-9430-3ec72d58ef7c.PNG)
 
-Les équations tirés de ces schémas se trouve dans bras_teleop.py (https://github.com/Beam-create/S4H2022-RufUS/blob/main/ROS/rufus_remote/src/bras_teleop.py). Avec la position en "x" et en "z" de la balle, il est possible de déterminer l'angle de rotation du joint 1. Par la suite, une fois que l'angle 1 est connue, il est possible d'utiliser le "solver" "nsolve" de python pour résoudre le système à deux équations et 2 inconnues pour trouver la valeur des angles pour les joints 2 et 3. Les valeurs de pi/2 et 0 dans le "nsolve" représente les valeurs des angles initiales en radians des joints 2 et 3 respectivement, ce qui permet d'accélérer la résolution du système d'équation
+Les équations tirés de ces schémas sont :
+$$
+q_1 = tan^{-1}(\frac{Z}{X})\\
+0=cos⁡(q1)*(L_2  cos⁡(q2)+L_3  cos⁡(q3)+L_4x )-x-cam_x\\
+0=cam_y+L_1+L_2 sin(q2)-L_3  sin⁡(q3)-L_4y-y
+$$
+Avec la position en "x" et en "z" de la balle, il est possible de déterminer l'angle de rotation du joint 1. Par la suite, une fois que l'angle 1 est connue, il est possible d'utiliser le "solver" "nsolve" de python pour résoudre le système à deux équations et 2 inconnues pour trouver la valeur des angles pour les joints 2 et 3. Les valeurs de pi/2 et 0 dans le "nsolve" représente les valeurs des angles initiales en radians des joints 2 et 3 respectivement, ce qui permet d'accélérer la résolution du système d'équation
 
 ### Calibration des servo
 Afin de bien modéliser le comportement réel des servos moteurs, une calibration est utilisée dans le but d'extraire une fonction approximative du signal PWM en fonction de l'angle désiré. 
