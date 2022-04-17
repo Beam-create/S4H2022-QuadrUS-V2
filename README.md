@@ -33,7 +33,7 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
 gedit .bashrc
 ```
 3. Aller au à la fin du fichier
-4. Valider que *source ~/rufus_ws/devel/setup.bash* ne se trouver par entre (" ")
+4. Valider que *source ~/rufus_ws/devel/setup.bash* ne se trouver par entre ( " " )
 
 ## Table des matières
 * Documentation
