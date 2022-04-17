@@ -38,7 +38,7 @@ La base mobile est faite de matériaux et de composants faciles à trouver. Sa r
 
 ### Assemblage mécanique
 ***
-Ce [dossier](https://github.com/Beam-create/S4H2022-RufUS/tree/main/BASE/CAD) contient plus de détails sur l'assemblage, ainsi que les STL et DXF pour fabriquer les pièces.
+Ce [dossier](https://github.com/Beam-create/S4H2022-RufUS/tree/main/CAD) contient plus de détails sur l'assemblage, ainsi que les STL et DXF pour fabriquer les pièces.
 #### Assemblage châssis
 ![S4H2022_Base_000](https://user-images.githubusercontent.com/72213923/155043265-a48b9cb9-ba62-4f9d-9cca-9c9b88f82a11.JPG)
 
@@ -53,7 +53,7 @@ Ce [dossier](https://github.com/Beam-create/S4H2022-RufUS/tree/main/BASE/CAD) co
 ![image](https://user-images.githubusercontent.com/54538310/162044831-c107e6bc-2753-42b0-91d1-e67a90bdf6a5.png)
 
 
-Un PCB a été concu afin de facilliter les branchements électriques. Toute l'information reliée au sens des branchements est indiqué directement sur le circuit. Pour se procurer le PCB, il suffit d'aller sur un site de commande de pcb en ligne (ex: [jlcpcb.com](https://jlcpcb.com/VGB?gclid=CjwKCAjw9LSSBhBsEiwAKtf0n9PKT3Qgz4o0cPbz0CCLisM4oUogkxZFzJCL4dg2W4-eoO5GJ_axChoCpaEQAvD_BwE)) et d'y téléverser le dossier compressé  [*production.zip*](https://drive.google.com/drive/folders/1pmGMpgm3lDUkDIR4QgA63MoetY-G-5LL). Aucun paramètre par défaut n'est à modifier.
+Un PCB a été concu afin de facilliter les branchements électriques. Toute l'information reliée au sens des branchements est indiqué directement sur le circuit. Pour se procurer le PCB, il suffit d'aller sur un site de commande de pcb en ligne (ex: [jlcpcb.com](https://jlcpcb.com/VGB?gclid=CjwKCAjw9LSSBhBsEiwAKtf0n9PKT3Qgz4o0cPbz0CCLisM4oUogkxZFzJCL4dg2W4-eoO5GJ_axChoCpaEQAvD_BwE)) et d'y téléverser le dossier compressé  [*production.zip*](/FABRICATION/PCB). Aucun paramètre par défaut n'est à modifier.
 
 > **IMPORTANT**: Pour la section de pin à souder située à droite du Arduino Mega, il faut SEULEMENT souder les pins entourées en rouge.
 
