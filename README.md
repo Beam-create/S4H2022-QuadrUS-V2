@@ -28,7 +28,7 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
 
 ## Table des matières
 * Documentation
-	* [Base](/BASE#s4h2022-rufusbase)
+	* [Base](/FABRICATION/BASE#s4h2022-rufusbase)
 		* [Fichiers CAD](/BASE#fichers-cad)
 		* [Comment fabriquer la base mobile](/BASE#comment-fabriquer-la-base-mobile) 
 			* [Liste des matériaux et composantes](/BASE#liste-des-matériaux-et-composantes)
