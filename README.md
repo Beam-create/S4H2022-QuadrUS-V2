@@ -40,7 +40,7 @@ catkin_make
 ```
 echo “source ~/catkin_ws/devel/setup.bash” >> ~/.bashrc
 ```
-*Sinon il faut faut écrire la ligne de commande ". ~/quadrus_ws/devel/setup.bash" a chaque fois qu'on ouvre un terminal
+> Sinon il faut faut écrire la ligne de commande ". ~/quadrus_ws/devel/setup.bash" a chaque fois qu'on ouvre un terminal
 5. Fermer le ou les terminals actif
 
 ## Table des matières
