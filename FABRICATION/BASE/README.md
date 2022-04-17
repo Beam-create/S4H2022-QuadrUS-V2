@@ -53,8 +53,8 @@ Ce [dossier](https://github.com/Beam-create/S4H2022-RufUS/tree/main/CAD) contien
 ![image](https://user-images.githubusercontent.com/54538310/162044831-c107e6bc-2753-42b0-91d1-e67a90bdf6a5.png)
 
 
-Un PCB a été concu afin de facilliter les branchements électriques. Toute l'information reliée au sens des branchements est indiqué directement sur le circuit. Pour se procurer le PCB, il suffit d'aller sur un site de commande de pcb en ligne (ex: [jlcpcb.com](https://jlcpcb.com/VGB?gclid=CjwKCAjw9LSSBhBsEiwAKtf0n9PKT3Qgz4o0cPbz0CCLisM4oUogkxZFzJCL4dg2W4-eoO5GJ_axChoCpaEQAvD_BwE)) et d'y téléverser le dossier compressé  [*production.zip*](/FABRICATION/PCB). Aucun paramètre par défaut n'est à modifier.
-[*PCB_Production.zip*](https://github.com/Beam-create/S4H2022-RufUS/files/8502373/PCB_Production.zip)
+Un PCB a été concu afin de facilliter les branchements électriques. Toute l'information reliée au sens des branchements est indiqué directement sur le circuit. Pour se procurer le PCB, il suffit d'aller sur un site de commande de pcb en ligne (ex: [jlcpcb.com](https://jlcpcb.com/VGB?gclid=CjwKCAjw9LSSBhBsEiwAKtf0n9PKT3Qgz4o0cPbz0CCLisM4oUogkxZFzJCL4dg2W4-eoO5GJ_axChoCpaEQAvD_BwE)) et d'y téléverser le dossier compressé  [*PCB_Production.zip*](https://github.com/Beam-create/S4H2022-RufUS/files/8502373/PCB_Production.zip). Aucun paramètre par défaut n'est à modifier.
+
 
 
 > **IMPORTANT**: Pour la section de pin à souder située à droite du Arduino Mega, il faut SEULEMENT souder les pins entourées en rouge.
