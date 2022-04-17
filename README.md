@@ -16,15 +16,32 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
 
 ## Téléchargement du projet
 1. Installez le fichier d'installation grâce à la commande ci-dessous:
- `wget https://raw.githubusercontent.com/Beam-create/S4H2022-RufUS/main/Installation.sh`
+ ```
+ wget https://raw.githubusercontent.com/Beam-create/S4H2022-RufUS/main/Installation.sh
+ ```
 2. Exécutez le fichier grâce à cette commande:
- `bash Installation.sh`
+ ```
+ bash Installation.sh
+ ```
 
 > L'exécution du fichier permet d'installer automatiquement toutes les librairies ROS et les dépendances nécessaires au projet. Il permet aussi de configurer l'infrastructure ROS du projet. En effet, Un dossier sous le nom de rufus_ws (rufus workspace) contenant tous les éléments nécessaire au fonctionnement de la plateforme sera créé.
 
-## Comment démarrer le projet
-1. 
-
+## Comment initialiser le projet (A REVOIR)
+1. Ouvrir un terminal
+2. Aller dans le répertoire rufus_ws
+```
+cd ~/rufus_ws
+```
+3. Initialiser le *workspace* (rester dans le répertoire *quadrus_ws*)
+```
+catkin_make
+```
+4. Source le *.bash*
+```
+echo “source ~/catkin_ws/devel/setup.bash” >> ~/.bashrc
+```
+*Sinon il faut faut écrire la ligne de commande ". ~/quadrus_ws/devel/setup.bash" a chaque fois qu'on ouvre un terminal
+5. Fermer le ou les terminals actif
 
 ## Table des matières
 * Documentation
