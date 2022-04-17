@@ -1,6 +1,6 @@
 
 # S4H2022-RufUS/BASE
-## [Fichers CAD](https://github.com/Beam-create/S4H2022-RufUS/tree/main/BASE/CAD)
+## [Fichers CAD](https://github.com/Beam-create/S4H2022-RufUS/tree/main/CAD)
 Cette section contient tous les fichiers CAD de la base et se divise selon les trois sections suivantes:
 ### CAD_SIM
 Cette section contient les pièces et les assemblages SolidWorks des composants primaires de la base et de ses roues (fichiers SLDPRT et SLDASM).
