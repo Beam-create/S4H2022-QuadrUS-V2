@@ -40,16 +40,6 @@ class bras_teleop:
         self.L4x = 3.5 #cm
         self.camx = 12.48
         self.camy = 10.87
-        # self.camy = 11.87
-
-
-        # self.L1 = 0.095 #m
-        # self.L2 = 0.160 #m
-        # self.L3 = 0.180 #m
-        # self.L4y = 0.098 #m
-        # self.L4x = 0.035 #m
-        # self.camx = 0.0
-        # self.camy = 0.07695
 
         self.isGood = False
         self.ball_position = [0] * 3
@@ -90,7 +80,6 @@ class bras_teleop:
 ##################### Class methods #######################
     def verify_camLimits(self, array):
 
-        #array[0] = x ; array[1] = y ; array[2] = z
         if array[0] <= self.lim['x_min'] or array[0] >= self.lim['x_max'] or array[1] <= self.lim['y_min'] or array[1] >= self.lim['y_max'] or array[2] <= self.lim['z_min'] or array[2] >= self.lim['z_max']:
             self.isGood = False
             return False
@@ -126,11 +115,12 @@ class bras_teleop:
         ########## Solution finale pour la resolution de la cinematique inverse #############
         e1 = Eq(cos(q1)*(self.L2*cos(a) + self.L3*cos(b) + self.L4x) - x - self.camx, 0.0) #x equation
         e2 = Eq(self.camy + self.L1 + self.L2*sin(a) - self.L3*sin(b) - self.L4y - y, 0.0) #y equation
-        sol = nsolve([e1, e2], [a, b], [pi/2, 0])
+        sol = nsolve([e1, e2], [a, b], [pi/2, 0]) #pi/2 rad est l'angle initiale q2 et 0 rad est q3
 
         Angle_q2 = float(sol[0])*180/pi
         Angle_q3 = float(sol[1])*180/pi
 
+        #Angles mit en deg.
         ik_angles[0] = round(float(q1)*180 / pi, 2)
         ik_angles[1] = round(Angle_q2,2)
         ik_angles[2] = round(Angle_q3,2)
@@ -139,12 +129,22 @@ class bras_teleop:
 
     ################## Callback functions ###################
     def cb_cam(self, data):
+        """
+        Fonction callback from camera topic and verifies limits of received message
+        :param x: Position of the object on the 'x' axis
+        :param y: Position of the object on the 'y' axis
+        :param z: Position of the object on the 'z' axis
+        :return: void
+        """
         if self.verify_camLimits([data.x, data.y, data.z]):
             self.ball_position = data
 
     def cb_joy(self, data):
-        # Tester config manette pour attribuer les valeurs a angles.q*
-        # Force set au mode manuelle en cas dappuis
+        """
+        Fonction callback from joy topic, sets flags and processes user input 
+        :param data: data array from joy message 
+        :return: void
+        """
         if (data.buttons[16] or data.buttons[15] or data.buttons[13] or data.buttons[14] or data.buttons[0] or data.buttons[2] or data.buttons[5] or data.buttons[4] or data.buttons[8]):
             self.commands.mode = False
 
@@ -181,7 +181,11 @@ class bras_teleop:
             self.commands.mode = True
 
     def controllerCommands(self):
-        # Fonction d'envoie de parametre a 10Hz 
+        """
+        Fonction to set command message according to user inputs
+        :return: void
+        """
+
         # q1
         if(self.flags["q1+"]):
             self.commands.q1 = self.lim["q1_max"] if (self.commands.q1 + self.ang_inc >= self.lim["q1_max"]) else self.commands.q1 + self.ang_inc
@@ -217,6 +221,7 @@ class bras_teleop:
                 pass
         
 if __name__=='__main__':
+    # Messages are published at a rate of 22Hz to bras_commands
     try:
         bras_t = bras_teleop()
         rospy.init_node('bras_teleop', anonymous=True)
