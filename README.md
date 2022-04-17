@@ -28,7 +28,20 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
 
 ## Comment initialiser le projet (A REVOIR)
 1. Ouvrir un terminal
-2. Aller dans le répertoire rufus_ws
+```
+mkdir -p ~/rufus_ws/src
+```
+```
+cd ~/rufus_ws/src
+```
+```
+catkin_init_workspace
+```
+2. Copier le répertoire git dans le dossier src
+```
+git clone
+```
+3. Aller dans le répertoire rufus_ws
 ```
 cd ~/rufus_ws
 ```
