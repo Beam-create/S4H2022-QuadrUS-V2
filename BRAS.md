@@ -29,11 +29,14 @@ Afin de se rendre à position cartésienne définie par la position de la balle 
 ![vue_dessus2](https://user-images.githubusercontent.com/72227713/163698269-1dca8a0d-97f3-4ff2-9430-3ec72d58ef7c.PNG)
 
 Les équations tirés de ces schémas sont :
-$$
-q_1 = tan^{-1}(\frac{Z}{X})\\
-0=cos⁡(q1)*(L_2  cos⁡(q2)+L_3  cos⁡(q3)+L_4x )-x-cam_x\\
-0=cam_y+L_1+L_2 sin(q2)-L_3  sin⁡(q3)-L_4y-y
-$$
+<p align="center">
+    <img src="https://latex.codecogs.com/svg.image?q_1=tan^{-1}(\frac{Z}{X})" height="60" />
+    <br>
+    <img src="https://latex.codecogs.com/svg.image?x=cos(q_1)*(L_2cos(q_2)+L_3cos(q_3)+L__{4x})-cam_x"  height="30"/>
+    <br>
+    <img src="https://latex.codecogs.com/svg.image?y=L_1+L_2sin(q_2)-L_3sin(q_3)-L__{4y}+cam_y"  height="30"/>
+</p>
+
 Avec la position en "x" et en "z" de la balle, il est possible de déterminer l'angle de rotation du joint 1. Par la suite, une fois que l'angle 1 est connue, il est possible d'utiliser le "solver" "nsolve" de python pour résoudre le système à deux équations et 2 inconnues pour trouver la valeur des angles pour les joints 2 et 3. Les valeurs de pi/2 et 0 dans le "nsolve" représente les valeurs des angles initiales en radians des joints 2 et 3 respectivement, ce qui permet d'accélérer la résolution du système d'équation
 
 ### Calibration des servo
