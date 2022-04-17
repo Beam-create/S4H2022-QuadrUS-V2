@@ -17,6 +17,15 @@ Lien pour la license CC: https://www.thingiverse.com/thing:1454048
 ## Contrôle du bras robot
 
 ### Cinématique inverse
+Afin de se rendre à position cartésienne définie par la position de la balle (position détecté par la caméra), une cinématique inverse a été modélisée à partir des schéma suivant :
+
+1- Vue de coter du bras du robot :
+![vue_coter2](https://user-images.githubusercontent.com/72227713/163698267-9b8c015c-d479-4254-9cab-0b8b52da7252.PNG)
+
+2- Vue de dessus du bras du robot : 
+![vue_dessus2](https://user-images.githubusercontent.com/72227713/163698269-1dca8a0d-97f3-4ff2-9430-3ec72d58ef7c.PNG)
+
+Les équations tirés de ces schémas se trouve dans bras_teleop.py (https://github.com/Beam-create/S4H2022-RufUS/blob/main/ROS/rufus_remote/src/bras_teleop.py). Avec la position en "x" et en "z" de la balle, il est possible de déterminer l'angle de rotation du joint 1. Par la suite, une fois que l'angle 1 est connue, il est possible d'utiliser le "solver" "nsolve" de python pour résoudre le système à deux équations et 2 inconnues pour trouver la valeur des angles pour les joints 2 et 3. Les valeurs de 0, pi/2, 0 représente les valeurs des angles initiales en radians des joints 1, 2 et 3 respectivement, ce qui permet d'accélérer la résolution du système d'équation
 
 ### Calibration des servo
 Afin de bien modéliser le comportement réel des servos moteurs, une calibration est utilisée dans le but d'extraire une fonction approximative du signal PWM en fonction de l'angle désiré. 
