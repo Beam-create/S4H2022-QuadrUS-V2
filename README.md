@@ -28,33 +28,12 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
 
 ## Comment initialiser le projet (A REVOIR)
 1. Ouvrir un terminal
+2. Écrire la commande :
 ```
-mkdir -p ~/rufus_ws/src
+gedit .bashrc
 ```
-```
-cd ~/rufus_ws/src
-```
-```
-catkin_init_workspace
-```
-2. Copier le répertoire git dans le dossier src
-```
-git clone
-```
-3. Aller dans le répertoire rufus_ws
-```
-cd ~/rufus_ws
-```
-3. Initialiser le *workspace* (rester dans le répertoire *quadrus_ws*)
-```
-catkin_make
-```
-4. Source le *.bash*
-```
-echo “source ~/catkin_ws/devel/setup.bash” >> ~/.bashrc
-```
-> Sinon il faut faut écrire la ligne de commande ". ~/quadrus_ws/devel/setup.bash" a chaque fois qu'on ouvre un terminal
-5. Fermer le ou les terminals actif
+3. Aller au à la fin du fichier
+4. Valider que *source ~/rufus_ws/devel/setup.bash* ne se trouver par entre ("")
 
 ## Table des matières
 * Documentation
