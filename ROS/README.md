@@ -1,7 +1,5 @@
 # S4H2022-RufUS/ROS
 
-mettre ici comment on utillise ros dans notre platforme et des images rqt_graph
-
 ## Configuration du Jetson Nano
 ### Création d'un hotspot
 La création d'un réseau wi-fi dit "hotspot" sur un appareil permet à un ordinateur tiers de se connecter à cet appareil et d'avoir accès à l'internet sans fil si l'appareil recoit une connexion internet filaire. Par extension, cela permet à l'ordinateur tiers d'accéder au terminal de l'appareil par "ssh" afin de lancer des commandes (voir la section correspondante). Le but ici est donc de lancer les commandes ROS sur le Jetson Nano à partir d'un autre ordinateur sans connexion filaire reliant les deux appareils.
