@@ -46,11 +46,11 @@ cd ~/rufus_ws
 catkin_make
 ```
 4. Lancer les packages sur deux terminaux différents:
-	i. Lancer le package principal sur l'ordinateur:
+i. Lancer le package principal sur l'ordinateur:
 ```
 roslaunch rufus_master rufus_master.launch 
 ```
-	ii. Lancer le package secondaire sur le Jetson:
+ii. Lancer le package secondaire sur le Jetson:
 ```
 roslaunch rufus_remote rufus_remote.launch
 ```
