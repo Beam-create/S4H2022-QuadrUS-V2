@@ -33,7 +33,31 @@ gedit .bashrc
 2. Allez à la fin du fichier
 3. Validez que *source ~/rufus_ws/devel/setup.bash* ne se trouver par entre ( " " )
 ## Comment démarrer le projet
-1. 
+1. Suivre les instructions d'installation sur un ordinateur avec Ubuntu20.04.
+2. Suivre les instructions d'installation de Ubuntu20.04 sur le Jetson Nano (Voir [Configuration du Jetson Nano](/VISION#configuration-du-jetson-nano))
+3. Lorsque l'installation est terminée sur le Jetson Nano, configurez le hotspot (Voir [Création d'un hotspot](/ROS#création-dun-hotspot)).
+4. Avec le hotspot configuré, connectez vous par SSH au Jetson Nano.
+5. Une fois connecté, allez dans le dossier rufus_ws et exécutez une compilation du programme ROS :
+```
+cd ~/rufus_ws     
+catkin_make
+```
+puis une fois compilé,
+```
+source devel/setup.bash
+```
+6. Finalement, toujours sur le Jetson Nano avec la connexion SSH, lancez le programme *master* :
+```
+roslaunch rufus_master rufus_master.launch
+```
+7. Finalement, avec l'ordinateur *remote*, lancez :
+```
+roslaunch rufus_remote rufus_remote.launch
+```
+Et le tour est joué!
+**Troubleshooting**
+Si des problèmes de connexion ont lieu, vérifiez que les adresses IP concordent avec les *launchfiles*.
+
 ## Table des matières
 * Documentation
 	* [Base](/FABRICATION/BASE#s4h2022-rufusbase)
