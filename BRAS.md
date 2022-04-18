@@ -21,7 +21,7 @@ Lien pour la license CC: https://www.thingiverse.com/thing:1454048
 ## Contrôle du bras robot
 
 ### Cinématique inverse
-Afin de se rendre à position cartésienne définie par la position de la balle (position détecté par la caméra), une cinématique inverse a été modélisée à partir des schéma suivant :
+Afin de se rendre à la position cartésienne de la balle (position détecté par la caméra), une cinématique inverse a été modélisée à partir des schéma suivant :
 
 1- Vue de coter du bras du robot :
 ![vue_coter2](https://user-images.githubusercontent.com/72227713/163698267-9b8c015c-d479-4254-9cab-0b8b52da7252.PNG)
