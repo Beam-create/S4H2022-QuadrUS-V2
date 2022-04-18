@@ -51,7 +51,7 @@ i. Lancer le package principal sur l'ordinateur:
 ```
 roslaunch rufus_master rufus_master.launch 
 ```
-ii. Lancer le package secondaire sur le Jetson:
+ii. Lancer le package secondaire sur le Jetson (référez-vous à cette ![section]"" pour se connecter en ssh au Jetson):
 ```
 roslaunch rufus_remote rufus_remote.launch
 ```
