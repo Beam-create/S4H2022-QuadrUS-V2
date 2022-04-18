@@ -1,7 +1,8 @@
 
 # S4H2022-RufUS/BRAS
 ## Liste des matériaux et composantes
-- [ ] 3 x Servo DS3225  ([amazon](https://www.amazon.ca/-/fr/enti%C3%A8rement-m%C3%A9tallique-num%C3%A9rique-voitures-contr%C3%B4le/dp/B07NSG5WFQ/ref=sr_1_7?__mk_fr_CA=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=250SI05Q6DGX1&keywords=servo+25+kg&qid=1650227407&sprefix=servo+25kg%2Caps%2C165&sr=8-7))
+- [ ] 1 x Servo DS3225  ([amazon](https://www.amazon.ca/-/fr/enti%C3%A8rement-m%C3%A9tallique-num%C3%A9rique-voitures-contr%C3%B4le/dp/B07NSG5WFQ/ref=sr_1_7?__mk_fr_CA=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=250SI05Q6DGX1&keywords=servo+25+kg&qid=1650227407&sprefix=servo+25kg%2Caps%2C165&sr=8-7))
+- [ ] 2 x Servo DS3218 ([amazon](https://www.amazon.ca/Servomoteur-num%C3%A9rique-%C3%A9tanche-voiture-contr%C3%B4le/dp/B07MDM1C3M/ref=sr_1_1_sspa?gclid=Cj0KCQjwmPSSBhCNARIsAH3cYgbY-I6gcLQd_m05WRdz0jvEnY4g75Xh6RnTGzBoZARoA3yt9WMbEREaAghcEALw_wcB&hvadid=231054272123&hvdev=c&hvlocphy=9000516&hvnetw=s&hvqmt=e&hvrand=12183318026730068377&hvtargid=kwd-297225592226&hydadcr=20845_10090782&keywords=ds3218&qid=1650316875&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyVVdaMk1HOUFRQ0E4JmVuY3J5cHRlZElkPUEwOTA3MDA2M0IyWUowSktWRU9POSZlbmNyeXB0ZWRBZElkPUEwMDYwNjI5M0ZVTEVDS0dSNEtZUSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU=))
 - [ ] 1 x Servo SG90 ([amazon](https://www.amazon.ca/-/fr/servomoteur-radiocommand%C3%A9-h%C3%A9licopt%C3%A8re-v%C3%A9hicules-compatible/dp/B097RD8RB7/ref=sr_1_16?__mk_fr_CA=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=BJCQ5BYGP5O8&keywords=servo+9+g&qid=1650227478&sprefix=servo+9g%2Caps%2C74&sr=8-16))
 ## Assemblage du bras robot
 
