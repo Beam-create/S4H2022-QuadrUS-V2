@@ -7,6 +7,8 @@
 
 ## Présentation du projet
 ![render_rufus](https://user-images.githubusercontent.com/54538310/163730728-76d62d03-951f-4c52-9c64-2c97f2e0f997.jpg)
+![278370804_358238186355541_65180280197177290_n](https://user-images.githubusercontent.com/54538310/163886041-4ef157aa-282a-4b21-9bb6-5ed436bbb83b.jpg)
+
 
 
 RufUS est un robot collaboratif conçu et fabriqué par 6 étudiants en génie robotique à l'Université de Sherbrooke. Ce projet est fait dans le cadre du projet de la session 4.
