@@ -38,26 +38,25 @@ Les équations tirés de ces schémas sont :
     <img src="https://latex.codecogs.com/svg.image?y=L_1+L_2sin(q_2)-L_3sin(q_3)-L__{4y}+cam_y"  height="30"/>
 </p>
 
-Avec la position en "x" et en "z" de la balle, il est possible de déterminer l'angle de rotation du joint 1. Par la suite, une fois que l'angle 1 est connue, il est possible d'utiliser le "solver" "nsolve" de python pour résoudre le système à deux équations et 2 inconnues pour trouver la valeur des angles pour les joints 2 et 3. Les valeurs de pi/2 et 0 dans le "nsolve" représente les valeurs des angles initiales en radians des joints 2 et 3 respectivement, ce qui permet d'accélérer la résolution du système d'équation
+Avec la position en "x" et en "z" de la balle, il est possible de déterminer l'angle de rotation du joint 1. Par la suite, une fois que l'angle 1 est connu, il est possible d'utiliser le "solver" "nsolve" de python pour résoudre le système à deux équations et 2 inconnues pour trouver la valeur des angles pour les joints 2 et 3. Les valeurs de pi/2 et 0 dans le "nsolve" représente les valeurs des angles initiales en radians des joints 2 et 3 respectivement, ce qui permet d'accélérer la résolution du système d'équation.
 
 ### Calibration des servo
 Afin de bien modéliser le comportement réel des servos moteurs, une calibration est utilisée dans le but d'extraire une fonction approximative du signal PWM en fonction de l'angle désiré. 
 
 Les étapes de calibration sont :
 
- 1- Création d'une série de donnée [angles_réels, PWM_envoyés] pour chaque servo.
+ 1- Création d'une série de données [angles_réels, PWM_envoyés] pour chaque servo.
 
- 2- Selon l'allure de la courbe, on utilise une fonction de linéarisation à plusieurs coefficients afin d'approximer la courbe de données discrète. 
+ 2- Selon l'allure de la courbe, on utilise une fonction de linéarisation à plusieurs coefficients afin d'approximer la courbe de données discrètes. 
 
- 3- Mesuré les erreurs quadratiques afin d'assurer une précision adéquate.
+ 3- Mesurer les erreurs quadratiques afin d'assurer une précision adéquate.
 
- 4- Modéliser la fonction de writeMicroseconds selon la fonction linéarisée obtenue.
+ 4- Modéliser la fonction de *writeMicroseconds()* selon la fonction linéarisée obtenue.
 
 *Pour ce faire, Matlab/Python sont de bons outils d'analyse numérique. 
 
 ## Dépendances logicielles
-Pour le fonctionnement bas-niveau du bras, le code c++ doit inclure les librairies externes suivantes:
+Pour le fonctionnement bas-niveau du bras, le code c++ doit inclure la librairie externe suivante:
 
-1- Servo.h, librairie Arduino pour le contrôle de servo moteur selon une commande PWM ou un angle. Lien de téléchargement: https://github.com/arduino-libraries/Servo
+1- [Servo.h](https://github.com/arduino-libraries/Servo), librairie Arduino pour le contrôle de servo moteur selon une commande PWM ou un angle.
 
-2- Ramp.h, librairie d'interpolation de donnée afin d'adoucir les mouvements du bras robot.
