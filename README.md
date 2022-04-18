@@ -61,11 +61,11 @@ Si des problèmes de connexion ont lieu, vérifiez que les adresses IP concorden
 ## Table des matières
 * Documentation
 	* [Base](/FABRICATION/BASE#s4h2022-rufusbase)
-		* [Fichiers CAD](/BASE#fichers-cad)
-		* [Comment fabriquer la base mobile](/BASE#comment-fabriquer-la-base-mobile) 
-			* [Liste des matériaux et composantes](/BASE#liste-des-matériaux-et-composantes)
-			* [Assemblage mécanique](/BASE#assemblage-mécanique)
-			* [Assemblage électrique](/BASE#assemblage-électrique)
+		* [Fichiers CAD](/FABRICATION/BASE#fichers-cad)
+		* [Comment fabriquer la base mobile](/FABRICATION/BASE#comment-fabriquer-la-base-mobile) 
+			* [Liste des matériaux et composantes](/FABRICATION/BASE#liste-des-matériaux-et-composantes)
+			* [Assemblage mécanique](/FABRICATION/BASE#assemblage-mécanique)
+			* [Assemblage électrique](/FABRICATION/BASE#assemblage-électrique)
 	* [Bras](/BRAS.md)
 		* [Assemblage du bras robot](/BRAS.md#assemblage-du-bras-robot)
 		* [Contrôle du bras robot](/BRAS.md#contrôle-du-bras-robot)
