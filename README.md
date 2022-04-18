@@ -46,6 +46,7 @@ cd ~/rufus_ws
 catkin_make
 ```
 4. Lancer les packages sur deux terminaux différents:
+
 i. Lancer le package principal sur l'ordinateur:
 ```
 roslaunch rufus_master rufus_master.launch 
