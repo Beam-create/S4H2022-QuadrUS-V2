@@ -25,16 +25,15 @@ Le but de ce projet est de construire un robot ayant la capacité de détecter, 
  ```
 
 > L'exécution du fichier permet d'installer automatiquement toutes les librairies ROS et les dépendances nécessaires au projet. Il permet aussi de configurer l'infrastructure ROS du projet. En effet, Un dossier sous le nom de rufus_ws (rufus workspace) contenant tous les éléments nécessaire au fonctionnement de la plateforme sera créé.
-
-## Comment initialiser le projet (A REVOIR)
-1. Ouvrir un terminal
-2. Écrire la commande :
+### Validation de l'installation
+1. Ouvrir un terminal et exécutez cette commande:
 ```
 gedit .bashrc
 ```
-3. Aller au à la fin du fichier
-4. Valider que *source ~/rufus_ws/devel/setup.bash* ne se trouver par entre ( " " )
-
+2. Allez à la fin du fichier
+3. Validez que *source ~/rufus_ws/devel/setup.bash* ne se trouver par entre ( " " )
+## Comment démarrer le projet
+1. 
 ## Table des matières
 * Documentation
 	* [Base](/FABRICATION/BASE#s4h2022-rufusbase)
