@@ -53,7 +53,7 @@ Les étapes de calibration sont :
 
  4- Modéliser la fonction de *writeMicroseconds()* selon la fonction linéarisée obtenue.
 
-*Pour ce faire, Matlab/Python sont de bons outils d'analyse numérique. 
+> Pour ce faire, Matlab/Python sont de bons outils d'analyse numérique. 
 
 ## Dépendances logicielles
 Pour le fonctionnement bas-niveau du bras, le code c++ doit inclure la librairie externe suivante:
