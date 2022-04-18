@@ -1,13 +1,6 @@
 
 # S4H2022-RufUS/BASE
 ## [Fichers CAD](https://github.com/Beam-create/S4H2022-RufUS/tree/main/CAD)
-Cette section contient tous les fichiers CAD de la base et se divise selon les trois sections suivantes:
-### CAD_SIM
-Cette section contient les pièces et les assemblages SolidWorks des composants primaires de la base et de ses roues (fichiers SLDPRT et SLDASM).
-### DXF
-Cette section contient les fichiers DXF de la base à découper au laser
-### STL
-Cette section contient les fichiers STL de composants secondaires de la base, tel que des supports, monture, etc.
 
 ## Comment fabriquer la base mobile
 ![Base_mec_cool](https://user-images.githubusercontent.com/72213923/155202295-f0e4fc5b-6d43-4b49-9942-6be311430c08.jpg)
