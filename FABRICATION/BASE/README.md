@@ -1,6 +1,6 @@
 
 # S4H2022-RufUS/BASE
-## [Fichers CAD](https://github.com/Beam-create/S4H2022-RufUS/tree/main/CAD)
+## [Fichiers CAD](https://github.com/Beam-create/S4H2022-RufUS/tree/main/CAD)
 
 ## Comment fabriquer la base mobile
 ![Base_mec_cool](https://user-images.githubusercontent.com/72213923/155202295-f0e4fc5b-6d43-4b49-9942-6be311430c08.jpg)
