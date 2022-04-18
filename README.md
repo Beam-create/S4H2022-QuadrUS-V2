@@ -33,7 +33,18 @@ gedit .bashrc
 2. Allez à la fin du fichier
 3. Validez que *source ~/rufus_ws/devel/setup.bash* ne se trouver par entre ( " " )
 ## Comment démarrer le projet
-1. 
+1. Ouvrir un terminal et exéxutez cette commande pour lancer ROS:
+```
+roscore
+```
+2. Sur un autre terminal, déplacez-vous dans l'espace de travail du projet:
+```
+cd ~/rufus_ws
+```
+3. Lancer ...
+```
+
+```
 ## Table des matières
 * Documentation
 	* [Base](/FABRICATION/BASE#s4h2022-rufusbase)
