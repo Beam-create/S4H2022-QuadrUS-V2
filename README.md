@@ -7,9 +7,11 @@
 
 ## Présentation du projet
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/54538310/163730728-76d62d03-951f-4c52-9c64-2c97f2e0f997.jpg" />
-    <br>
-    <img src="https://user-images.githubusercontent.com/54538310/163886041-4ef157aa-282a-4b21-9bb6-5ed436bbb83b.jpg" />
+    	<img src="https://user-images.githubusercontent.com/54538310/163730728-76d62d03-951f-4c52-9c64-2c97f2e0f997.jpg" />
+    	<br>
+    	<img src="https://user-images.githubusercontent.com/54538310/163886041-4ef157aa-282a-4b21-9bb6-5ed436bbb83b.jpg" />
+	<br>
+	<a>Respectivement <strong>Antoine Waltz</strong>, <strong>Jordan Simard</strong>, <strong>Guillaume Blain</strong>, <strong>Mathieu Beaudoin</strong>, <strong>Christopher Pacheco</strong> et <strong>Nicolas Longchamps</strong></a>
 </p>
 
 RufUS est un robot collaboratif conçu et fabriqué par 6 étudiants en génie robotique à l'Université de Sherbrooke. Ce projet est fait dans le cadre du projet de la session 4.
