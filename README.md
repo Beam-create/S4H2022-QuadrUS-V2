@@ -65,11 +65,11 @@ roslaunch rufus_master rufus_master.launch
 ```
 roslaunch rufus_remote rufus_remote.launch
 ```
-puis lancez dans un autre terminal :
+puis, dans un autre terminal, lancez _rqt_ avec la commande :
 ```
 rqt
 ```
-Et le tour est joué! Vous obtiendrez ceci comme interface d'utilisateur :
+Et le tour est joué! Vous obtiendrez ceci comme interface utilisateur :
 <p align="center">
 	<img src="https://user-images.githubusercontent.com/72104945/163908906-e3e4f1bb-6b4d-405b-af46-de2bc4a09aba.gif" />
 	<br>
