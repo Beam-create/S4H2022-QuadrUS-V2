@@ -140,12 +140,9 @@ class bras_teleop:
             self.ball_position = data
 
     def cb_joy(self, data):
-        """
-        Fonction callback from joy topic, sets flags and processes user input 
-        :param data: data array from joy message 
-        :return: void
-        """
-        if (data.buttons[16] or data.buttons[15] or data.buttons[13] or data.buttons[14] or data.buttons[0] or data.buttons[2] or data.buttons[5] or data.buttons[4] or data.buttons[8]):
+        # Tester config manette pour attribuer les valeurs a angles.q*
+        # Force set au mode manuelle en cas dappuis
+        if (data.buttons[8]):#data.buttons[16] or data.buttons[15] or data.buttons[13] or data.buttons[14] or data.buttons[0] or data.buttons[2] or data.buttons[5] or data.buttons[4] or 
             self.commands.mode = False
 
         #q1

@@ -15,9 +15,9 @@ class robotArm:
     #Changer angle initiale pour les bonnes valeurs
 	def __init__(self, initial_q1 = 0.0, initial_q2 = 90.0, initial_q3 = 0.0):
 		self.q = bras_commands()
-		self.q.q1 = initial_q1
-		self.q.q2 = initial_q2
-		self.q.q3 = initial_q3
+		#self.q.q1 = initial_q1
+		#self.q.q2 = initial_q2
+		#self.q.q3 = initial_q3
 		self.mode = False
 		self.IK = False
 
@@ -87,9 +87,14 @@ if __name__=='__main__':
 		rate = rospy.Rate(10)
 		while not rospy.is_shutdown():
 			if r_a.mode:
-				r_a.mode = False
-				r_a.inverseKinematics(r_a.ball_position)
-				r_a.pub.publish(r_a.q)
+				try:
+					r_a.inverseKinematics(r_a.ball_position)
+					r_a.pub.publish(r_a.q)
+					r_a.mode = False
+				except:
+					pass
+				
+				
 			rate.sleep()
 	except rospy.ROSInterruptException:
 		pass

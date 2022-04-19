@@ -18,6 +18,7 @@
 
     <!--Lancer le noeud de controle-->
     <node name="base_control" pkg="rufus_master" type="base_control_node.py"/>
+    <node name="StereoCam" pkg="stereocamera" type="BallStereoDetection.py" respawn="true"/>
 
 
 </launch>
