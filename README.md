@@ -14,6 +14,12 @@
 	<a>Respectivement <strong>Antoine Waltz</strong>, <strong>Jordan Simard</strong>, <strong>Guillaume Blain</strong>, <strong>Mathieu Beaudoin</strong>, <strong>Christopher Pacheco</strong> et <strong>Nicolas Longchamps</strong></a>
 </p>
 
+
+<p align="center">
+	<img src="https://user-images.githubusercontent.com/72104945/163909638-844c3a96-6343-4c8e-993d-094754346119.gif" />
+	<br>
+</p>
+
 RufUS est un robot collaboratif conçu et fabriqué par 6 étudiants en génie robotique à l'Université de Sherbrooke. Ce projet est fait dans le cadre du projet de la session 4.
 
 Le but de ce projet est de construire un robot ayant la capacité de détecter, saisir puis rapporter un item. Pour ce faire, RufUS intègre une vision caméra, un bras robotique et une base mobile.
@@ -51,15 +57,24 @@ puis une fois compilé,
 ```
 source devel/setup.bash
 ```
-6. Finalement, toujours sur le Jetson Nano avec la connexion SSH, lancez le programme *master* :
+6. Ensuite, toujours sur le Jetson Nano avec la connexion SSH, lancez le programme *master* :
 ```
 roslaunch rufus_master rufus_master.launch
 ```
-7. Finalement, avec l'ordinateur *remote*, lancez :
+7. Puis, avec l'ordinateur *remote*, lancez :
 ```
 roslaunch rufus_remote rufus_remote.launch
 ```
-Et le tour est joué!
+puis lancez dans un autre terminal :
+```
+rqt
+```
+Et le tour est joué! Vous obtiendrez ceci comme interface d'utilisateur :
+<p align="center">
+	<img src="https://user-images.githubusercontent.com/72104945/163908906-e3e4f1bb-6b4d-405b-af46-de2bc4a09aba.gif" />
+	<br>
+</p>
+
 **Troubleshooting**
 Si des problèmes de connexion ont lieu, vérifiez que les adresses IP concordent avec les *launchfiles*.
 
